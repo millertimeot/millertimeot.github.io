@@ -314,8 +314,34 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
   (function(){
     var installed = (navigator.standalone === true) || (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
     if (installed) document.documentElement.classList.add("standalone");
+    var page = location.href.split("#")[0];
+    function hardReload(){
+      // Pull a fresh copy past the HTTP cache first, then reload so the fresh copy is what shows.
+      var p = (window.fetch) ? fetch(page, { cache: "reload" }).catch(function(){}) : Promise.resolve();
+      p.then(function(){ location.reload(); });
+    }
     var b = document.getElementById("app-refresh");
-    if (b) b.addEventListener("click", function(){ b.textContent = "Pouring..."; location.reload(); });
+    if (b) b.addEventListener("click", function(){ b.textContent = "Pouring..."; hardReload(); });
+    // Installed app: check for a newer board on every open and swap to it automatically.
+    if (installed && window.fetch) {
+      var KEY = "ja_board_stamp";
+      var checkedAt = 0;
+      function checkForNewBoard(){
+        if (Date.now() - checkedAt < 60000) return;
+        checkedAt = Date.now();
+        fetch(page, { cache: "reload" }).then(function(r){
+          var stamp = r.headers.get("last-modified") || r.headers.get("etag") || "";
+          if (!stamp) return;
+          var seen = "";
+          try { seen = localStorage.getItem(KEY) || ""; } catch(e){}
+          try { localStorage.setItem(KEY, stamp); } catch(e){}
+          if (seen && seen !== stamp) location.reload();
+        }).catch(function(){});
+      }
+      checkForNewBoard();
+      document.addEventListener("visibilitychange", function(){ if (document.visibilityState === "visible") checkForNewBoard(); });
+      window.addEventListener("pageshow", function(ev){ if (ev.persisted) checkForNewBoard(); });
+    }
   })();
 </script>
 
