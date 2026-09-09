@@ -1203,10 +1203,12 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
       hideRow('nw-pass-row');
       hideRow('sb-pass-row');
       hideRow('nw-no-pass-note');
+      hideRow('nw-push-pass-row');
     } else {
       showRow('nw-pass-row');
       showRow('sb-pass-row');
       showRow('nw-no-pass-note');
+      showRow('nw-push-pass-row');
     }
   }
 
@@ -1882,7 +1884,9 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
       }
       return;
     }
-    ensurePasscode('nw-pass', 'nw-push-status', function(pass){
+    var pushPassEl = document.getElementById('nw-push-pass');
+    var passInputId = (pushPassEl && pushPassEl.value.trim()) ? 'nw-push-pass' : 'nw-pass';
+    ensurePasscode(passInputId, 'nw-push-status', function(pass){
       if (!pass) return;
       var btn = document.getElementById('nw-push-btn');
       if (btn) btn.disabled = true;
