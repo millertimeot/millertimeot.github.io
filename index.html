@@ -208,6 +208,17 @@ td.delta.zero{color:var(--dim);}
 .napkin .n-who{font-family:'Caveat',cursive;font-size:1.1875rem;color:#5c4d3a;}
 .napkin .n-line{font-family:'Caveat',cursive;font-size:1.1875rem;line-height:1.25;font-weight:700;}
 .napkin .n-tag{font-family:'Caveat',cursive;font-size:1.1875rem;color:#5c4d3a;margin-top:auto;}
+.napkin .n-replies{margin:8px -12px -22px;padding:8px 12px 14px;background:#e9dfc4;border-top:1px dashed rgba(42,31,22,0.35);display:flex;flex-direction:column;gap:8px;}
+.napkin .n-reply{display:flex;flex-direction:column;gap:1px;}
+.napkin .n-reply-who{font-family:'Caveat',cursive;font-size:1rem;color:#5c4d3a;}
+.napkin .n-reply-body{font-size:0.95rem;line-height:1.3;color:#2a1f16;}
+.napkin .n-reply-time{font-family:'Caveat',cursive;font-size:0.9rem;color:#5c4d3a;}
+.napkin .n-reply-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px;font-size:0.95rem;color:#5c4d3a;}
+.napkin .n-reply-link{font-family:'Caveat',cursive;font-size:1.1875rem;color:#2a1f16;background:none;border:none;padding:8px 4px;min-height:44px;cursor:pointer;text-decoration:underline;}
+.napkin .n-reply-compose{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start;margin-top:8px;}
+.napkin .n-reply-input{flex:1;min-width:120px;background:rgba(42,31,22,0.06);border:2px solid rgba(42,31,22,0.35);color:#2a1f16;}
+.napkin .n-reply-send{font-family:'Cabin Sketch',cursive;font-weight:700;font-size:1rem;background:#2a1f16;color:#f3ead3;border:none;border-radius:6px;padding:8px 14px;min-height:44px;cursor:pointer;}
+.napkin .n-reply-msg{font-family:'Caveat',cursive;font-size:1.05rem;color:#8a2f2f;min-height:1.2em;margin-top:4px;}
 
 /* Texts from Art */
 .texts-block{display:flex;align-items:center;gap:18px;flex-wrap:wrap;border:2px dashed var(--border-soft);border-radius:10px;padding:16px 18px;}
@@ -1004,6 +1015,8 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
   var MEMBERS = ['Tom', 'W', 'Oscar', 'Robert', 'Nic', 'Brennan', 'Tyler', 'Skoney'];
 
   var member = '';
+  var openReplyIds = {};
+  var lastRepliesByNote = {};
 
   function storedPass(){ try { return localStorage.getItem(PASS_KEY) || ''; } catch(e){ return ''; } }
   function setPass(p){ try { localStorage.setItem(PASS_KEY, p); } catch(e){} }
@@ -1069,6 +1082,7 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
     if (m.indexOf('winner must be one of the two') !== -1) return 'Pick one of the two.';
     if (m.indexOf('cannot be voided') !== -1) return 'Too late to void that.';
     if (m.indexOf('not your bet') !== -1) return 'Not your bet, kid.';
+    if (m.indexOf('napkin is gone') !== -1) return 'That napkin is gone.';
     return (err && err.message) || 'Something went wrong. Try again.';
   }
 
@@ -1251,21 +1265,239 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
     return div;
   }
 
-  function renderNotes(list){
+  function anyReplyOpen(){
+    for (var k in openReplyIds){ if (openReplyIds[k]) return true; }
+    return false;
+  }
+
+  function replyCountText(n){
+    return n + (n === 1 ? ' reply' : ' replies');
+  }
+
+  function appendReplies(napkinDiv, replies){
+    if (!replies || !replies.length) return;
+    var box = document.createElement('div');
+    box.className = 'n-replies';
+    replies.forEach(function(r){
+      var item = document.createElement('div');
+      item.className = 'n-reply';
+      var who = document.createElement('div');
+      who.className = 'n-reply-who';
+      who.textContent = r.name;
+      item.appendChild(who);
+      var body = document.createElement('div');
+      body.className = 'n-reply-body';
+      body.textContent = r.body;
+      item.appendChild(body);
+      var time = document.createElement('div');
+      time.className = 'n-reply-time';
+      time.textContent = relTime(r.created_at);
+      item.appendChild(time);
+      box.appendChild(item);
+    });
+    napkinDiv.appendChild(box);
+  }
+
+  function appendReplyControls(napkinDiv, note, replies){
+    var row = document.createElement('div');
+    row.className = 'n-reply-row';
+    if (replies && replies.length){
+      var count = document.createElement('span');
+      count.className = 'n-reply-count';
+      count.textContent = replyCountText(replies.length);
+      row.appendChild(count);
+    }
+    var link = document.createElement('button');
+    link.type = 'button';
+    link.className = 'n-reply-link';
+    link.textContent = 'Reply';
+    link.addEventListener('click', function(){
+      openReplyUI(napkinDiv, note, row, link);
+    });
+    row.appendChild(link);
+    napkinDiv.appendChild(row);
+  }
+
+  function addReplyToUI(napkinDiv, note, row, reply){
+    var noteKey = String(note.id);
+    if (!lastRepliesByNote[noteKey]) lastRepliesByNote[noteKey] = [];
+    lastRepliesByNote[noteKey].push(reply);
+    var box = napkinDiv.querySelector('.n-replies');
+    if (!box){
+      box = document.createElement('div');
+      box.className = 'n-replies';
+      napkinDiv.insertBefore(box, row);
+    }
+    var item = document.createElement('div');
+    item.className = 'n-reply';
+    var who = document.createElement('div');
+    who.className = 'n-reply-who';
+    who.textContent = reply.name;
+    item.appendChild(who);
+    var body = document.createElement('div');
+    body.className = 'n-reply-body';
+    body.textContent = reply.body;
+    item.appendChild(body);
+    var time = document.createElement('div');
+    time.className = 'n-reply-time';
+    time.textContent = relTime(reply.created_at);
+    item.appendChild(time);
+    box.appendChild(item);
+
+    var count = lastRepliesByNote[noteKey].length;
+    var countEl = row.querySelector('.n-reply-count');
+    if (!countEl){
+      countEl = document.createElement('span');
+      countEl.className = 'n-reply-count';
+      row.insertBefore(countEl, row.firstChild);
+    }
+    countEl.textContent = replyCountText(count);
+  }
+
+  function openReplyUI(napkinDiv, note, row, link){
+    if (napkinDiv.querySelector('.n-reply-compose')) return;
+    link.style.display = 'none';
+    if (!member){
+      openNapkinPasscode(napkinDiv, note, row, link);
+      return;
+    }
+    openReplyCompose(napkinDiv, note, row, link);
+  }
+
+  function openNapkinPasscode(napkinDiv, note, row, link){
+    var noteKey = String(note.id);
+    openReplyIds[noteKey] = true;
+    var passRow = document.createElement('div');
+    passRow.className = 'n-reply-compose';
+    var input = document.createElement('input');
+    input.type = 'password';
+    input.className = 'text-input n-reply-input';
+    input.maxLength = 40;
+    input.placeholder = 'Your passcode';
+    input.autocomplete = 'off';
+    passRow.appendChild(input);
+    var goBtn = document.createElement('button');
+    goBtn.type = 'button';
+    goBtn.className = 'n-reply-send';
+    goBtn.textContent = 'Go';
+    passRow.appendChild(goBtn);
+    var msg = document.createElement('div');
+    msg.className = 'n-reply-msg';
+    function submit(){
+      var val = input.value.trim();
+      if (!val){ msg.textContent = 'Passcode. Ask a regular.'; return; }
+      msg.textContent = '';
+      goBtn.disabled = true;
+      verifyPasscode(val, function(){
+        delete openReplyIds[noteKey];
+        passRow.remove();
+        msg.remove();
+        openReplyCompose(napkinDiv, note, row, link);
+      }, function(err){
+        goBtn.disabled = false;
+        msg.textContent = barMessage(err);
+      });
+    }
+    goBtn.addEventListener('click', submit);
+    input.addEventListener('keydown', function(ev){
+      if (ev.key === 'Enter'){ ev.preventDefault(); submit(); }
+    });
+    napkinDiv.appendChild(passRow);
+    napkinDiv.appendChild(msg);
+  }
+
+  function openReplyCompose(napkinDiv, note, row, link){
+    var noteKey = String(note.id);
+    openReplyIds[noteKey] = true;
+    var compose = document.createElement('div');
+    compose.className = 'n-reply-compose';
+    var input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'text-input n-reply-input';
+    input.maxLength = 240;
+    input.placeholder = 'Say it to his face';
+    compose.appendChild(input);
+    var sendBtn = document.createElement('button');
+    sendBtn.type = 'button';
+    sendBtn.className = 'n-reply-send';
+    sendBtn.textContent = 'Send';
+    compose.appendChild(sendBtn);
+    var msg = document.createElement('div');
+    msg.className = 'n-reply-msg';
+    function submit(){
+      var body = input.value.trim();
+      if (!body || body.length > 240){ msg.textContent = 'Say something. 240 tops.'; return; }
+      var pass = storedPass();
+      if (!pass || !member){
+        delete openReplyIds[noteKey];
+        compose.remove();
+        msg.remove();
+        openNapkinPasscode(napkinDiv, note, row, link);
+        return;
+      }
+      msg.textContent = '';
+      sendBtn.disabled = true;
+      rpc('post_reply', { p_pass: pass, p_note_id: note.id, p_body: body }).then(function(){
+        addReplyToUI(napkinDiv, note, row, { name: member, body: body, created_at: new Date().toISOString() });
+        delete openReplyIds[noteKey];
+        compose.remove();
+        msg.remove();
+        link.style.display = '';
+      }).catch(function(err){
+        sendBtn.disabled = false;
+        if (isWrongPasscode(err)){
+          clearPass();
+          setMemberState('');
+        }
+        msg.textContent = barMessage(err);
+      });
+    }
+    sendBtn.addEventListener('click', submit);
+    input.addEventListener('keydown', function(ev){
+      if (ev.key === 'Enter'){ ev.preventDefault(); submit(); }
+    });
+    napkinDiv.appendChild(compose);
+    napkinDiv.appendChild(msg);
+  }
+
+  function buildNoteNapkin(note, repliesByNote){
+    var div = buildNapkin(note.name, note.body, relTime(note.created_at), true);
+    var replies = repliesByNote[String(note.id)] || [];
+    appendReplies(div, replies);
+    appendReplyControls(div, note, replies);
+    return div;
+  }
+
+  function renderNotes(list, repliesByNote){
     var wrap = document.getElementById('nw-list');
     if (!wrap) return;
+    if (anyReplyOpen()) return;
+    lastRepliesByNote = repliesByNote || {};
     wrap.innerHTML = '';
     if (!list || !list.length){
       wrap.appendChild(buildNapkin('', 'Nothing here yet. First round of insults is on the house.', 'Art, probably', false));
       return;
     }
     list.forEach(function(n){
-      wrap.appendChild(buildNapkin(n.name, n.body, relTime(n.created_at), true));
+      wrap.appendChild(buildNoteNapkin(n, lastRepliesByNote));
     });
   }
 
   function loadNotes(){
-    return getList('notes?select=id,created_at,name,body&order=created_at.desc&limit=100').then(renderNotes).catch(function(){});
+    return Promise.all([
+      getList('notes?select=id,created_at,name,body&order=created_at.desc&limit=100'),
+      getList('replies?select=id,note_id,created_at,name,body&order=created_at.asc&limit=500')
+    ]).then(function(results){
+      var notes = results[0] || [];
+      var replies = results[1] || [];
+      var repliesByNote = {};
+      replies.forEach(function(r){
+        var key = String(r.note_id);
+        if (!repliesByNote[key]) repliesByNote[key] = [];
+        repliesByNote[key].push(r);
+      });
+      renderNotes(notes, repliesByNote);
+    }).catch(function(){});
   }
 
   function submitNote(){
