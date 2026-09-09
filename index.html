@@ -584,6 +584,7 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
       <div class="form-msg" id="nw-msg" role="status" aria-live="polite"></div>
       <button class="btn-primary" type="button" id="nw-submit">Pin it</button>
     </div>
+    <div class="section-note" id="nw-no-pass-note">Regulars post with their passcode. Enter it above.</div>
     <div class="section-note">Every napkin is signed by the passcode that pinned it. Art would have wanted it that way.</div>
     <div class="napkin-wall-grid" id="nw-list"></div>
   </div>
@@ -1137,9 +1138,11 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
     if (member){
       hideRow('nw-pass-row');
       hideRow('sb-pass-row');
+      hideRow('nw-no-pass-note');
     } else {
       showRow('nw-pass-row');
       showRow('sb-pass-row');
+      showRow('nw-no-pass-note');
     }
   }
 
@@ -1327,10 +1330,12 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
     actions.className = 'bet-actions';
 
     if (!member){
-      var note = document.createElement('span');
-      note.className = 'bet-meta';
-      note.textContent = 'Enter your passcode to bet.';
-      actions.appendChild(note);
+      var enterBtn = document.createElement('button');
+      enterBtn.type = 'button';
+      enterBtn.className = 'btn-sm';
+      enterBtn.textContent = 'Enter passcode to bet';
+      enterBtn.addEventListener('click', function(){ showInlinePasscode(card, enterBtn); });
+      actions.appendChild(enterBtn);
     } else {
       var isProposer = b.proposer === member;
       var isTaker = !!b.taker && b.taker === member;
@@ -1361,6 +1366,47 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
     }
     card.appendChild(actions);
     return card;
+  }
+
+  function showInlinePasscode(card, triggerBtn){
+    if (card.querySelector('.inline-pass-row')) return;
+    if (triggerBtn) triggerBtn.style.display = 'none';
+    var row = document.createElement('div');
+    row.className = 'bet-actions inline-pass-row';
+    var input = document.createElement('input');
+    input.type = 'password';
+    input.className = 'text-input';
+    input.maxLength = 40;
+    input.placeholder = 'Your passcode';
+    input.autocomplete = 'off';
+    row.appendChild(input);
+    var goBtn = document.createElement('button');
+    goBtn.type = 'button';
+    goBtn.className = 'btn-sm';
+    goBtn.textContent = 'Go';
+    row.appendChild(goBtn);
+    var msg = document.createElement('div');
+    msg.className = 'form-msg';
+    function submit(){
+      var val = input.value.trim();
+      if (!val){ msg.textContent = 'Passcode. Ask a regular.'; msg.className = 'form-msg err'; return; }
+      msg.textContent = '';
+      msg.className = 'form-msg';
+      goBtn.disabled = true;
+      verifyPasscode(val, function(){
+        input.value = '';
+      }, function(err){
+        goBtn.disabled = false;
+        msg.textContent = barMessage(err);
+        msg.className = 'form-msg err';
+      });
+    }
+    goBtn.addEventListener('click', submit);
+    input.addEventListener('keydown', function(ev){
+      if (ev.key === 'Enter'){ ev.preventDefault(); submit(); }
+    });
+    card.appendChild(row);
+    card.appendChild(msg);
   }
 
   function showSettleChoice(card, b){
