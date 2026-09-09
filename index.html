@@ -570,8 +570,7 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
     <div class="bar-rail"></div>
     <div class="compose-card">
       <div class="field-row">
-        <label class="field-label" for="nw-name">Your name</label>
-        <input class="text-input" type="text" id="nw-name" maxlength="24" autocomplete="off" placeholder="Your name">
+        <div class="field-label" id="nw-regular">Enter your passcode to post</div>
       </div>
       <div class="field-row">
         <label class="field-label" for="nw-body">Say something</label>
@@ -580,11 +579,12 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
       </div>
       <div class="field-row" id="nw-pass-row">
         <label class="field-label" for="nw-pass">Passcode</label>
-        <input class="text-input" type="password" id="nw-pass" autocomplete="off" placeholder="Ask a regular">
+        <input class="text-input" type="password" id="nw-pass" autocomplete="off" placeholder="Your passcode">
       </div>
       <div class="form-msg" id="nw-msg" role="status" aria-live="polite"></div>
       <button class="btn-primary" type="button" id="nw-submit">Pin it</button>
     </div>
+    <div class="section-note">Every napkin is signed by the passcode that pinned it. Art would have wanted it that way.</div>
     <div class="napkin-wall-grid" id="nw-list"></div>
   </div>
 
@@ -593,8 +593,7 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
     <div class="bar-rail"></div>
     <div class="compose-card">
       <div class="field-row">
-        <label class="field-label" for="sb-name">Your name</label>
-        <input class="text-input" type="text" id="sb-name" maxlength="24" autocomplete="off" placeholder="Your name">
+        <div class="field-label" id="sb-regular">Enter your passcode to post</div>
       </div>
       <div class="field-row">
         <label class="field-label" for="sb-body">The bet</label>
@@ -607,11 +606,21 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
       </div>
       <div class="field-row">
         <label class="field-label" for="sb-against">Against (optional)</label>
-        <input class="text-input" type="text" id="sb-against" maxlength="24" autocomplete="off" placeholder="Leave blank for anyone">
+        <select class="text-input" id="sb-against">
+          <option value="">anyone</option>
+          <option value="Tom">Tom</option>
+          <option value="W">W</option>
+          <option value="Oscar">Oscar</option>
+          <option value="Robert">Robert</option>
+          <option value="Nic">Nic</option>
+          <option value="Brennan">Brennan</option>
+          <option value="Tyler">Tyler</option>
+          <option value="Skoney">Skoney</option>
+        </select>
       </div>
       <div class="field-row" id="sb-pass-row">
         <label class="field-label" for="sb-pass">Passcode</label>
-        <input class="text-input" type="password" id="sb-pass" autocomplete="off" placeholder="Ask a regular">
+        <input class="text-input" type="password" id="sb-pass" autocomplete="off" placeholder="Your passcode">
       </div>
       <div class="form-msg" id="sb-msg" role="status" aria-live="polite"></div>
       <button class="btn-primary" type="button" id="sb-submit">Slap it on the bar</button>
@@ -990,13 +999,17 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
   var SB_URL = 'https://wuwhfrajgxumzukczehf.supabase.co';
   var SB_KEY = 'sb_publishable_OF7oEvCH1MIzfLVM3OElxg_jPoFV9z6';
   var PASS_KEY = 'mtc_passcode';
-  var NAME_KEY = 'mtc_name';
+  var MEMBER_KEY = 'mtc_member';
+  var MEMBERS = ['Tom', 'W', 'Oscar', 'Robert', 'Nic', 'Brennan', 'Tyler', 'Skoney'];
+
+  var member = '';
 
   function storedPass(){ try { return localStorage.getItem(PASS_KEY) || ''; } catch(e){ return ''; } }
   function setPass(p){ try { localStorage.setItem(PASS_KEY, p); } catch(e){} }
   function clearPass(){ try { localStorage.removeItem(PASS_KEY); } catch(e){} }
-  function storedName(){ try { return localStorage.getItem(NAME_KEY) || ''; } catch(e){ return ''; } }
-  function setName(n){ try { localStorage.setItem(NAME_KEY, n); } catch(e){} }
+  function storedMember(){ try { return localStorage.getItem(MEMBER_KEY) || ''; } catch(e){ return ''; } }
+  function setMember(n){ try { localStorage.setItem(MEMBER_KEY, n); } catch(e){} }
+  function clearMember(){ try { localStorage.removeItem(MEMBER_KEY); } catch(e){} }
 
   function hideRow(id){ var el = document.getElementById(id); if (el) el.style.display = 'none'; }
   function showRow(id){ var el = document.getElementById(id); if (el) el.style.display = ''; }
@@ -1044,11 +1057,34 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
   function barMessage(err){
     var m = ((err && err.message) || '').toLowerCase();
     var code = (err && err.code) || '';
-    if (code === '28000' || m.indexOf('wrong passcode') !== -1) return 'Wrong passcode. Ask a regular.';
+    if (code === '28000' || m.indexOf('wrong passcode') !== -1) return 'Wrong passcode. Ask Tom.';
+    if (m.indexOf('no regular by that name') !== -1) return 'No regular by that name.';
+    if (m.indexOf('cannot bet yourself') !== -1) return 'You cannot bet yourself. Art tried.';
     if (m.indexOf('slow down') !== -1) return 'Slow down, kid.';
-    if (m.indexOf('not open') !== -1) return "That bet's already taken.";
-    if (m.indexOf('not accepted') !== -1) return "Nobody's taken that bet yet, kid.";
+    if (m.indexOf('cannot take your own bet') !== -1) return 'You cannot take your own bet.';
+    if (m.indexOf('for someone else') !== -1) return 'That one is not for you.';
+    if (m.indexOf('not open') !== -1) return 'That bet is already taken.';
+    if (m.indexOf('not accepted') !== -1) return 'Nobody has taken that bet yet.';
+    if (m.indexOf('winner must be one of the two') !== -1) return 'Pick one of the two.';
+    if (m.indexOf('cannot be voided') !== -1) return 'Too late to void that.';
+    if (m.indexOf('not your bet') !== -1) return 'Not your bet, kid.';
     return (err && err.message) || 'Something went wrong. Try again.';
+  }
+
+  function isWrongPasscode(err){
+    var m = ((err && err.message) || '').toLowerCase();
+    var code = (err && err.code) || '';
+    return code === '28000' || m.indexOf('wrong passcode') !== -1;
+  }
+
+  function handleWriteError(err, msgId){
+    var friendly = barMessage(err);
+    if (isWrongPasscode(err)){
+      clearPass();
+      setMemberState('');
+      loadBets();
+    }
+    setMsg(msgId, friendly, 'err');
   }
 
   function relTime(iso){
@@ -1085,6 +1121,106 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
     }
     input.addEventListener('input', update);
     update();
+  }
+
+  /* ---------- Who's posting ---------- */
+
+  function updateRegularLines(){
+    var text = member ? ('Posting as ' + member) : 'Enter your passcode to post';
+    ['nw-regular', 'sb-regular'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) el.textContent = text;
+    });
+  }
+
+  function updatePassRows(){
+    if (member){
+      hideRow('nw-pass-row');
+      hideRow('sb-pass-row');
+    } else {
+      showRow('nw-pass-row');
+      showRow('sb-pass-row');
+    }
+  }
+
+  function updateAgainstOptions(){
+    var sel = document.getElementById('sb-against');
+    if (!sel) return;
+    var current = sel.value;
+    sel.innerHTML = '';
+    var anyOpt = document.createElement('option');
+    anyOpt.value = '';
+    anyOpt.textContent = 'anyone';
+    sel.appendChild(anyOpt);
+    MEMBERS.forEach(function(nm){
+      if (member && nm === member) return;
+      var opt = document.createElement('option');
+      opt.value = nm;
+      opt.textContent = nm;
+      sel.appendChild(opt);
+    });
+    if (current && current !== member) sel.value = current;
+  }
+
+  function setMemberState(name){
+    member = name || '';
+    if (member) setMember(member); else clearMember();
+    updateRegularLines();
+    updatePassRows();
+    updateAgainstOptions();
+  }
+
+  function verifyPasscode(pass, onSuccess, onError){
+    rpc('who_is', { p_pass: pass }).then(function(name){
+      setPass(pass);
+      setMemberState(name);
+      loadBets();
+      if (onSuccess) onSuccess(name);
+    }).catch(function(err){
+      clearPass();
+      setMemberState('');
+      if (onError) onError(err);
+    });
+  }
+
+  function ensurePasscode(passInputId, msgId, cb){
+    var stored = storedPass();
+    if (stored && member){ cb(stored); return; }
+    var input = document.getElementById(passInputId);
+    var val = input ? input.value.trim() : '';
+    if (!val){ setMsg(msgId, 'Passcode. Ask a regular.', 'err'); return; }
+    verifyPasscode(val, function(){
+      if (input) input.value = '';
+      cb(storedPass());
+    }, function(err){
+      setMsg(msgId, barMessage(err), 'err');
+    });
+  }
+
+  function wirePasscodeField(inputId, msgId){
+    var input = document.getElementById(inputId);
+    if (!input) return;
+    input.addEventListener('blur', function(){
+      var val = input.value.trim();
+      if (!val) return;
+      setMsg(msgId, '', '');
+      verifyPasscode(val, function(){
+        input.value = '';
+      }, function(err){
+        setMsg(msgId, barMessage(err), 'err');
+      });
+    });
+  }
+
+  function initMember(cb){
+    var pass = storedPass();
+    if (!pass){ setMemberState(''); if (cb) cb(); return; }
+    rpc('who_is', { p_pass: pass }).then(function(name){
+      setMemberState(name);
+    }).catch(function(){
+      clearPass();
+      setMemberState('');
+    }).then(function(){ if (cb) cb(); });
   }
 
   /* ---------- The napkin wall ---------- */
@@ -1130,31 +1266,23 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
   }
 
   function submitNote(){
-    var nameEl = document.getElementById('nw-name');
     var bodyEl = document.getElementById('nw-body');
-    var passEl = document.getElementById('nw-pass');
     var btn = document.getElementById('nw-submit');
-    var name = nameEl.value.trim();
     var body = bodyEl.value.trim();
     setMsg('nw-msg', '', '');
-    if (!name || name.length > 24){ setMsg('nw-msg', 'Name, 1 to 24 letters, kid.', 'err'); return; }
     if (!body || body.length > 240){ setMsg('nw-msg', 'Say something. 240 tops.', 'err'); return; }
-    var pass = storedPass() || (passEl ? passEl.value.trim() : '');
-    if (!pass){ setMsg('nw-msg', 'Passcode. Ask a regular.', 'err'); return; }
-    btn.disabled = true;
-    rpc('post_note', { p_pass: pass, p_name: name, p_body: body }).then(function(){
-      setPass(pass);
-      setName(name);
-      hideRow('nw-pass-row');
-      bodyEl.value = '';
-      wireCounter('nw-body', 'nw-count', 240);
-      setMsg('nw-msg', 'Pinned to the wall.', 'ok');
-      return loadNotes();
-    }).catch(function(err){
-      var friendly = barMessage(err);
-      if (/wrong passcode/i.test(friendly)){ clearPass(); showRow('nw-pass-row'); }
-      setMsg('nw-msg', friendly, 'err');
-    }).then(function(){ btn.disabled = false; });
+    ensurePasscode('nw-pass', 'nw-msg', function(pass){
+      if (!pass) return;
+      btn.disabled = true;
+      rpc('post_note', { p_pass: pass, p_body: body }).then(function(){
+        bodyEl.value = '';
+        wireCounter('nw-body', 'nw-count', 240);
+        setMsg('nw-msg', 'Pinned to the wall.', 'ok');
+        return loadNotes();
+      }).catch(function(err){
+        handleWriteError(err, 'nw-msg');
+      }).then(function(){ btn.disabled = false; });
+    });
   }
 
   /* ---------- Side bets ---------- */
@@ -1198,29 +1326,38 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
     var actions = document.createElement('div');
     actions.className = 'bet-actions';
 
-    if (b.status === 'open'){
-      var acceptBtn = document.createElement('button');
-      acceptBtn.type = 'button';
-      acceptBtn.className = 'btn-sm';
-      acceptBtn.textContent = 'Accept';
-      acceptBtn.addEventListener('click', function(){ handleAccept(b.id); });
-      actions.appendChild(acceptBtn);
-    }
-    if (b.status === 'accepted'){
-      var settleBtn = document.createElement('button');
-      settleBtn.type = 'button';
-      settleBtn.className = 'btn-sm';
-      settleBtn.textContent = 'Settle';
-      settleBtn.addEventListener('click', function(){ showSettleChoice(card, b); });
-      actions.appendChild(settleBtn);
-    }
-    if (b.status === 'open' || b.status === 'accepted'){
-      var voidBtn = document.createElement('button');
-      voidBtn.type = 'button';
-      voidBtn.className = 'btn-void';
-      voidBtn.textContent = 'Void';
-      voidBtn.addEventListener('click', function(){ handleVoid(b.id); });
-      actions.appendChild(voidBtn);
+    if (!member){
+      var note = document.createElement('span');
+      note.className = 'bet-meta';
+      note.textContent = 'Enter your passcode to bet.';
+      actions.appendChild(note);
+    } else {
+      var isProposer = b.proposer === member;
+      var isTaker = !!b.taker && b.taker === member;
+      if (b.status === 'open' && !isProposer && (!b.taker || b.taker === member)){
+        var acceptBtn = document.createElement('button');
+        acceptBtn.type = 'button';
+        acceptBtn.className = 'btn-sm';
+        acceptBtn.textContent = 'Accept';
+        acceptBtn.addEventListener('click', function(){ handleAccept(b.id); });
+        actions.appendChild(acceptBtn);
+      }
+      if (b.status === 'accepted' && (isProposer || isTaker)){
+        var settleBtn = document.createElement('button');
+        settleBtn.type = 'button';
+        settleBtn.className = 'btn-sm';
+        settleBtn.textContent = 'Settle';
+        settleBtn.addEventListener('click', function(){ showSettleChoice(card, b); });
+        actions.appendChild(settleBtn);
+      }
+      if ((b.status === 'open' || b.status === 'accepted') && (isProposer || isTaker)){
+        var voidBtn = document.createElement('button');
+        voidBtn.type = 'button';
+        voidBtn.className = 'btn-void';
+        voidBtn.textContent = 'Void';
+        voidBtn.addEventListener('click', function(){ handleVoid(b.id); });
+        actions.appendChild(voidBtn);
+      }
     }
     card.appendChild(actions);
     return card;
@@ -1287,122 +1424,87 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
   }
 
   function submitBet(){
-    var nameEl = document.getElementById('sb-name');
     var bodyEl = document.getElementById('sb-body');
     var stakesEl = document.getElementById('sb-stakes');
     var againstEl = document.getElementById('sb-against');
-    var passEl = document.getElementById('sb-pass');
     var btn = document.getElementById('sb-submit');
-    var name = nameEl.value.trim();
     var body = bodyEl.value.trim();
     var stakes = stakesEl.value.trim() || "a McGillicuddy's";
-    var against = againstEl.value.trim();
+    var against = againstEl ? againstEl.value : '';
     setMsg('sb-msg', '', '');
-    if (!name || name.length > 24){ setMsg('sb-msg', 'Name, 1 to 24 letters, kid.', 'err'); return; }
     if (!body || body.length > 240){ setMsg('sb-msg', 'Say the bet. 240 tops.', 'err'); return; }
     if (stakes.length > 60){ setMsg('sb-msg', 'Stakes, 60 tops.', 'err'); return; }
-    if (against.length > 24){ setMsg('sb-msg', 'That name is too long.', 'err'); return; }
-    var pass = storedPass() || (passEl ? passEl.value.trim() : '');
-    if (!pass){ setMsg('sb-msg', 'Passcode. Ask a regular.', 'err'); return; }
-    btn.disabled = true;
-    rpc('post_bet', { p_pass: pass, p_proposer: name, p_taker: against || null, p_body: body, p_stakes: stakes }).then(function(){
-      setPass(pass);
-      setName(name);
-      hideRow('sb-pass-row');
-      bodyEl.value = '';
-      stakesEl.value = '';
-      againstEl.value = '';
-      wireCounter('sb-body', 'sb-count', 240);
-      setMsg('sb-msg', 'On the bar.', 'ok');
-      return loadBets();
-    }).catch(function(err){
-      var friendly = barMessage(err);
-      if (/wrong passcode/i.test(friendly)){ clearPass(); showRow('sb-pass-row'); }
-      setMsg('sb-msg', friendly, 'err');
-    }).then(function(){ btn.disabled = false; });
-  }
-
-  function withPass(cb){
-    var p = storedPass();
-    if (!p){
-      p = window.prompt('Passcode. Ask a regular.');
-      if (!p) return;
-    }
-    cb(p);
+    ensurePasscode('sb-pass', 'sb-msg', function(pass){
+      if (!pass) return;
+      btn.disabled = true;
+      rpc('post_bet', { p_pass: pass, p_taker: against || null, p_body: body, p_stakes: stakes }).then(function(){
+        bodyEl.value = '';
+        stakesEl.value = '';
+        if (againstEl) againstEl.value = '';
+        wireCounter('sb-body', 'sb-count', 240);
+        setMsg('sb-msg', 'On the bar.', 'ok');
+        return loadBets();
+      }).catch(function(err){
+        handleWriteError(err, 'sb-msg');
+      }).then(function(){ btn.disabled = false; });
+    });
   }
 
   function handleAccept(id){
-    withPass(function(pass){
-      var taker = window.prompt('Your name, taking the bet:', storedName());
-      if (!taker) return;
-      taker = taker.trim();
-      if (!taker) return;
-      rpc('accept_bet', { p_pass: pass, p_id: id, p_taker: taker }).then(function(){
-        setPass(pass);
-        setName(taker);
-        setMsg('sb-action-msg', 'Bet accepted.', 'ok');
-        return loadBets();
-      }).catch(function(err){
-        var friendly = barMessage(err);
-        if (/wrong passcode/i.test(friendly)) clearPass();
-        setMsg('sb-action-msg', friendly, 'err');
-      });
+    var pass = storedPass();
+    if (!pass || !member){ setMsg('sb-action-msg', 'Enter your passcode to bet.', 'err'); return; }
+    rpc('accept_bet', { p_pass: pass, p_id: id }).then(function(){
+      setMsg('sb-action-msg', 'Bet accepted.', 'ok');
+      return loadBets();
+    }).catch(function(err){
+      handleWriteError(err, 'sb-action-msg');
     });
   }
 
   function handleSettle(id, winner){
-    withPass(function(pass){
-      rpc('settle_bet', { p_pass: pass, p_id: id, p_winner: winner }).then(function(){
-        setPass(pass);
-        setMsg('sb-action-msg', 'Settled. Winner: ' + winner + '.', 'ok');
-        return loadBets();
-      }).catch(function(err){
-        var friendly = barMessage(err);
-        if (/wrong passcode/i.test(friendly)) clearPass();
-        setMsg('sb-action-msg', friendly, 'err');
-      });
+    var pass = storedPass();
+    if (!pass || !member){ setMsg('sb-action-msg', 'Enter your passcode to bet.', 'err'); return; }
+    rpc('settle_bet', { p_pass: pass, p_id: id, p_winner: winner }).then(function(){
+      setMsg('sb-action-msg', 'Settled. Winner: ' + winner + '.', 'ok');
+      return loadBets();
+    }).catch(function(err){
+      handleWriteError(err, 'sb-action-msg');
     });
   }
 
   function handleVoid(id){
     if (!window.confirm('Void this bet? No do-overs.')) return;
-    withPass(function(pass){
-      rpc('void_bet', { p_pass: pass, p_id: id }).then(function(){
-        setPass(pass);
-        setMsg('sb-action-msg', 'Voided.', 'ok');
-        return loadBets();
-      }).catch(function(err){
-        var friendly = barMessage(err);
-        if (/wrong passcode/i.test(friendly)) clearPass();
-        setMsg('sb-action-msg', friendly, 'err');
-      });
+    var pass = storedPass();
+    if (!pass || !member){ setMsg('sb-action-msg', 'Enter your passcode to bet.', 'err'); return; }
+    rpc('void_bet', { p_pass: pass, p_id: id }).then(function(){
+      setMsg('sb-action-msg', 'Voided.', 'ok');
+      return loadBets();
+    }).catch(function(err){
+      handleWriteError(err, 'sb-action-msg');
     });
   }
 
   /* ---------- Wire it up ---------- */
 
-  if (storedPass()){
-    hideRow('nw-pass-row');
-    hideRow('sb-pass-row');
-  }
-  var nm = storedName();
-  if (nm){
-    var nwName = document.getElementById('nw-name');
-    var sbName = document.getElementById('sb-name');
-    if (nwName) nwName.value = nm;
-    if (sbName) sbName.value = nm;
-  }
+  updateRegularLines();
+  updatePassRows();
+  updateAgainstOptions();
 
   wireCounter('nw-body', 'nw-count', 240);
   wireCounter('sb-body', 'sb-count', 240);
+
+  wirePasscodeField('nw-pass', 'nw-msg');
+  wirePasscodeField('sb-pass', 'sb-msg');
 
   var nwSubmit = document.getElementById('nw-submit');
   if (nwSubmit) nwSubmit.addEventListener('click', submitNote);
   var sbSubmit = document.getElementById('sb-submit');
   if (sbSubmit) sbSubmit.addEventListener('click', submitBet);
 
-  loadNotes();
-  loadBets();
+  initMember(function(){
+    loadNotes();
+    loadBets();
+  });
 
   setInterval(function(){
     if (document.visibilityState === 'visible'){
