@@ -298,9 +298,26 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
 .napkin input, .napkin textarea, #side-bets .bet-card input, #side-bets .bet-card textarea{color:#2a1f16 !important;background:#fffdf5 !important;border:2px solid #2a1f16 !important;caret-color:#2a1f16;}
 .napkin input::placeholder, #side-bets .bet-card input::placeholder{color:#7a6a55;}
 .napkin .form-msg, #side-bets .bet-card .form-msg{color:#8a2f2f;}
+
+/* Home screen app bar: only shows when the site runs installed, where there is no browser reload */
+.app-bar{display:none;position:fixed;top:0;left:0;right:0;z-index:50;padding:calc(env(safe-area-inset-top) + 6px) 12px 6px;background:#140b06;border-bottom:2px solid #3a2415;justify-content:flex-end;align-items:center;gap:10px;}
+.app-bar .app-bar-name{font-family:'Yellowtail',cursive;font-size:1.25rem;color:#f3ead3;margin-right:auto;}
+.app-bar .btn-sm{min-height:36px;padding:4px 12px;font-size:.95rem;}
+html.standalone .app-bar{display:flex;}
+html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
+@media (display-mode: standalone){.app-bar{display:flex;} body{padding-top:calc(env(safe-area-inset-top) + 54px);}}
 </style>
 </head>
 <body>
+<div class="app-bar" id="app-bar"><span class="app-bar-name">Just Art's</span><button class="btn-sm" type="button" id="app-refresh">Refresh the board</button></div>
+<script>
+  (function(){
+    var installed = (navigator.standalone === true) || (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches);
+    if (installed) document.documentElement.classList.add("standalone");
+    var b = document.getElementById("app-refresh");
+    if (b) b.addEventListener("click", function(){ b.textContent = "Pouring..."; location.reload(); });
+  })();
+</script>
 
 <div class="wrap">
 
