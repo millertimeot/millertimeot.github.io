@@ -221,6 +221,7 @@ td.delta.zero{color:var(--dim);}
 .napkin .n-reply-time{font-family:'Caveat',cursive;font-size:0.9rem;color:#5c4d3a;}
 .napkin .n-reply-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px;font-size:0.95rem;color:#5c4d3a;}
 .napkin .n-reply-link{font-family:'Caveat',cursive;font-size:1.1875rem;color:#2a1f16;background:none;border:none;padding:8px 4px;min-height:44px;cursor:pointer;text-decoration:underline;}
+.napkin .n-takedown-link{font-family:'Caveat',cursive;font-size:1.1875rem;color:#8a2f2f;background:none;border:none;padding:8px 4px;min-height:44px;cursor:pointer;text-decoration:underline;}
 .napkin .n-reply-compose{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start;margin-top:8px;}
 .napkin .n-reply-input{flex:1;min-width:120px;background:rgba(42,31,22,0.06);border:2px solid rgba(42,31,22,0.35);color:#2a1f16;}
 .napkin .n-reply-send{font-family:'Cabin Sketch',cursive;font-weight:700;font-size:1rem;background:#2a1f16;color:#f3ead3;border:none;border-radius:6px;padding:8px 14px;min-height:44px;cursor:pointer;}
@@ -276,6 +277,7 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
 .btn-sm{font-family:'Cabin Sketch',cursive;font-size:1rem;font-weight:700;background:none;border:2px solid var(--accent);color:var(--accent);border-radius:6px;padding:8px 14px;min-height:44px;cursor:pointer;}
 .btn-sm:hover{background:var(--accent-tint);}
 .btn-void{font-family:'Caveat',cursive;font-size:1.1875rem;color:var(--pink);background:none;border:none;padding:8px 4px;min-height:44px;cursor:pointer;text-decoration:underline;}
+.house-label{font-family:'Caveat',cursive;font-size:0.85rem;color:var(--dim);margin-left:-4px;}
 .settle-choice{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:4px;}
 .bet-empty{color:var(--dim);}
 .ledger-line{font-size:1.0625rem;color:var(--dim);padding-top:4px;}
@@ -293,6 +295,7 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
 #side-bets .btn-sm{border-color:#2a1f16;color:#2a1f16;background:transparent;font-family:'Caveat',cursive;font-size:1.2rem;min-height:44px;}
 #side-bets .btn-void{color:#8a2f2f;}
 #side-bets .settle-choice{color:#2a1f16;}
+#side-bets .house-label{color:#7a6a55;}
 #sb-ledger{font-family:'Caveat',cursive;font-size:1.4rem;color:#f6ecb6;border-top:1px dashed rgba(246,236,182,0.5);padding-top:10px;margin-top:14px;}
 /* Inputs on napkins and bet cards: dark ink on paper */
 .napkin input, .napkin textarea, #side-bets .bet-card input, #side-bets .bet-card textarea{color:#2a1f16 !important;background:#fffdf5 !important;border:2px solid #2a1f16 !important;caret-color:#2a1f16;}
@@ -749,6 +752,22 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     <div class="line-note">Art, probably</div>
   </div>
 
+  <div class="section" id="door-section">
+    <div class="section-head"><div class="section-plaque"><div class="section-title">The regulars' door</div></div><div class="section-note">One passcode. No usernames. Art never learned anybody's name either.</div></div>
+    <div class="bar-rail"></div>
+    <div class="compose-card">
+      <div class="field-row" id="door-pass-row">
+        <label class="field-label" for="door-pass">Passcode</label>
+        <input class="text-input" type="password" id="door-pass" autocomplete="off" placeholder="Your passcode">
+      </div>
+      <div class="form-msg" id="door-msg" role="status" aria-live="polite"></div>
+      <button class="btn-primary" type="button" id="door-submit">Let me in</button>
+      <div class="field-row" id="door-signed-row" style="display:none;">
+        <div class="field-label" id="door-signed-text"></div>
+      </div>
+    </div>
+  </div>
+
   <div class="site-footer">
     <div class="tribute-line" id="tribute-footer-line">Just Art's Saloon, 181 S. 2nd St., Walker's Point, 1980 to 2025. Bar dice every night. Eat shit, we miss you.</div>
     <span>Great rosters, less filling. Projections from ESPN Fantasy, read Sep 8, 2026.</span>
@@ -1112,6 +1131,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
   var MEMBERS = ['Tom', 'W', 'Oscar', 'Robert', 'Nic', 'Brennan', 'Tyler', 'Skoney'];
 
   var member = '';
+  var isAdmin = false;
   var openReplyIds = {};
   var lastRepliesByNote = {};
 
@@ -1189,6 +1209,14 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     return code === '28000' || m.indexOf('wrong passcode') !== -1;
   }
 
+  function refreshAdmin(pass){
+    return rpc('my_role', { p_pass: pass }).then(function(res){
+      isAdmin = !!(res && res.admin);
+    }).catch(function(){
+      isAdmin = false;
+    });
+  }
+
   function handleWriteError(err, msgId){
     var friendly = barMessage(err);
     if (isWrongPasscode(err)){
@@ -1257,6 +1285,44 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
       showRow('nw-no-pass-note');
       showRow('nw-push-pass-row');
     }
+    renderDoor();
+  }
+
+  function signOutDoor(){
+    clearPass();
+    setMemberState('');
+    isAdmin = false;
+    loadNotes();
+    loadBets();
+    renderPushDefault();
+    setMsg('door-msg', '', '');
+    var input = document.getElementById('door-pass');
+    if (input) input.value = '';
+  }
+
+  function renderDoor(){
+    var passRow = document.getElementById('door-pass-row');
+    var submit = document.getElementById('door-submit');
+    var signedRow = document.getElementById('door-signed-row');
+    var signedText = document.getElementById('door-signed-text');
+    if (!passRow || !submit || !signedRow || !signedText) return;
+    if (member){
+      passRow.style.display = 'none';
+      submit.style.display = 'none';
+      signedRow.style.display = '';
+      signedText.innerHTML = '';
+      signedText.appendChild(document.createTextNode('Signed in as ' + member + '.' + (isAdmin ? ' House.' : '') + ' '));
+      var off = document.createElement('button');
+      off.type = 'button';
+      off.className = 'btn-void';
+      off.textContent = 'sign out';
+      off.addEventListener('click', signOutDoor);
+      signedText.appendChild(off);
+    } else {
+      passRow.style.display = '';
+      submit.style.display = '';
+      signedRow.style.display = 'none';
+    }
   }
 
   function updateAgainstOptions(){
@@ -1291,10 +1357,16 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
       setPass(pass);
       setMemberState(name);
       loadBets();
+      refreshAdmin(pass).then(function(){
+        loadNotes();
+        loadBets();
+        renderDoor();
+      });
       if (onSuccess) onSuccess(name);
     }).catch(function(err){
       clearPass();
       setMemberState('');
+      isAdmin = false;
       if (onError) onError(err);
     });
   }
@@ -1328,14 +1400,37 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     });
   }
 
+  function wireDoor(){
+    var input = document.getElementById('door-pass');
+    var submit = document.getElementById('door-submit');
+    if (!input || !submit) return;
+    function attempt(){
+      var val = input.value.trim();
+      if (!val){ setMsg('door-msg', 'Passcode. Ask a regular.', 'err'); return; }
+      setMsg('door-msg', '', '');
+      verifyPasscode(val, function(){
+        input.value = '';
+      }, function(err){
+        setMsg('door-msg', barMessage(err), 'err');
+      });
+    }
+    submit.addEventListener('click', attempt);
+    input.addEventListener('keydown', function(e){
+      if (e.key === 'Enter'){ e.preventDefault(); attempt(); }
+    });
+    renderDoor();
+  }
+
   function initMember(cb){
     var pass = storedPass();
-    if (!pass){ setMemberState(''); if (cb) cb(); return; }
+    if (!pass){ setMemberState(''); isAdmin = false; if (cb) cb(); return; }
     rpc('who_is', { p_pass: pass }).then(function(name){
       setMemberState(name);
+      return refreshAdmin(pass);
     }).catch(function(){
       clearPass();
       setMemberState('');
+      isAdmin = false;
     }).then(function(){ if (cb) cb(); });
   }
 
@@ -1373,6 +1468,42 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     return n + (n === 1 ? ' reply' : ' replies');
   }
 
+  function canTakeDown(name){
+    return !!member && (name === member || isAdmin);
+  }
+
+  function buildTakeDownLink(confirmText, onConfirmed){
+    var link = document.createElement('button');
+    link.type = 'button';
+    link.className = 'n-takedown-link';
+    link.textContent = 'Take it down';
+    link.addEventListener('click', function(){
+      if (!window.confirm(confirmText)) return;
+      onConfirmed();
+    });
+    return link;
+  }
+
+  function handleHideNote(id){
+    var pass = storedPass();
+    if (!pass || !member) return;
+    rpc('hide_note', { p_pass: pass, p_id: id }).then(function(){
+      return loadNotes();
+    }).catch(function(err){
+      handleWriteError(err, 'nw-msg');
+    });
+  }
+
+  function handleHideReply(id){
+    var pass = storedPass();
+    if (!pass || !member) return;
+    rpc('hide_reply', { p_pass: pass, p_id: id }).then(function(){
+      return loadNotes();
+    }).catch(function(err){
+      handleWriteError(err, 'nw-msg');
+    });
+  }
+
   function appendReplies(napkinDiv, replies){
     if (!replies || !replies.length) return;
     var box = document.createElement('div');
@@ -1392,6 +1523,11 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
       time.className = 'n-reply-time';
       time.textContent = relTime(r.created_at);
       item.appendChild(time);
+      if (canTakeDown(r.name)){
+        item.appendChild(buildTakeDownLink('Take this reply down?', function(){
+          handleHideReply(r.id);
+        }));
+      }
       box.appendChild(item);
     });
     napkinDiv.appendChild(box);
@@ -1414,6 +1550,11 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
       openReplyUI(napkinDiv, note, row, link);
     });
     row.appendChild(link);
+    if (canTakeDown(note.name)){
+      row.appendChild(buildTakeDownLink('Take this napkin down?', function(){
+        handleHideNote(note.id);
+      }));
+    }
     napkinDiv.appendChild(row);
   }
 
@@ -1678,21 +1819,33 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
         acceptBtn.addEventListener('click', function(){ handleAccept(b.id); });
         actions.appendChild(acceptBtn);
       }
-      if (b.status === 'accepted' && (isProposer || isTaker)){
+      var adminParty = isProposer || isTaker;
+      if (b.status === 'accepted' && (adminParty || isAdmin)){
         var settleBtn = document.createElement('button');
         settleBtn.type = 'button';
         settleBtn.className = 'btn-sm';
         settleBtn.textContent = 'Settle';
         settleBtn.addEventListener('click', function(){ showSettleChoice(card, b); });
         actions.appendChild(settleBtn);
+        if (!adminParty && isAdmin) actions.appendChild(buildHouseLabel());
       }
-      if ((b.status === 'open' || b.status === 'accepted') && (isProposer || isTaker)){
+      if ((b.status === 'open' || b.status === 'accepted') && (adminParty || isAdmin)){
         var voidBtn = document.createElement('button');
         voidBtn.type = 'button';
         voidBtn.className = 'btn-void';
         voidBtn.textContent = 'Void';
         voidBtn.addEventListener('click', function(){ handleVoid(b.id); });
         actions.appendChild(voidBtn);
+        if (!adminParty && isAdmin) actions.appendChild(buildHouseLabel());
+      }
+      if (isAdmin){
+        var tearBtn = document.createElement('button');
+        tearBtn.type = 'button';
+        tearBtn.className = 'btn-void';
+        tearBtn.textContent = 'Tear it up';
+        tearBtn.addEventListener('click', function(){ handleHideBet(b.id); });
+        actions.appendChild(tearBtn);
+        actions.appendChild(buildHouseLabel());
       }
     }
     card.appendChild(actions);
@@ -1861,6 +2014,25 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     });
   }
 
+  function handleHideBet(id){
+    if (!window.confirm('Tear this bet up? It disappears for everyone.')) return;
+    var pass = storedPass();
+    if (!pass || !member){ setMsg('sb-action-msg', 'Enter your passcode to bet.', 'err'); return; }
+    rpc('hide_bet', { p_pass: pass, p_id: id }).then(function(){
+      setMsg('sb-action-msg', 'Torn up.', 'ok');
+      return loadBets();
+    }).catch(function(err){
+      handleWriteError(err, 'sb-action-msg');
+    });
+  }
+
+  function buildHouseLabel(){
+    var label = document.createElement('span');
+    label.className = 'house-label';
+    label.textContent = 'house';
+    return label;
+  }
+
   /* ---------- Push notifications ---------- */
 
   var PUSH_ENDPOINT_KEY = 'ja_push_endpoint';
@@ -2023,6 +2195,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
 
   wirePasscodeField('nw-pass', 'nw-msg');
   wirePasscodeField('sb-pass', 'sb-msg');
+  wireDoor();
 
   var nwSubmit = document.getElementById('nw-submit');
   if (nwSubmit) nwSubmit.addEventListener('click', submitNote);
