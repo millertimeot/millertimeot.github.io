@@ -796,9 +796,16 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     var expandedState = {};
 
     function splitFirstSentence(text){
-      var m = /^([\s\S]*?[.!?]) ([A-Z][\s\S]+)$/.exec(text);
-      if (!m) return null;
-      return { first: m[1], rest: m[2] };
+      // Keep taking sentences until the teaser is at least 90 characters, so a short opener is not the whole tease.
+      var first = '', rest = text;
+      while (rest){
+        var m = /^([\s\S]*?[.!?]) ([A-Z][\s\S]+)$/.exec(rest);
+        if (!m) return first ? { first: first, rest: rest } : null;
+        first = first ? first + ' ' + m[1] : m[1];
+        rest = m[2];
+        if (first.length >= 90) return { first: first, rest: rest };
+      }
+      return null;
     }
 
     function wrapParagraph(el){
