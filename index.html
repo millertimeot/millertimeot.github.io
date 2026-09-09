@@ -663,7 +663,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
   </div>
 
   <div class="section" id="side-bets">
-    <div class="section-head"><div class="section-plaque"><div class="section-title">Side bets</div></div><div class="section-note">Put a McGillicuddy's on it. Loser pays at the bar.</div></div>
+    <div class="section-head"><div class="section-plaque"><div class="section-title">Side bets</div></div><div class="section-note">Put a Dr. McGillicuddy's on it. Peppermint, the way Art took it. Loser pays at the bar.</div></div>
     <div class="bar-rail"></div>
     <div class="compose-card">
       <div class="field-row">
@@ -676,7 +676,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
       </div>
       <div class="field-row">
         <label class="field-label" for="sb-stakes">Stakes</label>
-        <input class="text-input" type="text" id="sb-stakes" maxlength="60" autocomplete="off" placeholder="a McGillicuddy's">
+        <input class="text-input" type="text" id="sb-stakes" maxlength="60" autocomplete="off" placeholder="a Dr. McGillicuddy's">
       </div>
       <div class="field-row">
         <label class="field-label" for="sb-against">Against (optional)</label>
@@ -745,7 +745,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
 
   <div class="house-rules">
     <div class="house-rules-title">House rules</div>
-    <div class="house-rules-body" id="house-rules-body">Cash only. Dice every night. Kitchen's closed unless it's a holiday. McGillicuddy's is the house shot. Bears fans drink outside.</div>
+    <div class="house-rules-body" id="house-rules-body">Cash only. Dice every night. Kitchen's closed unless it's a holiday. Dr. McGillicuddy's peppermint is the house shot. Bears fans drink outside.</div>
     <div class="line-note">Art, probably</div>
   </div>
 
@@ -799,7 +799,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
           <div class="tc-stat"><span>Season projection</span><span>2,648</span><span>Week 1 projection</span><span>161.2</span><span>After the draft</span><span>2,622 (1st)</span><span>Change since draft</span><span>+26</span><span>Best pick</span><span>Nacua, R1</span><span>Steal</span><span>Burrow, R9</span><span>Reach</span><span>Washington, R15</span></div>
           <div class="tc-grades"><div class="tc-g"><span class="p">QB</span><span class="v">A-</span></div><div class="tc-g"><span class="p">RB</span><span class="v">B</span></div><div class="tc-g"><span class="p">WR</span><span class="v">A+</span></div><div class="tc-g"><span class="p">TE</span><span class="v">B</span></div><div class="tc-g"><span class="p">D/K</span><span class="v">B</span></div></div>
           <div class="tc-scout"><span class="tc-lbl">Scouting report</span><br>Three top ten receivers and one Achane. Sent Walker and Higgins to Robert for St. Brown on Tuesday and the number went up. Bench is a running back parking lot. Signature move: the two for one.</div>
-          <div class="tc-art">Art, probably: a backup quarterback in round sixteen. That's a McGillicuddy's for you, kid, and you're buying.</div>
+          <div class="tc-art">Art, probably: a backup quarterback in round sixteen. That's a Dr. McGillicuddy's for you, kid, and you're buying.</div>
         </div>
       </div>
 
@@ -1806,7 +1806,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     var againstEl = document.getElementById('sb-against');
     var btn = document.getElementById('sb-submit');
     var body = bodyEl.value.trim();
-    var stakes = stakesEl.value.trim() || "a McGillicuddy's";
+    var stakes = stakesEl.value.trim() || "a Dr. McGillicuddy's";
     var against = againstEl ? againstEl.value : '';
     setMsg('sb-msg', '', '');
     if (!body || body.length > 240){ setMsg('sb-msg', 'Say the bet. 240 tops.', 'err'); return; }
