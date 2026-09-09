@@ -7,6 +7,12 @@
 <meta name="robots" content="noindex">
 <title>Miller Time Chalkboard</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Yellowtail&family=Bungee&family=Cabin+Sketch:wght@400;700&family=Patrick+Hand&family=Caveat:wght@500;700&display=swap">
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#1c1712">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Just Art's">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <style>
 :root{
   --bg:#1a1410; --ink:#efe6d6; --dim:#b9ae9c; --accent:#f2b544; --pink:#f2a6a6; --blue:#3aa0ff; --green:#39ff6e; --title-color:#ff4d2e; --title-glow: rgba(255,77,46,0.6);
@@ -600,6 +606,11 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
       <button class="btn-primary" type="button" id="nw-submit">Pin it</button>
     </div>
     <div class="section-note" id="nw-no-pass-note">Regulars post with their passcode. Enter it above.</div>
+    <div class="field-row" id="nw-push-row">
+      <button class="btn-sm" type="button" id="nw-push-btn">Ping my phone when my name comes up</button>
+      <div class="form-msg" id="nw-push-status" role="status" aria-live="polite"></div>
+    </div>
+    <div class="section-note">Art will tap you on the shoulder when someone puts your name on a napkin or bets you.</div>
     <div class="section-note">Every napkin is signed by the passcode that pinned it. Art would have wanted it that way.</div>
     <div class="napkin-wall-grid" id="nw-list"></div>
   </div>
@@ -1801,6 +1812,155 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
     });
   }
 
+  /* ---------- Push notifications ---------- */
+
+  var PUSH_ENDPOINT_KEY = 'ja_push_endpoint';
+  var VAPID_PUBLIC_KEY = 'BBV1zDxQgW-zb_209URih7XvwX0PD81g0ieP2eqq-HPje_h_CGzbMKTovY1KrOPauo7-zhb8v8xR9PmhFqoFU5U';
+
+  function storedPushEndpoint(){ try { return localStorage.getItem(PUSH_ENDPOINT_KEY) || ''; } catch(e){ return ''; } }
+  function setPushEndpoint(e){ try { localStorage.setItem(PUSH_ENDPOINT_KEY, e); } catch(err){} }
+  function clearPushEndpoint(){ try { localStorage.removeItem(PUSH_ENDPOINT_KEY); } catch(e){} }
+
+  function urlBase64ToUint8Array(base64String){
+    var padding = '='.repeat((4 - base64String.length % 4) % 4);
+    var base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
+    var rawData = atob(base64);
+    var outputArray = new Uint8Array(rawData.length);
+    for (var i = 0; i < rawData.length; ++i){
+      outputArray[i] = rawData.charCodeAt(i);
+    }
+    return outputArray;
+  }
+
+  function isIosSafariNotStandalone(){
+    var ua = navigator.userAgent || '';
+    var isIosDevice = /iPhone|iPad|iPod/.test(ua);
+    return isIosDevice && navigator.standalone !== true;
+  }
+
+  function pushSupported(){
+    return ('serviceWorker' in navigator) && ('PushManager' in window) && ('Notification' in window);
+  }
+
+  function isBadPushPasscode(err){
+    var m = ((err && err.message) || '').toLowerCase();
+    var code = (err && err.code) || '';
+    return code === '28000' || m.indexOf('bad passcode') !== -1;
+  }
+
+  function setPushButtonVisible(visible){
+    var btn = document.getElementById('nw-push-btn');
+    if (btn) btn.style.display = visible ? '' : 'none';
+  }
+
+  function renderPushDefault(msg, cls){
+    setPushButtonVisible(true);
+    setMsg('nw-push-status', msg || '', cls || '');
+  }
+
+  function renderPushOn(name){
+    setPushButtonVisible(false);
+    var el = document.getElementById('nw-push-status');
+    if (!el) return;
+    el.className = 'form-msg ok';
+    el.innerHTML = '';
+    el.appendChild(document.createTextNode('Pings on for this phone as ' + name + '. '));
+    var off = document.createElement('button');
+    off.type = 'button';
+    off.className = 'btn-void';
+    off.textContent = 'turn off';
+    off.addEventListener('click', turnOffPush);
+    el.appendChild(off);
+  }
+
+  function subscribeToPush(){
+    if (!pushSupported()){
+      if (isIosSafariNotStandalone()){
+        renderPushDefault('iPhone: tap Share, then Add to Home Screen, open it from there, and tap this again.', 'err');
+      } else {
+        renderPushDefault("This browser can't do pings.", 'err');
+      }
+      return;
+    }
+    ensurePasscode('nw-pass', 'nw-push-status', function(pass){
+      if (!pass) return;
+      var btn = document.getElementById('nw-push-btn');
+      if (btn) btn.disabled = true;
+      Notification.requestPermission().then(function(perm){
+        if (perm !== 'granted'){
+          renderPushDefault('You said no to pings. Change it in your browser settings if you change your mind.', 'err');
+          return;
+        }
+        return navigator.serviceWorker.register('/sw.js').then(function(){
+          return navigator.serviceWorker.ready;
+        }).then(function(reg){
+          return reg.pushManager.subscribe({
+            userVisibleOnly: true,
+            applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+          });
+        }).then(function(sub){
+          var json = sub.toJSON();
+          var endpoint = json.endpoint;
+          var p256dh = json.keys && json.keys.p256dh;
+          var auth = json.keys && json.keys.auth;
+          return rpc('save_push_sub', {
+            p_pass: pass,
+            p_endpoint: endpoint,
+            p_p256dh: p256dh,
+            p_auth: auth,
+            p_ua: navigator.userAgent
+          }).then(function(name){
+            setPushEndpoint(endpoint);
+            renderPushOn(name);
+          });
+        }).catch(function(err){
+          if (isBadPushPasscode(err)){
+            clearPass();
+            setMemberState('');
+            renderPushDefault('Wrong passcode. Ask Tom.', 'err');
+            return;
+          }
+          renderPushDefault((err && err.message) || 'Something went wrong.', 'err');
+        });
+      }).then(function(){
+        if (btn) btn.disabled = false;
+      });
+    });
+  }
+
+  function turnOffPush(){
+    var pass = storedPass();
+    var endpoint = storedPushEndpoint();
+    function done(){
+      clearPushEndpoint();
+      renderPushDefault('Pings off.', '');
+    }
+    var removeP = (pass && endpoint) ? rpc('remove_push_sub', { p_pass: pass, p_endpoint: endpoint }) : Promise.resolve();
+    removeP.catch(function(){}).then(function(){
+      if (!('serviceWorker' in navigator)){ done(); return; }
+      navigator.serviceWorker.getRegistration().then(function(reg){
+        if (!reg) return null;
+        return reg.pushManager.getSubscription();
+      }).then(function(sub){
+        if (sub) return sub.unsubscribe();
+      }).catch(function(){}).then(done);
+    });
+  }
+
+  function initPush(){
+    var btn = document.getElementById('nw-push-btn');
+    if (btn) btn.addEventListener('click', subscribeToPush);
+    if (!('serviceWorker' in navigator)) return;
+    navigator.serviceWorker.getRegistration().then(function(reg){
+      if (!reg) return null;
+      return reg.pushManager.getSubscription();
+    }).then(function(sub){
+      if (sub && sub.endpoint && storedPushEndpoint() && sub.endpoint === storedPushEndpoint()){
+        renderPushOn(member || storedMember() || 'you');
+      }
+    }).catch(function(){});
+  }
+
   /* ---------- Wire it up ---------- */
 
   updateRegularLines();
@@ -1821,6 +1981,7 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
   initMember(function(){
     loadNotes();
     loadBets();
+    initPush();
   });
 
   setInterval(function(){
