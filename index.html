@@ -227,6 +227,57 @@ td.delta.zero{color:var(--dim);}
   .matchup-grid{grid-template-columns:1fr 1fr;}
   .napkin-grid{grid-template-columns:repeat(4,minmax(0,1fr));}
 }
+
+/* Napkin wall + side bets (live, community) */
+.compose-card{border:2px solid var(--border-soft-3);border-radius:10px;padding:16px;display:flex;flex-direction:column;gap:12px;}
+.field-row{display:flex;flex-direction:column;gap:4px;}
+.field-label{font-family:'Caveat',cursive;font-size:1.1875rem;color:var(--dim);}
+.text-input{font-family:'Patrick Hand',cursive;font-size:1.0625rem;background:rgba(239,230,214,0.08);border:2px solid var(--border-soft-2);border-radius:6px;padding:10px 12px;color:var(--ink);min-height:44px;width:100%;}
+.text-input:focus{outline:2px solid var(--accent);outline-offset:1px;}
+textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1.0625rem;}
+.char-count{font-size:0.9rem;color:var(--dim);text-align:right;}
+.btn-primary{font-family:'Cabin Sketch',cursive;font-size:1.15rem;font-weight:700;background:var(--accent);color:var(--bg);border:none;border-radius:8px;padding:10px 16px;min-height:44px;cursor:pointer;align-self:flex-start;}
+.btn-primary:hover{background:#ffcf70;}
+.btn-primary:disabled{opacity:0.5;cursor:default;}
+.form-msg{font-family:'Caveat',cursive;font-size:1.1875rem;min-height:1.3em;}
+.form-msg.err{color:var(--pink);}
+.form-msg.ok{color:var(--green);}
+.napkin-wall-grid{display:flex;flex-direction:column;gap:16px;}
+.napkin-wall-grid .napkin{width:100%;}
+.napkin-wall-grid .napkin:nth-child(odd){transform:rotate(-1.1deg);}
+.napkin-wall-grid .napkin:nth-child(even){transform:rotate(0.9deg);}
+.bet-list{display:flex;flex-direction:column;gap:14px;}
+.bet-card{border:2px solid var(--border-soft-3);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;}
+.bet-tag{font-family:'Cabin Sketch',cursive;font-size:0.8rem;font-weight:700;letter-spacing:0.06em;padding:4px 10px;border-radius:4px;align-self:flex-start;}
+.bet-tag.tag-open{color:var(--bg);background:var(--accent);}
+.bet-tag.tag-accepted{color:var(--bg);background:var(--green);}
+.bet-tag.tag-settled{color:var(--bg);background:var(--dim);}
+.bet-tag.tag-void{color:var(--ink);background:rgba(185,174,156,0.25);}
+.bet-meta{font-family:'Caveat',cursive;font-size:1.1875rem;color:var(--dim);}
+.bet-line{font-size:1.0625rem;line-height:1.4;}
+.bet-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:4px;}
+.btn-sm{font-family:'Cabin Sketch',cursive;font-size:1rem;font-weight:700;background:none;border:2px solid var(--accent);color:var(--accent);border-radius:6px;padding:8px 14px;min-height:44px;cursor:pointer;}
+.btn-sm:hover{background:var(--accent-tint);}
+.btn-void{font-family:'Caveat',cursive;font-size:1.1875rem;color:var(--pink);background:none;border:none;padding:8px 4px;min-height:44px;cursor:pointer;text-decoration:underline;}
+.settle-choice{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:4px;}
+.bet-empty{color:var(--dim);}
+.ledger-line{font-size:1.0625rem;color:var(--dim);padding-top:4px;}
+@media (min-width:480px){
+  .bet-actions{flex-wrap:nowrap;}
+}
+/* Side bets as Art's legal pad bar tab */
+#side-bets .bet-card{background:#f6ecb6 repeating-linear-gradient(180deg, transparent 0 27px, rgba(60,90,160,0.28) 27px 28px);background-position:0 6px;color:#2a1f16;border:1px solid #c9b878;border-left:3px solid #d96b6b;border-radius:3px;box-shadow:2px 3px 0 rgba(0,0,0,0.35);transform:rotate(-0.4deg);}
+#side-bets .bet-card:nth-child(even){transform:rotate(0.5deg);}
+#side-bets .bet-line{font-family:'Caveat',cursive;font-size:1.5rem;line-height:28px;color:#1f2a44;}
+#side-bets .bet-meta{font-family:'Caveat',cursive;font-size:1.25rem;color:#5c4d3a;line-height:28px;}
+#side-bets .bet-tag{border-radius:2px;}
+#side-bets .bet-tag.tag-settled{color:#f6ecb6;background:#2a1f16;}
+#side-bets .bet-tag.tag-void{color:#5c4d3a;background:rgba(42,31,22,0.12);}
+#side-bets .btn-sm{border-color:#2a1f16;color:#2a1f16;background:transparent;font-family:'Caveat',cursive;font-size:1.2rem;min-height:44px;}
+#side-bets .btn-void{color:#8a2f2f;}
+#side-bets .settle-choice{color:#2a1f16;}
+#sb-ledger{font-family:'Caveat',cursive;font-size:1.4rem;color:#f6ecb6;border-top:1px dashed rgba(246,236,182,0.5);padding-top:10px;margin-top:14px;}
+#sb-ledger::before{content:'The tab: ';color:#f2b544;}
 </style>
 </head>
 <body>
@@ -513,6 +564,62 @@ td.delta.zero{color:var(--dim);}
       <div class="story"><div class="srank">7</div><div><div class="swho">Symp-Tom of a Bigger Paul-blem &middot; Tyler</div><div class="sline">Deepest receiver room in the league, nine wide receivers deep, with McCaffrey and Kittle up top. Josh Jacobs is day to day, and the ninth receiver on the bench is not walking through that door to help.</div></div></div>
       <div class="story"><div class="srank">8</div><div><div class="swho">5 bucks says Robert's on call &middot; Skoney</div><div class="sline">Jonathan Taylor and Saquon Barkley give him a real backfield, and Nabers, Brown and Waddle a real receiver room. He also traded away his only tight end on a Tuesday, lost the waiver claim on Isaiah Likely to Tom's priority at 2 AM, and found Juwan Johnson anyway at three in the morning.</div></div></div>
     </div>
+  </div>
+
+  <div class="section" id="napkin-wall">
+    <div class="section-head"><div class="section-plaque"><div class="section-title">The napkin wall</div></div><div class="section-note">Say it to the whole bar. Art would have.</div></div>
+    <div class="bar-rail"></div>
+    <div class="compose-card">
+      <div class="field-row">
+        <label class="field-label" for="nw-name">Your name</label>
+        <input class="text-input" type="text" id="nw-name" maxlength="24" autocomplete="off" placeholder="Your name">
+      </div>
+      <div class="field-row">
+        <label class="field-label" for="nw-body">Say something</label>
+        <textarea class="text-input textarea" id="nw-body" maxlength="240" rows="3" placeholder="Napkin's yours."></textarea>
+        <div class="char-count" id="nw-count">240 left</div>
+      </div>
+      <div class="field-row" id="nw-pass-row">
+        <label class="field-label" for="nw-pass">Passcode</label>
+        <input class="text-input" type="password" id="nw-pass" autocomplete="off" placeholder="Ask a regular">
+      </div>
+      <div class="form-msg" id="nw-msg" role="status" aria-live="polite"></div>
+      <button class="btn-primary" type="button" id="nw-submit">Pin it</button>
+    </div>
+    <div class="napkin-wall-grid" id="nw-list"></div>
+  </div>
+
+  <div class="section" id="side-bets">
+    <div class="section-head"><div class="section-plaque"><div class="section-title">Side bets</div></div><div class="section-note">Put a McGillicuddy's on it. Loser pays at the bar.</div></div>
+    <div class="bar-rail"></div>
+    <div class="compose-card">
+      <div class="field-row">
+        <label class="field-label" for="sb-name">Your name</label>
+        <input class="text-input" type="text" id="sb-name" maxlength="24" autocomplete="off" placeholder="Your name">
+      </div>
+      <div class="field-row">
+        <label class="field-label" for="sb-body">The bet</label>
+        <textarea class="text-input textarea" id="sb-body" maxlength="240" rows="3" placeholder="Say the bet out loud."></textarea>
+        <div class="char-count" id="sb-count">240 left</div>
+      </div>
+      <div class="field-row">
+        <label class="field-label" for="sb-stakes">Stakes</label>
+        <input class="text-input" type="text" id="sb-stakes" maxlength="60" autocomplete="off" placeholder="a McGillicuddy's">
+      </div>
+      <div class="field-row">
+        <label class="field-label" for="sb-against">Against (optional)</label>
+        <input class="text-input" type="text" id="sb-against" maxlength="24" autocomplete="off" placeholder="Leave blank for anyone">
+      </div>
+      <div class="field-row" id="sb-pass-row">
+        <label class="field-label" for="sb-pass">Passcode</label>
+        <input class="text-input" type="password" id="sb-pass" autocomplete="off" placeholder="Ask a regular">
+      </div>
+      <div class="form-msg" id="sb-msg" role="status" aria-live="polite"></div>
+      <button class="btn-primary" type="button" id="sb-submit">Slap it on the bar</button>
+    </div>
+    <div class="form-msg" id="sb-action-msg" role="status" aria-live="polite"></div>
+    <div class="bet-list" id="sb-list"></div>
+    <div class="ledger-line" id="sb-ledger"></div>
   </div>
 
   <div class="section">
@@ -876,6 +983,434 @@ td.delta.zero{color:var(--dim);}
       applyTheme();
     }
   });
+})();
+</script>
+
+<script>
+(function(){
+  var SB_URL = 'https://wuwhfrajgxumzukczehf.supabase.co';
+  var SB_KEY = 'sb_publishable_OF7oEvCH1MIzfLVM3OElxg_jPoFV9z6';
+  var PASS_KEY = 'mtc_passcode';
+  var NAME_KEY = 'mtc_name';
+
+  function storedPass(){ try { return localStorage.getItem(PASS_KEY) || ''; } catch(e){ return ''; } }
+  function setPass(p){ try { localStorage.setItem(PASS_KEY, p); } catch(e){} }
+  function clearPass(){ try { localStorage.removeItem(PASS_KEY); } catch(e){} }
+  function storedName(){ try { return localStorage.getItem(NAME_KEY) || ''; } catch(e){ return ''; } }
+  function setName(n){ try { localStorage.setItem(NAME_KEY, n); } catch(e){} }
+
+  function hideRow(id){ var el = document.getElementById(id); if (el) el.style.display = 'none'; }
+  function showRow(id){ var el = document.getElementById(id); if (el) el.style.display = ''; }
+
+  function apiHeaders(extra){
+    var h = { apikey: SB_KEY, Authorization: 'Bearer ' + SB_KEY };
+    if (extra){ for (var k in extra){ h[k] = extra[k]; } }
+    return h;
+  }
+
+  function getList(path){
+    return fetch(SB_URL + '/rest/v1/' + path, { headers: apiHeaders() }).then(function(res){
+      return res.text().then(function(text){
+        var data = null;
+        try { data = text ? JSON.parse(text) : null; } catch(e){}
+        if (!res.ok){
+          var err = new Error((data && data.message) || 'Could not load.');
+          err.code = data && data.code;
+          throw err;
+        }
+        return data;
+      });
+    });
+  }
+
+  function rpc(name, body){
+    return fetch(SB_URL + '/rest/v1/rpc/' + name, {
+      method: 'POST',
+      headers: apiHeaders({ 'Content-Type': 'application/json' }),
+      body: JSON.stringify(body)
+    }).then(function(res){
+      return res.text().then(function(text){
+        var data = null;
+        try { data = text ? JSON.parse(text) : null; } catch(e){}
+        if (!res.ok){
+          var err = new Error((data && data.message) || 'Something went wrong.');
+          err.code = data && data.code;
+          throw err;
+        }
+        return data;
+      });
+    });
+  }
+
+  function barMessage(err){
+    var m = ((err && err.message) || '').toLowerCase();
+    var code = (err && err.code) || '';
+    if (code === '28000' || m.indexOf('wrong passcode') !== -1) return 'Wrong passcode. Ask a regular.';
+    if (m.indexOf('slow down') !== -1) return 'Slow down, kid.';
+    if (m.indexOf('not open') !== -1) return "That bet's already taken.";
+    if (m.indexOf('not accepted') !== -1) return "Nobody's taken that bet yet, kid.";
+    return (err && err.message) || 'Something went wrong. Try again.';
+  }
+
+  function relTime(iso){
+    var d = new Date(iso);
+    var diffSec = Math.floor((Date.now() - d.getTime()) / 1000);
+    if (diffSec < 60) return 'just now';
+    var diffMin = Math.floor(diffSec / 60);
+    if (diffMin < 60) return diffMin + ' min ago';
+    var diffHr = Math.floor(diffMin / 60);
+    if (diffHr < 24) return diffHr + ' hr ago';
+    var diffDay = Math.floor(diffHr / 24);
+    if (diffDay < 7){
+      var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      return days[d.getDay()];
+    }
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return months[d.getMonth()] + ' ' + d.getDate();
+  }
+
+  function setMsg(id, text, cls){
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.textContent = text || '';
+    el.className = 'form-msg' + (cls ? ' ' + cls : '');
+  }
+
+  function wireCounter(inputId, countId, limit){
+    var input = document.getElementById(inputId);
+    var count = document.getElementById(countId);
+    if (!input || !count) return;
+    function update(){
+      var left = limit - input.value.length;
+      count.textContent = (left < 0 ? 0 : left) + ' left';
+    }
+    input.addEventListener('input', update);
+    update();
+  }
+
+  /* ---------- The napkin wall ---------- */
+
+  function buildNapkin(name, body, tag, showName){
+    var div = document.createElement('div');
+    div.className = 'napkin';
+    if (showName){
+      var row = document.createElement('div');
+      row.className = 'n-who-row';
+      var who = document.createElement('div');
+      who.className = 'n-who';
+      who.textContent = name;
+      row.appendChild(who);
+      div.appendChild(row);
+    }
+    var line = document.createElement('div');
+    line.className = 'n-line';
+    line.textContent = body;
+    div.appendChild(line);
+    var tagEl = document.createElement('div');
+    tagEl.className = 'n-tag';
+    tagEl.textContent = tag;
+    div.appendChild(tagEl);
+    return div;
+  }
+
+  function renderNotes(list){
+    var wrap = document.getElementById('nw-list');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    if (!list || !list.length){
+      wrap.appendChild(buildNapkin('', 'Nothing here yet. First round of insults is on the house.', 'Art, probably', false));
+      return;
+    }
+    list.forEach(function(n){
+      wrap.appendChild(buildNapkin(n.name, n.body, relTime(n.created_at), true));
+    });
+  }
+
+  function loadNotes(){
+    return getList('notes?select=id,created_at,name,body&order=created_at.desc&limit=100').then(renderNotes).catch(function(){});
+  }
+
+  function submitNote(){
+    var nameEl = document.getElementById('nw-name');
+    var bodyEl = document.getElementById('nw-body');
+    var passEl = document.getElementById('nw-pass');
+    var btn = document.getElementById('nw-submit');
+    var name = nameEl.value.trim();
+    var body = bodyEl.value.trim();
+    setMsg('nw-msg', '', '');
+    if (!name || name.length > 24){ setMsg('nw-msg', 'Name, 1 to 24 letters, kid.', 'err'); return; }
+    if (!body || body.length > 240){ setMsg('nw-msg', 'Say something. 240 tops.', 'err'); return; }
+    var pass = storedPass() || (passEl ? passEl.value.trim() : '');
+    if (!pass){ setMsg('nw-msg', 'Passcode. Ask a regular.', 'err'); return; }
+    btn.disabled = true;
+    rpc('post_note', { p_pass: pass, p_name: name, p_body: body }).then(function(){
+      setPass(pass);
+      setName(name);
+      hideRow('nw-pass-row');
+      bodyEl.value = '';
+      wireCounter('nw-body', 'nw-count', 240);
+      setMsg('nw-msg', 'Pinned to the wall.', 'ok');
+      return loadNotes();
+    }).catch(function(err){
+      var friendly = barMessage(err);
+      if (/wrong passcode/i.test(friendly)){ clearPass(); showRow('nw-pass-row'); }
+      setMsg('nw-msg', friendly, 'err');
+    }).then(function(){ btn.disabled = false; });
+  }
+
+  /* ---------- Side bets ---------- */
+
+  function buildBetCard(b){
+    var card = document.createElement('div');
+    card.className = 'bet-card';
+
+    var tag = document.createElement('div');
+    tag.className = 'bet-tag tag-' + b.status;
+    tag.textContent = (b.status || '').toUpperCase();
+    card.appendChild(tag);
+
+    var vs = document.createElement('div');
+    vs.className = 'bet-meta';
+    vs.textContent = b.proposer + ' vs ' + (b.taker || 'anyone');
+    card.appendChild(vs);
+
+    var line = document.createElement('div');
+    line.className = 'bet-line';
+    line.textContent = b.body;
+    card.appendChild(line);
+
+    var stakes = document.createElement('div');
+    stakes.className = 'bet-meta';
+    stakes.textContent = 'Stakes: ' + b.stakes;
+    card.appendChild(stakes);
+
+    if (b.status === 'settled' && b.winner){
+      var winnerLine = document.createElement('div');
+      winnerLine.className = 'bet-meta';
+      winnerLine.textContent = 'Winner: ' + b.winner;
+      card.appendChild(winnerLine);
+    }
+
+    var dateLine = document.createElement('div');
+    dateLine.className = 'bet-meta';
+    dateLine.textContent = relTime(b.created_at);
+    card.appendChild(dateLine);
+
+    var actions = document.createElement('div');
+    actions.className = 'bet-actions';
+
+    if (b.status === 'open'){
+      var acceptBtn = document.createElement('button');
+      acceptBtn.type = 'button';
+      acceptBtn.className = 'btn-sm';
+      acceptBtn.textContent = 'Accept';
+      acceptBtn.addEventListener('click', function(){ handleAccept(b.id); });
+      actions.appendChild(acceptBtn);
+    }
+    if (b.status === 'accepted'){
+      var settleBtn = document.createElement('button');
+      settleBtn.type = 'button';
+      settleBtn.className = 'btn-sm';
+      settleBtn.textContent = 'Settle';
+      settleBtn.addEventListener('click', function(){ showSettleChoice(card, b); });
+      actions.appendChild(settleBtn);
+    }
+    if (b.status === 'open' || b.status === 'accepted'){
+      var voidBtn = document.createElement('button');
+      voidBtn.type = 'button';
+      voidBtn.className = 'btn-void';
+      voidBtn.textContent = 'Void';
+      voidBtn.addEventListener('click', function(){ handleVoid(b.id); });
+      actions.appendChild(voidBtn);
+    }
+    card.appendChild(actions);
+    return card;
+  }
+
+  function showSettleChoice(card, b){
+    if (card.querySelector('.settle-choice')) return;
+    var panel = document.createElement('div');
+    panel.className = 'settle-choice';
+    var label = document.createElement('span');
+    label.className = 'bet-meta';
+    label.textContent = 'Who won?';
+    panel.appendChild(label);
+    [b.proposer, b.taker].forEach(function(w){
+      if (!w) return;
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn-sm';
+      btn.textContent = w;
+      btn.addEventListener('click', function(){ panel.remove(); handleSettle(b.id, w); });
+      panel.appendChild(btn);
+    });
+    var cancel = document.createElement('button');
+    cancel.type = 'button';
+    cancel.className = 'btn-void';
+    cancel.textContent = 'Never mind';
+    cancel.addEventListener('click', function(){ panel.remove(); });
+    panel.appendChild(cancel);
+    card.appendChild(panel);
+  }
+
+  function renderLedger(list){
+    var el = document.getElementById('sb-ledger');
+    if (!el) return;
+    var wins = {};
+    (list || []).forEach(function(b){
+      if (b.status === 'settled' && b.winner){
+        wins[b.winner] = (wins[b.winner] || 0) + 1;
+      }
+    });
+    var names = Object.keys(wins);
+    if (!names.length){ el.textContent = 'Tab: nobody has won anything yet.'; return; }
+    names.sort(function(a, c){ return wins[c] - wins[a]; });
+    el.textContent = 'Tab: ' + names.map(function(n){ return n + ' ' + wins[n]; }).join(', ');
+  }
+
+  function renderBets(list){
+    var wrap = document.getElementById('sb-list');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    if (!list || !list.length){
+      var empty = document.createElement('div');
+      empty.className = 'bet-empty form-msg';
+      empty.textContent = "No bets on the bar. Somebody's chicken.";
+      wrap.appendChild(empty);
+    } else {
+      list.forEach(function(b){ wrap.appendChild(buildBetCard(b)); });
+    }
+    renderLedger(list);
+  }
+
+  function loadBets(){
+    return getList('bets?select=id,created_at,proposer,taker,body,stakes,status,accepted_at,settled_at,winner&order=created_at.desc&limit=100').then(renderBets).catch(function(){});
+  }
+
+  function submitBet(){
+    var nameEl = document.getElementById('sb-name');
+    var bodyEl = document.getElementById('sb-body');
+    var stakesEl = document.getElementById('sb-stakes');
+    var againstEl = document.getElementById('sb-against');
+    var passEl = document.getElementById('sb-pass');
+    var btn = document.getElementById('sb-submit');
+    var name = nameEl.value.trim();
+    var body = bodyEl.value.trim();
+    var stakes = stakesEl.value.trim() || "a McGillicuddy's";
+    var against = againstEl.value.trim();
+    setMsg('sb-msg', '', '');
+    if (!name || name.length > 24){ setMsg('sb-msg', 'Name, 1 to 24 letters, kid.', 'err'); return; }
+    if (!body || body.length > 240){ setMsg('sb-msg', 'Say the bet. 240 tops.', 'err'); return; }
+    if (stakes.length > 60){ setMsg('sb-msg', 'Stakes, 60 tops.', 'err'); return; }
+    if (against.length > 24){ setMsg('sb-msg', 'That name is too long.', 'err'); return; }
+    var pass = storedPass() || (passEl ? passEl.value.trim() : '');
+    if (!pass){ setMsg('sb-msg', 'Passcode. Ask a regular.', 'err'); return; }
+    btn.disabled = true;
+    rpc('post_bet', { p_pass: pass, p_proposer: name, p_taker: against || null, p_body: body, p_stakes: stakes }).then(function(){
+      setPass(pass);
+      setName(name);
+      hideRow('sb-pass-row');
+      bodyEl.value = '';
+      stakesEl.value = '';
+      againstEl.value = '';
+      wireCounter('sb-body', 'sb-count', 240);
+      setMsg('sb-msg', 'On the bar.', 'ok');
+      return loadBets();
+    }).catch(function(err){
+      var friendly = barMessage(err);
+      if (/wrong passcode/i.test(friendly)){ clearPass(); showRow('sb-pass-row'); }
+      setMsg('sb-msg', friendly, 'err');
+    }).then(function(){ btn.disabled = false; });
+  }
+
+  function withPass(cb){
+    var p = storedPass();
+    if (!p){
+      p = window.prompt('Passcode. Ask a regular.');
+      if (!p) return;
+    }
+    cb(p);
+  }
+
+  function handleAccept(id){
+    withPass(function(pass){
+      var taker = window.prompt('Your name, taking the bet:', storedName());
+      if (!taker) return;
+      taker = taker.trim();
+      if (!taker) return;
+      rpc('accept_bet', { p_pass: pass, p_id: id, p_taker: taker }).then(function(){
+        setPass(pass);
+        setName(taker);
+        setMsg('sb-action-msg', 'Bet accepted.', 'ok');
+        return loadBets();
+      }).catch(function(err){
+        var friendly = barMessage(err);
+        if (/wrong passcode/i.test(friendly)) clearPass();
+        setMsg('sb-action-msg', friendly, 'err');
+      });
+    });
+  }
+
+  function handleSettle(id, winner){
+    withPass(function(pass){
+      rpc('settle_bet', { p_pass: pass, p_id: id, p_winner: winner }).then(function(){
+        setPass(pass);
+        setMsg('sb-action-msg', 'Settled. Winner: ' + winner + '.', 'ok');
+        return loadBets();
+      }).catch(function(err){
+        var friendly = barMessage(err);
+        if (/wrong passcode/i.test(friendly)) clearPass();
+        setMsg('sb-action-msg', friendly, 'err');
+      });
+    });
+  }
+
+  function handleVoid(id){
+    if (!window.confirm('Void this bet? No do-overs.')) return;
+    withPass(function(pass){
+      rpc('void_bet', { p_pass: pass, p_id: id }).then(function(){
+        setPass(pass);
+        setMsg('sb-action-msg', 'Voided.', 'ok');
+        return loadBets();
+      }).catch(function(err){
+        var friendly = barMessage(err);
+        if (/wrong passcode/i.test(friendly)) clearPass();
+        setMsg('sb-action-msg', friendly, 'err');
+      });
+    });
+  }
+
+  /* ---------- Wire it up ---------- */
+
+  if (storedPass()){
+    hideRow('nw-pass-row');
+    hideRow('sb-pass-row');
+  }
+  var nm = storedName();
+  if (nm){
+    var nwName = document.getElementById('nw-name');
+    var sbName = document.getElementById('sb-name');
+    if (nwName) nwName.value = nm;
+    if (sbName) sbName.value = nm;
+  }
+
+  wireCounter('nw-body', 'nw-count', 240);
+  wireCounter('sb-body', 'sb-count', 240);
+
+  var nwSubmit = document.getElementById('nw-submit');
+  if (nwSubmit) nwSubmit.addEventListener('click', submitNote);
+  var sbSubmit = document.getElementById('sb-submit');
+  if (sbSubmit) sbSubmit.addEventListener('click', submitBet);
+
+  loadNotes();
+  loadBets();
+
+  setInterval(function(){
+    if (document.visibilityState === 'visible'){
+      loadNotes();
+      loadBets();
+    }
+  }, 60000);
 })();
 </script>
 
