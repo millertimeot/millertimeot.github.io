@@ -1138,6 +1138,25 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     <div class="line-note">Art, probably</div>
   </div>
 
+  <div class="section" id="guest-section">
+    <div class="section-head"><div class="section-plaque"><div class="section-title">Pull up a stool</div></div><div class="section-note">Not in the league? You can still hear about it. Art let anybody in as long as they bought something.</div></div>
+    <div class="bar-rail"></div>
+    <div class="compose-card">
+      <div class="field-row">
+        <label class="field-label" for="guest-email">Email</label>
+        <input class="text-input" type="email" id="guest-email" autocomplete="email" inputmode="email" placeholder="you@somewhere.com">
+      </div>
+      <div class="form-msg" id="guest-email-msg" role="status" aria-live="polite"></div>
+      <button class="btn-primary" type="button" id="guest-email-submit">Put me on the list</button>
+      <div class="section-note">Weekly recap and awards, nothing else. No spam, Art would have thrown it out.</div>
+      <div class="field-row" id="guest-push-row">
+        <button class="btn-sm" type="button" id="guest-push-btn">Ping this phone</button>
+        <div class="form-msg" id="guest-push-status" role="status" aria-live="polite"></div>
+      </div>
+      <div class="section-note">Guest pings are the big stuff only: awards, trades, records. No passcode, no name attached. The napkin wall is for regulars.</div>
+    </div>
+  </div>
+
   <div class="section" id="door-section">
     <div class="section-head"><div class="section-plaque"><div class="section-title">The regulars' door</div></div><div class="section-note">One passcode. No usernames. Art never learned anybody's name either.</div></div>
     <div class="bar-rail"></div>
@@ -2738,6 +2757,8 @@ const ROSTER_ROASTS = {
             p_ua: navigator.userAgent
           }).then(function(name){
             setPushEndpoint(endpoint);
+            clearGuestPushEndpoint();
+            renderGuestPushDefault('', '');
             renderPushOn(name);
           });
         }).catch(function(err){
@@ -2761,6 +2782,8 @@ const ROSTER_ROASTS = {
     function done(){
       clearPushEndpoint();
       renderPushDefault('Pings off.', '');
+      clearGuestPushEndpoint();
+      renderGuestPushDefault('', '');
     }
     var removeP = (pass && endpoint) ? rpc('remove_push_sub', { p_pass: pass, p_endpoint: endpoint }) : Promise.resolve();
     removeP.catch(function(){}).then(function(){
@@ -2784,6 +2807,152 @@ const ROSTER_ROASTS = {
     }).then(function(sub){
       if (sub && sub.endpoint && storedPushEndpoint() && sub.endpoint === storedPushEndpoint()){
         renderPushOn(member || storedMember() || 'you');
+      }
+    }).catch(function(){});
+  }
+
+  /* ---------- Guests: newsletter and pings ---------- */
+
+  var GUEST_PUSH_ENDPOINT_KEY = 'ja_guest_push_endpoint';
+
+  function storedGuestPushEndpoint(){ try { return localStorage.getItem(GUEST_PUSH_ENDPOINT_KEY) || ''; } catch(e){ return ''; } }
+  function setGuestPushEndpoint(e){ try { localStorage.setItem(GUEST_PUSH_ENDPOINT_KEY, e); } catch(err){} }
+  function clearGuestPushEndpoint(){ try { localStorage.removeItem(GUEST_PUSH_ENDPOINT_KEY); } catch(e){} }
+
+  function submitGuestEmail(){
+    var input = document.getElementById('guest-email');
+    var email = (input && input.value.trim()) || '';
+    if (!email || email.indexOf('@') === -1){
+      setMsg('guest-email-msg', "That's not an email. Art's seen better handwriting on a napkin.", 'err');
+      return;
+    }
+    var btn = document.getElementById('guest-email-submit');
+    if (btn) btn.disabled = true;
+    rpc('subscribe_email', { p_email: email, p_source: 'site' }).then(function(){
+      if (input) input.value = '';
+      setMsg('guest-email-msg', "You're on the list. Art will get to it.", 'ok');
+    }).catch(function(err){
+      var m = ((err && err.message) || '').toLowerCase();
+      if (m.indexOf('bad email') !== -1){
+        setMsg('guest-email-msg', "That's not an email. Art's seen better handwriting on a napkin.", 'err');
+      } else if (m.indexOf('slow down') !== -1){
+        setMsg('guest-email-msg', 'Slow down. Art only has two hands.', 'err');
+      } else {
+        setMsg('guest-email-msg', (err && err.message) || 'Something went wrong.', 'err');
+      }
+    }).then(function(){
+      if (btn) btn.disabled = false;
+    });
+  }
+
+  function setGuestPushButtonVisible(visible){
+    var btn = document.getElementById('guest-push-btn');
+    if (btn) btn.style.display = visible ? '' : 'none';
+  }
+
+  function renderGuestPushDefault(msg, cls){
+    setGuestPushButtonVisible(true);
+    setMsg('guest-push-status', msg || '', cls || '');
+  }
+
+  function renderGuestPushOn(){
+    setGuestPushButtonVisible(false);
+    var el = document.getElementById('guest-push-status');
+    if (!el) return;
+    el.className = 'form-msg ok';
+    el.innerHTML = '';
+    el.appendChild(document.createTextNode('Pings on for this phone. '));
+    var off = document.createElement('button');
+    off.type = 'button';
+    off.className = 'btn-void';
+    off.textContent = 'turn off';
+    off.addEventListener('click', turnOffGuestPush);
+    el.appendChild(off);
+  }
+
+  function subscribeToGuestPush(){
+    if (!pushSupported()){
+      if (isIosSafariNotStandalone()){
+        renderGuestPushDefault('iPhone: tap Share, then Add to Home Screen, open it from there, and tap this again.', 'err');
+      } else {
+        renderGuestPushDefault("This browser can't do pings.", 'err');
+      }
+      return;
+    }
+    if (storedPushEndpoint()){
+      renderGuestPushDefault('This phone already gets pings as a regular.', '');
+      return;
+    }
+    var btn = document.getElementById('guest-push-btn');
+    if (btn) btn.disabled = true;
+    Notification.requestPermission().then(function(perm){
+      if (perm !== 'granted'){
+        renderGuestPushDefault('You said no to pings. Change it in your browser settings if you change your mind.', 'err');
+        return;
+      }
+      return navigator.serviceWorker.register('/sw.js').then(function(){
+        return navigator.serviceWorker.ready;
+      }).then(function(reg){
+        return reg.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(VAPID_PUBLIC_KEY)
+        });
+      }).then(function(sub){
+        var json = sub.toJSON();
+        var endpoint = json.endpoint;
+        var p256dh = json.keys && json.keys.p256dh;
+        var auth = json.keys && json.keys.auth;
+        return rpc('save_guest_push_sub', {
+          p_endpoint: endpoint,
+          p_p256dh: p256dh,
+          p_auth: auth,
+          p_ua: navigator.userAgent
+        }).then(function(){
+          setGuestPushEndpoint(endpoint);
+          renderGuestPushOn();
+        });
+      }).catch(function(err){
+        renderGuestPushDefault((err && err.message) || 'Something went wrong.', 'err');
+      });
+    }).then(function(){
+      if (btn) btn.disabled = false;
+    });
+  }
+
+  function turnOffGuestPush(){
+    var endpoint = storedGuestPushEndpoint();
+    function done(){
+      clearGuestPushEndpoint();
+      renderGuestPushDefault('Pings off.', '');
+    }
+    var removeP = endpoint ? rpc('remove_guest_push_sub', { p_endpoint: endpoint }) : Promise.resolve();
+    removeP.catch(function(){}).then(function(){
+      if (!('serviceWorker' in navigator)){ done(); return; }
+      navigator.serviceWorker.getRegistration().then(function(reg){
+        if (!reg) return null;
+        return reg.pushManager.getSubscription();
+      }).then(function(sub){
+        if (sub) return sub.unsubscribe();
+      }).catch(function(){}).then(done);
+    });
+  }
+
+  function initGuestPush(){
+    var emailBtn = document.getElementById('guest-email-submit');
+    if (emailBtn) emailBtn.addEventListener('click', submitGuestEmail);
+    var emailInput = document.getElementById('guest-email');
+    if (emailInput) emailInput.addEventListener('keydown', function(e){
+      if (e.key === 'Enter'){ e.preventDefault(); submitGuestEmail(); }
+    });
+    var pushBtn = document.getElementById('guest-push-btn');
+    if (pushBtn) pushBtn.addEventListener('click', subscribeToGuestPush);
+    if (!('serviceWorker' in navigator)) return;
+    navigator.serviceWorker.getRegistration().then(function(reg){
+      if (!reg) return null;
+      return reg.pushManager.getSubscription();
+    }).then(function(sub){
+      if (sub && sub.endpoint && storedGuestPushEndpoint() && sub.endpoint === storedGuestPushEndpoint()){
+        renderGuestPushOn();
       }
     }).catch(function(){});
   }
@@ -3153,6 +3322,7 @@ const ROSTER_ROASTS = {
     loadSacko();
     loadPoll();
     initPush();
+    initGuestPush();
   });
 
   setInterval(function(){
@@ -3187,6 +3357,7 @@ const ROSTER_ROASTS = {
     ['arts-take-section', "Art's take"],
     ['regulars-section', 'Regulars'],
     ['house-rules-section', 'House rules'],
+    ['guest-section', 'Pull up a stool'],
     ['door-section', 'The regulars\' door']
   ];
   var fab = document.getElementById('menu-fab');
