@@ -510,9 +510,40 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
   </div>
 
   <div class="section" id="today-section">
-    <div class="section-head"><div class="section-plaque"><div class="section-title">Tonight at the bar</div></div><div class="section-note">Thursday night from Melbourne. Four fantasy matchups, one of them with nobody playing. Postgame lands Friday morning.</div></div>
+    <div class="section-head"><div class="section-plaque"><div class="section-title">Tonight at the bar</div></div><div class="section-note">Two nights down, Seattle and Melbourne. Next pour is Sunday at noon Central, when everybody finally plays.</div></div>
     <div class="bar-rail"></div>
-    <div id="today-thu-pre">
+    <div id="today-thu-post">
+      <div class="matchup-line" style="margin-bottom:10px;">Final: 49ers 27, Rams 7, from the Melbourne Cricket Ground. The Rams brought the cricket score.</div>
+      <div class="matchup-grid">
+        <div class="matchup-card plain">
+          <div class="matchup-name">Tom vs Skoney</div>
+          <div class="card-blurb">Nacua 12.4: five catches, 74 yards, nine targets, one of them a 41 yard shot, no touchdown. Mevis 1.0: one extra point, no field goal tries. Tom 49.7, Skoney 15.4.</div>
+          <div class="card-blurb">Tom has six starters left, Skoney nine. ESPN has it 61 to 39.</div>
+          <div class="line-note">Art, probably: Tom's kicker flew twenty hours to Australia to kick one extra point. Nacua got nine targets, caught five, ripped off a 41 yarder, and the Rams still scored seven, so twelve and change is what the best receiver on the board gets when his quarterback throws for 155 and a pick. Skoney sat at the end of the bar for a second straight night and lost ground anyway, down 34 with a nine man lineup ESPN has at 128. Corum stayed on his bench and outscored Tom's kicker, which is the only number Skoney gets to keep from Thursday.</div>
+        </div>
+        <div class="matchup-card plain">
+          <div class="matchup-name">Tyler vs W</div>
+          <div class="card-blurb">McCaffrey 13.8: ten carries for 68, five catches for 20 on eight targets, no score. Kyren Williams 15.5: eleven carries for 41 and the Rams' only touchdown, three catches for 24. Kittle 3.2 on the bench. Tyler 29.3, W 0.</div>
+          <div class="card-blurb">Tyler has nine starters left, W all eleven. ESPN has W 52 to 48.</div>
+          <div class="line-note">Art, probably: Tyler got both starting backs in a 27 to 7 game and pulled 29 out of it, because McCaffrey's night was 88 yards and none of the three touchdowns, all of which Purdy threw to guys nobody in this league starts. Kyren scored the Rams' only points and the tight end with the bad back caught two balls for twelve on the bench, so the lineup was right. And ESPN still has W as the favorite. Twenty nine to nothing, and the book says the guy with nothing is winning. Stafford threw for 155 and a pick from W's bench, which is where Lamar's backup belongs. Come back Sunday, the both of you. Again.</div>
+        </div>
+        <div class="matchup-card plain">
+          <div class="matchup-name">Robert vs Nic</div>
+          <div class="card-blurb">Rams D/ST 1.0: 27 points and 379 yards allowed, one interception, zero sacks. Robert 26.2, Nic 1.0.</div>
+          <div class="card-blurb">Ten starters left each. ESPN has Robert 54 to 46.</div>
+          <div class="line-note">Art, probably: Nic's whole Thursday was a defense in a cricket stadium and it came home with one point, which is what 379 yards allowed and no sacks pays. The one pick it did get, Stafford's offense turned into nothing. Robert has not touched his lineup since Wednesday and leads by 25 with the same ten guys left. Twenty six from one receiver on night one, one point from the other side on night two. Robert should send that defense a thank you napkin.</div>
+        </div>
+        <div class="matchup-card plain">
+          <div class="matchup-name">Oscar vs Brennan</div>
+          <div class="card-blurb">Adams 5.6: three catches, 26 yards, six targets. Mike Evans, on Brennan's bench, 16.9 with a touchdown from Purdy. Oscar 7.0, Brennan 5.6.</div>
+          <div class="card-blurb">Oscar has ten starters left. Brennan has nine, and as of Friday morning the second running back slot is still empty with McConkey (13.7) on the bench. ESPN has Oscar 60 to 40.</div>
+          <div class="line-note">Art, probably: Brennan started the thirty three year old Ram and benched the thirty three year old 49er, and the 49er caught the touchdown. Evans scored more from Brennan's bench than any Ram did on the field. Two days after the trade the lineup still has a running back sized hole in it and Ladd is still sitting next to Evans, so the bench is currently the best part of the roster. Oscar leads by a point and four tenths on a kicker and has not had to think yet. First place is a lifestyle.</div>
+        </div>
+      </div>
+      <div class="section-note" style="opacity:0.7;margin-top:10px;">Points are ESPN's official week 1 scoring. Live projections after night two: Tom 149.1, Skoney 128.1 &middot; Oscar 158.5, Brennan 132.7 &middot; Robert 153.4, Nic 143.9 &middot; W 144.0, Tyler 140.0.</div>
+      <button type="button" class="lc-toggle" id="today-thu-pre-toggle" style="margin-top:10px;">what we said before</button>
+    </div>
+    <div id="today-thu-pre" hidden>
       <div class="matchup-line" style="margin-bottom:10px;">49ers at Rams, 7:35 PM Central, from the Melbourne Cricket Ground. Yes, Australia. Rams by 3.5, total 48.5.</div>
       <div class="matchup-grid">
         <div class="matchup-card plain">
@@ -538,7 +569,6 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
       </div>
       <div class="section-note" style="opacity:0.7;margin-top:10px;">Numbers are ESPN's week 1 projections for tonight's players. The postgame comes in the morning.</div>
     </div>
-    <div id="today-thu-post" hidden></div>
     <button type="button" class="lc-toggle" id="today-wed-toggle" style="margin-top:10px;">Wednesday, what happened and what we said</button>
     <div id="today-wed-wrap" hidden>
     <div id="today-post">
@@ -606,6 +636,18 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
   (function(){
     var pre = document.getElementById('today-pre');
     var toggle = document.getElementById('today-pre-toggle');
+    if (!pre || !toggle) return;
+    toggle.addEventListener('click', function(){
+      var willShow = pre.hidden;
+      pre.hidden = !willShow;
+      toggle.textContent = willShow ? 'enough' : 'what we said before';
+    });
+  })();
+  </script>
+  <script>
+  (function(){
+    var pre = document.getElementById('today-thu-pre');
+    var toggle = document.getElementById('today-thu-pre-toggle');
     if (!pre || !toggle) return;
     toggle.addEventListener('click', function(){
       var willShow = pre.hidden;
