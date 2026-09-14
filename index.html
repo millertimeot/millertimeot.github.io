@@ -416,6 +416,23 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
 /* The tab / sacko tags */
 .tab-loudest{color:var(--bg);background:var(--accent);}
 .sb-reminder{border-top:1px solid rgba(185,174,156,0.25);padding-top:12px;}
+.bx-matchup{margin-top:18px;}
+.bx-head{font-family:'Caveat',cursive;font-size:1.375rem;color:var(--accent);margin-bottom:6px;}
+.bx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;}
+.bx-side{border:1px solid rgba(185,174,156,0.22);border-radius:8px;padding:10px 12px;overflow-x:auto;}
+.bx-team{font-weight:700;margin-bottom:6px;}
+.bx-total{color:var(--accent);margin-left:6px;}
+.bx-table{width:100%;border-collapse:collapse;font-size:0.875rem;}
+.bx-table th{font-weight:400;color:var(--dim);text-align:right;padding:2px 4px;font-size:0.75rem;}
+.bx-table td{padding:3px 4px;border-top:1px solid rgba(185,174,156,0.12);}
+.bx-slot{color:var(--dim);font-size:0.75rem;width:44px;}
+.bx-name{white-space:nowrap;}
+.bx-nfl{color:var(--dim);font-size:0.75rem;margin-left:6px;}
+.bx-pts,.bx-proj,.bx-delta{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.bx-proj{color:var(--dim);}
+.bx-up{color:var(--green);}
+.bx-down{color:var(--pink);}
+.bx-pending{color:var(--dim);font-style:italic;}
 .sb-reminder-body{line-height:1.5;}
 .sb-reminder-line{font-family:'Caveat',cursive;font-size:1.3125rem;font-weight:700;color:var(--accent);margin-top:8px;}
 .tab-ducker{color:var(--ink);background:rgba(242,166,166,0.25);}
@@ -551,6 +568,141 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
         </div>
       </div>
       <div class="section-note" style="opacity:0.7;margin-top:10px;">Points are ESPN's official week 1 scoring, Sunday night final. Three matchups finish Monday in Denver. Art's awards and the record book go up Tuesday morning.</div>
+      <button type="button" class="lc-toggle" id="today-box-toggle" style="margin-top:10px;">Every starter, every matchup</button>
+      <div id="today-box" hidden>
+        <div class="bx-matchup">
+          <div class="bx-head">Oscar 152.5 &middot; Brennan 129.9</div>
+          <div class="bx-grid">
+            <div class="bx-side"><div class="bx-team">Oscar <span class="bx-total">152.5</span></div>
+            <table class="bx-table"><thead><tr><th></th><th></th><th>pts</th><th>proj</th><th>vs</th></tr></thead><tbody>
+              <tr><td class="bx-slot">QB</td><td class="bx-name">Jalen Hurts<span class="bx-nfl">PHI</span></td><td class="bx-pts"><b>24.7</b></td><td class="bx-proj">21.1</td><td class="bx-delta bx-up">+3.6</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">Ashton Jeanty<span class="bx-nfl">LV</span></td><td class="bx-pts"><b>32.7</b></td><td class="bx-proj">17.9</td><td class="bx-delta bx-up">+14.8</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">Breece Hall<span class="bx-nfl">NYJ</span></td><td class="bx-pts"><b>19.8</b></td><td class="bx-proj">16.5</td><td class="bx-delta bx-up">+3.3</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Ja'Marr Chase<span class="bx-nfl">CIN</span></td><td class="bx-pts"><b>3.2</b></td><td class="bx-proj">19.9</td><td class="bx-delta bx-down">-16.7</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">CeeDee Lamb<span class="bx-nfl">DAL</span></td><td class="bx-pts"><b>15.4</b></td><td class="bx-proj">17.3</td><td class="bx-delta bx-down">-1.9</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Terry McLaurin<span class="bx-nfl">WSH</span></td><td class="bx-pts"><b>3.4</b></td><td class="bx-proj">12.2</td><td class="bx-delta bx-down">-8.8</td></tr>
+              <tr><td class="bx-slot">TE</td><td class="bx-name">Kyle Pitts Sr.<span class="bx-nfl">ATL</span></td><td class="bx-pts"><b>0</b></td><td class="bx-proj">9.8</td><td class="bx-delta bx-down">-9.8</td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">Javonte Williams<span class="bx-nfl">DAL</span></td><td class="bx-pts"><b>24.2</b></td><td class="bx-proj">15.3</td><td class="bx-delta bx-up">+8.9</td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">Cam Skattebo<span class="bx-nfl">NYG</span></td><td class="bx-pts"><b>14.1</b></td><td class="bx-proj">13.7</td><td class="bx-delta bx-up">+0.4</td></tr>
+              <tr><td class="bx-slot">D/ST</td><td class="bx-name">Ravens D/ST<span class="bx-nfl">BAL</span></td><td class="bx-pts"><b>8</b></td><td class="bx-proj">6.6</td><td class="bx-delta bx-up">+1.4</td></tr>
+              <tr><td class="bx-slot">K</td><td class="bx-name">Jason Myers<span class="bx-nfl">SEA</span></td><td class="bx-pts"><b>7</b></td><td class="bx-proj">9.4</td><td class="bx-delta bx-down">-2.4</td></tr>
+            </tbody></table></div>
+            <div class="bx-side"><div class="bx-team">Brennan <span class="bx-total">129.9</span></div>
+            <table class="bx-table"><thead><tr><th></th><th></th><th>pts</th><th>proj</th><th>vs</th></tr></thead><tbody>
+              <tr><td class="bx-slot">QB</td><td class="bx-name">Jayden Daniels<span class="bx-nfl">WSH</span></td><td class="bx-pts"><b>17.7</b></td><td class="bx-proj">16.8</td><td class="bx-delta bx-up">+0.9</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">Omarion Hampton<span class="bx-nfl">LAC</span></td><td class="bx-pts"><b>8.3</b></td><td class="bx-proj">17.6</td><td class="bx-delta bx-down">-9.3</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">Derrick Henry<span class="bx-nfl">BAL</span></td><td class="bx-pts"><b>35.3</b></td><td class="bx-proj">16.4</td><td class="bx-delta bx-up">+18.9</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Tetairoa McMillan<span class="bx-nfl">CAR</span></td><td class="bx-pts"><b>10.5</b></td><td class="bx-proj">14.8</td><td class="bx-delta bx-down">-4.3</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">George Pickens<span class="bx-nfl">DAL</span></td><td class="bx-pts"><b>5.8</b></td><td class="bx-proj">14.7</td><td class="bx-delta bx-down">-8.9</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Davante Adams<span class="bx-nfl">LAR</span></td><td class="bx-pts"><b>5.6</b></td><td class="bx-proj">13.8</td><td class="bx-delta bx-down">-8.2</td></tr>
+              <tr><td class="bx-slot">TE</td><td class="bx-name">Harold Fannin Jr.<span class="bx-nfl">CLE</span></td><td class="bx-pts"><b>4.1</b></td><td class="bx-proj">11.1</td><td class="bx-delta bx-down">-7</td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">Jahmyr Gibbs<span class="bx-nfl">DET</span></td><td class="bx-pts"><b>33.6</b></td><td class="bx-proj">22.4</td><td class="bx-delta bx-up">+11.2</td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">Quinshon Judkins<span class="bx-nfl">CLE</span></td><td class="bx-pts"><b>7</b></td><td class="bx-proj">13.2</td><td class="bx-delta bx-down">-6.2</td></tr>
+              <tr><td class="bx-slot">D/ST</td><td class="bx-name">Chargers D/ST<span class="bx-nfl">LAC</span></td><td class="bx-pts"><b>0</b></td><td class="bx-proj">7.4</td><td class="bx-delta bx-down">-7.4</td></tr>
+              <tr><td class="bx-slot">K</td><td class="bx-name">Cameron Dicker<span class="bx-nfl">LAC</span></td><td class="bx-pts"><b>2</b></td><td class="bx-proj">10.3</td><td class="bx-delta bx-down">-8.3</td></tr>
+            </tbody></table></div>
+          </div>
+        </div>
+        <div class="bx-matchup">
+          <div class="bx-head">Nic 151.3 &middot; Robert 150.2</div>
+          <div class="bx-grid">
+            <div class="bx-side"><div class="bx-team">Nic <span class="bx-total">151.3</span></div>
+            <table class="bx-table"><thead><tr><th></th><th></th><th>pts</th><th>proj</th><th>vs</th></tr></thead><tbody>
+              <tr><td class="bx-slot">QB</td><td class="bx-name">Justin Herbert<span class="bx-nfl">LAC</span></td><td class="bx-pts"><b>13.3</b></td><td class="bx-proj">19</td><td class="bx-delta bx-down">-5.7</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">Bijan Robinson<span class="bx-nfl">ATL</span></td><td class="bx-pts"><b>31.3</b></td><td class="bx-proj">18.9</td><td class="bx-delta bx-up">+12.4</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">Chase Brown<span class="bx-nfl">CIN</span></td><td class="bx-pts"><b>18.8</b></td><td class="bx-proj">16</td><td class="bx-delta bx-up">+2.8</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">DeVonta Smith<span class="bx-nfl">PHI</span></td><td class="bx-pts"><b>8.3</b></td><td class="bx-proj">14.8</td><td class="bx-delta bx-down">-6.5</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Chris Olave<span class="bx-nfl">NO</span></td><td class="bx-pts"><b>28.2</b></td><td class="bx-proj">14.8</td><td class="bx-delta bx-up">+13.4</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Rome Odunze<span class="bx-nfl">CHI</span></td><td class="bx-pts"><b>7.2</b></td><td class="bx-proj">12.4</td><td class="bx-delta bx-down">-5.2</td></tr>
+              <tr><td class="bx-slot">TE</td><td class="bx-name">Colston Loveland<span class="bx-nfl">CHI</span></td><td class="bx-pts"><b>0</b></td><td class="bx-proj">12</td><td class="bx-delta bx-down">-12</td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">D'Andre Swift<span class="bx-nfl">CHI</span></td><td class="bx-pts"><b>32.4</b></td><td class="bx-proj">12.3</td><td class="bx-delta bx-up">+20.1</td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">Michael Pittman Jr.<span class="bx-nfl">PIT</span></td><td class="bx-pts"><b>8.8</b></td><td class="bx-proj">12.3</td><td class="bx-delta bx-down">-3.5</td></tr>
+              <tr><td class="bx-slot">D/ST</td><td class="bx-name">Rams D/ST<span class="bx-nfl">LAR</span></td><td class="bx-pts"><b>1</b></td><td class="bx-proj">6.2</td><td class="bx-delta bx-down">-5.2</td></tr>
+              <tr><td class="bx-slot">K</td><td class="bx-name">Brandon Aubrey<span class="bx-nfl">DAL</span></td><td class="bx-pts"><b>2</b></td><td class="bx-proj">9.9</td><td class="bx-delta bx-down">-7.9</td></tr>
+            </tbody></table></div>
+            <div class="bx-side"><div class="bx-team">Robert <span class="bx-total">150.2</span></div>
+            <table class="bx-table"><thead><tr><th></th><th></th><th>pts</th><th>proj</th><th>vs</th></tr></thead><tbody>
+              <tr><td class="bx-slot">QB</td><td class="bx-name">Caleb Williams<span class="bx-nfl">CHI</span></td><td class="bx-pts"><b>37.3</b></td><td class="bx-proj">16.4</td><td class="bx-delta bx-up">+20.9</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">Travis Etienne Jr.<span class="bx-nfl">NO</span></td><td class="bx-pts"><b>14.8</b></td><td class="bx-proj">15.1</td><td class="bx-delta bx-down">-0.3</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">David Montgomery<span class="bx-nfl">HOU</span></td><td class="bx-pts"><b>28.9</b></td><td class="bx-proj">12.7</td><td class="bx-delta bx-up">+16.2</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Jaxon Smith-Njigba<span class="bx-nfl">SEA</span></td><td class="bx-pts"><b>26.2</b></td><td class="bx-proj">19</td><td class="bx-delta bx-up">+7.2</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Tee Higgins<span class="bx-nfl">CIN</span></td><td class="bx-pts"><b>8.9</b></td><td class="bx-proj">13</td><td class="bx-delta bx-down">-4.1</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Luther Burden III<span class="bx-nfl">CHI</span></td><td class="bx-pts"><b>9.5</b></td><td class="bx-proj">12</td><td class="bx-delta bx-down">-2.5</td></tr>
+              <tr><td class="bx-slot">TE</td><td class="bx-name">Trey McBride<span class="bx-nfl">ARI</span></td><td class="bx-pts"><b>24.5</b></td><td class="bx-proj">14.3</td><td class="bx-delta bx-up">+10.2</td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">Kenneth Walker III<span class="bx-nfl">KC</span></td><td class="bx-pts"><span class="bx-pending">yet to play</span></td><td class="bx-proj">14.7</td><td class="bx-delta"></td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">Rico Dowdle<span class="bx-nfl">PIT</span></td><td class="bx-pts"><b>4.1</b></td><td class="bx-proj">12.5</td><td class="bx-delta bx-down">-8.4</td></tr>
+              <tr><td class="bx-slot">D/ST</td><td class="bx-name">Texans D/ST<span class="bx-nfl">HOU</span></td><td class="bx-pts"><b>-4</b></td><td class="bx-proj">5.3</td><td class="bx-delta bx-down">-9.3</td></tr>
+              <tr><td class="bx-slot">K</td><td class="bx-name">Harrison Butker<span class="bx-nfl">KC</span></td><td class="bx-pts"><span class="bx-pending">yet to play</span></td><td class="bx-proj">8.5</td><td class="bx-delta"></td></tr>
+            </tbody></table></div>
+          </div>
+        </div>
+        <div class="bx-matchup">
+          <div class="bx-head">Skoney 153.2 &middot; Tom 150.2</div>
+          <div class="bx-grid">
+            <div class="bx-side"><div class="bx-team">Skoney <span class="bx-total">153.2</span></div>
+            <table class="bx-table"><thead><tr><th></th><th></th><th>pts</th><th>proj</th><th>vs</th></tr></thead><tbody>
+              <tr><td class="bx-slot">QB</td><td class="bx-name">Drake Maye<span class="bx-nfl">NE</span></td><td class="bx-pts"><b>9.8</b></td><td class="bx-proj">16.3</td><td class="bx-delta bx-down">-6.5</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">Jonathan Taylor<span class="bx-nfl">IND</span></td><td class="bx-pts"><b>25.1</b></td><td class="bx-proj">17.7</td><td class="bx-delta bx-up">+7.4</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">Saquon Barkley<span class="bx-nfl">PHI</span></td><td class="bx-pts"><b>9</b></td><td class="bx-proj">17.7</td><td class="bx-delta bx-down">-8.7</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">A.J. Brown<span class="bx-nfl">NE</span></td><td class="bx-pts"><b>5.6</b></td><td class="bx-proj">14.2</td><td class="bx-delta bx-down">-8.6</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Jaylen Waddle<span class="bx-nfl">DEN</span></td><td class="bx-pts"><span class="bx-pending">yet to play</span></td><td class="bx-proj">12.2</td><td class="bx-delta"></td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Christian Watson<span class="bx-nfl">GB</span></td><td class="bx-pts"><b>32.7</b></td><td class="bx-proj">10.9</td><td class="bx-delta bx-up">+21.8</td></tr>
+              <tr><td class="bx-slot">TE</td><td class="bx-name">Juwan Johnson<span class="bx-nfl">NO</span></td><td class="bx-pts"><b>14.4</b></td><td class="bx-proj">8.8</td><td class="bx-delta bx-up">+5.6</td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">Emeka Egbuka<span class="bx-nfl">TB</span></td><td class="bx-pts"><b>11.3</b></td><td class="bx-proj">14</td><td class="bx-delta bx-down">-2.7</td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">Parker Washington<span class="bx-nfl">JAX</span></td><td class="bx-pts"><b>19.3</b></td><td class="bx-proj">11.3</td><td class="bx-delta bx-up">+8</td></tr>
+              <tr><td class="bx-slot">D/ST</td><td class="bx-name">Jaguars D/ST<span class="bx-nfl">JAX</span></td><td class="bx-pts"><b>14</b></td><td class="bx-proj">8.2</td><td class="bx-delta bx-up">+5.8</td></tr>
+              <tr><td class="bx-slot">K</td><td class="bx-name">Cam Little<span class="bx-nfl">JAX</span></td><td class="bx-pts"><b>12</b></td><td class="bx-proj">8.8</td><td class="bx-delta bx-up">+3.2</td></tr>
+            </tbody></table></div>
+            <div class="bx-side"><div class="bx-team">Tom <span class="bx-total">150.2</span></div>
+            <table class="bx-table"><thead><tr><th></th><th></th><th>pts</th><th>proj</th><th>vs</th></tr></thead><tbody>
+              <tr><td class="bx-slot">QB</td><td class="bx-name">Joe Burrow<span class="bx-nfl">CIN</span></td><td class="bx-pts"><b>14.2</b></td><td class="bx-proj">18.2</td><td class="bx-delta bx-down">-4</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">De'Von Achane<span class="bx-nfl">MIA</span></td><td class="bx-pts"><b>10.6</b></td><td class="bx-proj">18.2</td><td class="bx-delta bx-down">-7.6</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">Rhamondre Stevenson<span class="bx-nfl">NE</span></td><td class="bx-pts"><b>14.5</b></td><td class="bx-proj">14</td><td class="bx-delta bx-up">+0.5</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Puka Nacua<span class="bx-nfl">LAR</span></td><td class="bx-pts"><b>12.4</b></td><td class="bx-proj">21.1</td><td class="bx-delta bx-down">-8.7</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Amon-Ra St. Brown<span class="bx-nfl">DET</span></td><td class="bx-pts"><b>28.7</b></td><td class="bx-proj">18.8</td><td class="bx-delta bx-up">+9.9</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Rashee Rice<span class="bx-nfl">KC</span></td><td class="bx-pts"><span class="bx-pending">yet to play</span></td><td class="bx-proj">14.4</td><td class="bx-delta"></td></tr>
+              <tr><td class="bx-slot">TE</td><td class="bx-name">Isaiah Likely<span class="bx-nfl">NYG</span></td><td class="bx-pts"><b>27.8</b></td><td class="bx-proj">9.5</td><td class="bx-delta bx-up">+18.3</td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">Jadarian Price<span class="bx-nfl">SEA</span></td><td class="bx-pts"><b>7.8</b></td><td class="bx-proj">14.1</td><td class="bx-delta bx-down">-6.3</td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">Ladd McConkey<span class="bx-nfl">LAC</span></td><td class="bx-pts"><b>19.2</b></td><td class="bx-proj">13.7</td><td class="bx-delta bx-up">+5.5</td></tr>
+              <tr><td class="bx-slot">D/ST</td><td class="bx-name">Seahawks D/ST<span class="bx-nfl">SEA</span></td><td class="bx-pts"><b>14</b></td><td class="bx-proj">7.2</td><td class="bx-delta bx-up">+6.8</td></tr>
+              <tr><td class="bx-slot">K</td><td class="bx-name">Harrison Mevis<span class="bx-nfl">LAR</span></td><td class="bx-pts"><b>1</b></td><td class="bx-proj">9.4</td><td class="bx-delta bx-down">-8.4</td></tr>
+            </tbody></table></div>
+          </div>
+        </div>
+        <div class="bx-matchup">
+          <div class="bx-head">Tyler 163.6 &middot; W 157.9</div>
+          <div class="bx-grid">
+            <div class="bx-side"><div class="bx-team">Tyler <span class="bx-total">163.6</span></div>
+            <table class="bx-table"><thead><tr><th></th><th></th><th>pts</th><th>proj</th><th>vs</th></tr></thead><tbody>
+              <tr><td class="bx-slot">QB</td><td class="bx-name">Jaxson Dart<span class="bx-nfl">NYG</span></td><td class="bx-pts"><b>26.6</b></td><td class="bx-proj">18.5</td><td class="bx-delta bx-up">+8.1</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">Christian McCaffrey<span class="bx-nfl">SF</span></td><td class="bx-pts"><b>13.8</b></td><td class="bx-proj">18.5</td><td class="bx-delta bx-down">-4.7</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">Kyren Williams<span class="bx-nfl">LAR</span></td><td class="bx-pts"><b>15.5</b></td><td class="bx-proj">13.7</td><td class="bx-delta bx-up">+1.8</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Garrett Wilson<span class="bx-nfl">NYJ</span></td><td class="bx-pts"><b>13.9</b></td><td class="bx-proj">14.8</td><td class="bx-delta bx-down">-0.9</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Zay Flowers<span class="bx-nfl">BAL</span></td><td class="bx-pts"><b>26</b></td><td class="bx-proj">14.2</td><td class="bx-delta bx-up">+11.8</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Drake London<span class="bx-nfl">ATL</span></td><td class="bx-pts"><b>5.5</b></td><td class="bx-proj">13.8</td><td class="bx-delta bx-down">-8.3</td></tr>
+              <tr><td class="bx-slot">TE</td><td class="bx-name">Dalton Kincaid<span class="bx-nfl">BUF</span></td><td class="bx-pts"><b>18</b></td><td class="bx-proj">8.7</td><td class="bx-delta bx-up">+9.3</td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">DK Metcalf<span class="bx-nfl">PIT</span></td><td class="bx-pts"><b>8</b></td><td class="bx-proj">12.2</td><td class="bx-delta bx-down">-4.2</td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">Marvin Harrison Jr.<span class="bx-nfl">ARI</span></td><td class="bx-pts"><b>4.3</b></td><td class="bx-proj">11.5</td><td class="bx-delta bx-down">-7.2</td></tr>
+              <tr><td class="bx-slot">D/ST</td><td class="bx-name">Steelers D/ST<span class="bx-nfl">PIT</span></td><td class="bx-pts"><b>19</b></td><td class="bx-proj">7.2</td><td class="bx-delta bx-up">+11.8</td></tr>
+              <tr><td class="bx-slot">K</td><td class="bx-name">Trey Smack<span class="bx-nfl">GB</span></td><td class="bx-pts"><b>13</b></td><td class="bx-proj">8.2</td><td class="bx-delta bx-up">+4.8</td></tr>
+            </tbody></table></div>
+            <div class="bx-side"><div class="bx-team">W <span class="bx-total">157.9</span></div>
+            <table class="bx-table"><thead><tr><th></th><th></th><th>pts</th><th>proj</th><th>vs</th></tr></thead><tbody>
+              <tr><td class="bx-slot">QB</td><td class="bx-name">Lamar Jackson<span class="bx-nfl">BAL</span></td><td class="bx-pts"><b>25</b></td><td class="bx-proj">19.1</td><td class="bx-delta bx-up">+5.9</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">James Cook III<span class="bx-nfl">BUF</span></td><td class="bx-pts"><b>9.9</b></td><td class="bx-proj">15.9</td><td class="bx-delta bx-down">-6</td></tr>
+              <tr><td class="bx-slot">RB</td><td class="bx-name">Jeremiyah Love<span class="bx-nfl">ARI</span></td><td class="bx-pts"><b>13</b></td><td class="bx-proj">13.9</td><td class="bx-delta bx-down">-0.9</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Justin Jefferson<span class="bx-nfl">MIN</span></td><td class="bx-pts"><b>31.2</b></td><td class="bx-proj">17.1</td><td class="bx-delta bx-up">+14.1</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Nico Collins<span class="bx-nfl">HOU</span></td><td class="bx-pts"><b>21.2</b></td><td class="bx-proj">15.6</td><td class="bx-delta bx-up">+5.6</td></tr>
+              <tr><td class="bx-slot">WR</td><td class="bx-name">Jameson Williams<span class="bx-nfl">DET</span></td><td class="bx-pts"><b>8.5</b></td><td class="bx-proj">12.1</td><td class="bx-delta bx-down">-3.6</td></tr>
+              <tr><td class="bx-slot">TE</td><td class="bx-name">Tucker Kraft<span class="bx-nfl">GB</span></td><td class="bx-pts"><b>9.5</b></td><td class="bx-proj">9</td><td class="bx-delta bx-up">+0.5</td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">Bucky Irving<span class="bx-nfl">TB</span></td><td class="bx-pts"><b>20.3</b></td><td class="bx-proj">13.5</td><td class="bx-delta bx-up">+6.8</td></tr>
+              <tr><td class="bx-slot">FLEX</td><td class="bx-name">Jaylen Warren<span class="bx-nfl">PIT</span></td><td class="bx-pts"><b>10.3</b></td><td class="bx-proj">12.6</td><td class="bx-delta bx-down">-2.3</td></tr>
+              <tr><td class="bx-slot">D/ST</td><td class="bx-name">Broncos D/ST<span class="bx-nfl">DEN</span></td><td class="bx-pts"><span class="bx-pending">yet to play</span></td><td class="bx-proj">5.9</td><td class="bx-delta"></td></tr>
+              <tr><td class="bx-slot">K</td><td class="bx-name">Ka'imi Fairbairn<span class="bx-nfl">HOU</span></td><td class="bx-pts"><b>9</b></td><td class="bx-proj">9.8</td><td class="bx-delta bx-down">-0.8</td></tr>
+            </tbody></table></div>
+          </div>
+        </div>
+      </div>
     </div>
     <button type="button" class="lc-toggle" id="today-thu-toggle" style="margin-top:10px;">Thursday night, what happened</button>
     <div id="today-thu-wrap" hidden>
@@ -675,6 +827,18 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     </div>
   </div>
 
+  <script>
+  (function(){
+    var box = document.getElementById('today-box');
+    var toggle = document.getElementById('today-box-toggle');
+    if (!box || !toggle) return;
+    toggle.addEventListener('click', function(){
+      var willShow = box.hidden;
+      box.hidden = !willShow;
+      toggle.textContent = willShow ? 'enough' : 'Every starter, every matchup';
+    });
+  })();
+  </script>
   <script>
   (function(){
     var pre = document.getElementById('today-pre');
