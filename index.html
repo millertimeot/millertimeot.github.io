@@ -299,9 +299,16 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
 .bet-tag.tag-accepted{color:var(--bg);background:var(--green);}
 .bet-tag.tag-settled{color:var(--bg);background:var(--dim);}
 .bet-tag.tag-void{color:var(--ink);background:rgba(185,174,156,0.25);}
+.bet-tag.tag-expired{color:var(--ink);background:rgba(185,174,156,0.25);}
+.bet-tag.tag-invalid{color:var(--bg);background:var(--pink);}
 .bet-meta{font-family:'Caveat',cursive;font-size:1.1875rem;color:var(--dim);}
+.bet-invalid-reason{font-style:italic;}
 .bet-line{font-size:1.0625rem;line-height:1.4;}
 .bet-house-note{font-family:'Caveat',cursive;font-size:1.1875rem;font-style:italic;color:var(--pink);}
+.bet-comments{border-top:1px solid var(--border-soft-2);margin-top:6px;padding-top:8px;display:flex;flex-direction:column;gap:6px;}
+.bet-comment{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px;}
+.bc-who{font-weight:700;}
+.bc-when{color:var(--dim);font-size:0.85em;}
 .bet-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:4px;}
 .btn-sm{font-family:'Cabin Sketch',cursive;font-size:1rem;font-weight:700;background:none;border:2px solid var(--accent);color:var(--accent);border-radius:6px;padding:8px 14px;min-height:44px;cursor:pointer;}
 .btn-sm:hover{background:var(--accent-tint);}
@@ -322,6 +329,8 @@ textarea.text-input{resize:vertical;min-height:78px;line-height:1.35;font-size:1
 #side-bets .bet-tag{border-radius:2px;}
 #side-bets .bet-tag.tag-settled{color:#f6ecb6;background:#2a1f16;}
 #side-bets .bet-tag.tag-void{color:#5c4d3a;background:rgba(42,31,22,0.12);}
+#side-bets .bet-tag.tag-expired{color:#5c4d3a;background:rgba(42,31,22,0.12);}
+#side-bets .bet-tag.tag-invalid{color:#f6ecb6;background:#8a2f2f;}
 #side-bets .btn-sm{border-color:#2a1f16;color:#2a1f16;background:transparent;font-family:'Caveat',cursive;font-size:1.2rem;min-height:44px;}
 #side-bets .btn-void{color:#8a2f2f;}
 #side-bets .settle-choice{color:#2a1f16;}
@@ -1296,6 +1305,17 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
           <option value="Skoney">Skoney</option>
         </select>
       </div>
+      <div class="field-row">
+        <label class="field-label" for="sb-week">Matchup week (optional)</label>
+        <select class="text-input" id="sb-week">
+          <option value="">not a matchup bet</option>
+        </select>
+        <div class="char-count" id="sb-week-note">A matchup bet cannot be posted or accepted once that week kicks off.</div>
+      </div>
+      <div class="field-row">
+        <label class="field-label" for="sb-deadline">Accept by (optional)</label>
+        <input class="text-input" type="datetime-local" id="sb-deadline">
+      </div>
       <div class="field-row" id="sb-pass-row">
         <label class="field-label" for="sb-pass">Passcode</label>
         <input class="text-input" type="password" id="sb-pass" autocomplete="off" placeholder="Your passcode">
@@ -1306,6 +1326,62 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     <div class="form-msg" id="sb-action-msg" role="status" aria-live="polite"></div>
     <div class="bet-list" id="sb-list"></div>
     <div class="ledger-line" id="sb-ledger"></div>
+  </div>
+
+  <div class="section" id="bet-rules-section">
+    <div class="section-head"><div class="section-plaque"><div class="section-title">House rules</div></div><div class="section-note">Posted above the register so nobody has to take anyone's word for it</div></div>
+    <div class="bar-rail"></div>
+
+    <div class="matchup-line" style="margin-bottom:10px;">Art never settled an argument with his opinion when a clock would do it for him. These are the rules the site enforces on its own. The house does not apply them by hand and cannot bend them for anybody, including whoever owns the bar.</div>
+
+    <div class="matchup-grid">
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">1. Every bet is stamped</div>
+        <div class="card-blurb">The moment a bet goes up is recorded to the second, and so is the moment somebody takes it. Both are printed on the card. No bet on this board relies on anyone remembering when something happened.</div>
+      </div>
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">2. Matchup bets die at kickoff</div>
+        <div class="card-blurb">A bet on how a week's matchup ends can only be posted, and can only be accepted, before that week's first kickoff. After the first ball is in the air the site refuses both, with the kickoff time in the error.</div>
+        <div class="card-blurb">This is the one that matters most. A wager offered or taken once the result is known is not a wager, it is a man reading a scoreboard and asking for a drink. The clock decides it, not the house.</div>
+      </div>
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">3. You may set your own deadline</div>
+        <div class="card-blurb">Any bet can carry an acceptance deadline. Put one on and the bet stops taking takers at that moment, whether or not it is about a matchup. Leave it off and a matchup bet still dies at kickoff; an open ended bet stays up until somebody takes it or the house closes it.</div>
+      </div>
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">4. Expired, and what a duck is</div>
+        <div class="card-blurb">A bet whose window shuts with nobody on the other side is marked EXPIRED. If it had a name on it and that person never took it, it counts as a duck against them on the tab.</div>
+        <div class="card-blurb">Ducks are counted by the clock and nothing else: named, unaccepted, window closed. Nobody can hand one out, and no note written by the house adds or removes one. Declining a bet is allowed. Leaving one with your name on it sitting on the bar until it rots is a duck, and that is the whole test.</div>
+      </div>
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">5. Invalid is not a duck</div>
+        <div class="card-blurb">A bet that broke a rule when it was posted, most often a matchup bet written after kickoff, is marked INVALID with the reason on the card. It is dead, no drink is owed, and it counts against nobody on either side.</div>
+        <div class="card-blurb">A bet that should never have been on the bar cannot be ducked.</div>
+      </div>
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">6. Taking, settling, walking away</div>
+        <div class="card-blurb">An open bet with no name on it can be taken by anyone. A bet with a name on it can only be taken by that person. Nobody can take their own bet. Once accepted, either side may settle it when there is a winner, and either side may void it by agreement.</div>
+      </div>
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">7. The house rules on itself last</div>
+        <div class="card-blurb">The man who runs this board also has bets on it. So the rules above are enforced by the site rather than by him: he cannot post a matchup bet late, cannot accept one late, cannot grant a duck, and cannot clear one off his own record.</div>
+        <div class="card-blurb">Where the house has ruled by hand, the reason is printed on the card with the timestamps behind it, so anyone can check the work and say so if it stinks.</div>
+      </div>
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">8. Say your piece</div>
+        <div class="card-blurb">Every bet takes comments. Both sides get pinged when one lands, and so does anybody named in it. Take your own comment down whenever you like. Two hundred forty characters, same as a napkin, because Art only had so much paper.</div>
+      </div>
+
+    </div>
+    <div class="line-note">Art, probably: a bet is a promise made before you know the answer. Everything after that is just talking.</div>
   </div>
 
   <div class="section" id="tab-section">
@@ -1984,6 +2060,8 @@ const ROSTER_ROASTS = {
 
   var member = '';
   var isAdmin = false;
+  var weeksById = {};
+  var commentsByBetId = {};
   var openReplyIds = {};
   var lastRepliesByNote = {};
 
@@ -2094,6 +2172,22 @@ const ROSTER_ROASTS = {
     }
     var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     return months[d.getMonth()] + ' ' + d.getDate();
+  }
+
+  function exactTime(iso){
+    var s = new Date(iso).toLocaleString('en-US', { timeZone: 'America/Chicago', weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+    return s.replace(',', '');
+  }
+
+  function closingTime(b){
+    var deadline = b.accept_deadline ? new Date(b.accept_deadline).getTime() : null;
+    var weekLock = null;
+    if (b.week != null && weeksById[b.week] && weeksById[b.week].locks_at){
+      weekLock = new Date(weeksById[b.week].locks_at).getTime();
+    }
+    if (deadline == null) return weekLock;
+    if (weekLock == null) return deadline;
+    return Math.min(deadline, weekLock);
   }
 
   function setMsg(id, text, cls){
@@ -2625,8 +2719,13 @@ const ROSTER_ROASTS = {
     card.className = 'bet-card';
 
     var tag = document.createElement('div');
-    tag.className = 'bet-tag tag-' + b.status;
-    tag.textContent = (b.status || '').toUpperCase();
+    if (b.invalid_reason){
+      tag.className = 'bet-tag tag-invalid';
+      tag.textContent = 'INVALID';
+    } else {
+      tag.className = 'bet-tag tag-' + b.status;
+      tag.textContent = (b.status || '').toUpperCase();
+    }
     card.appendChild(tag);
 
     var vs = document.createElement('div');
@@ -2638,6 +2737,13 @@ const ROSTER_ROASTS = {
     line.className = 'bet-line';
     line.textContent = b.body;
     card.appendChild(line);
+
+    if (b.invalid_reason){
+      var invalidLine = document.createElement('div');
+      invalidLine.className = 'bet-meta bet-invalid-reason';
+      invalidLine.textContent = 'Invalid: ' + b.invalid_reason;
+      card.appendChild(invalidLine);
+    }
 
     if (b.house_note){
       var houseNote = document.createElement('div');
@@ -2658,10 +2764,25 @@ const ROSTER_ROASTS = {
       card.appendChild(winnerLine);
     }
 
-    var dateLine = document.createElement('div');
-    dateLine.className = 'bet-meta';
-    dateLine.textContent = relTime(b.created_at);
-    card.appendChild(dateLine);
+    var closeTs = closingTime(b);
+    var stamps = [];
+    stamps.push('Posted ' + exactTime(b.created_at));
+    if (closeTs != null){
+      var closeIso = new Date(closeTs).toISOString();
+      if (closeTs > Date.now()){
+        if (b.status === 'open') stamps.push('Closes ' + exactTime(closeIso));
+      } else {
+        stamps.push('Closed ' + exactTime(closeIso));
+      }
+    }
+    if (b.accepted_at) stamps.push('Taken ' + exactTime(b.accepted_at));
+    if (b.settled_at) stamps.push('Settled ' + exactTime(b.settled_at));
+    stamps.forEach(function(text){
+      var stampLine = document.createElement('div');
+      stampLine.className = 'bet-meta';
+      stampLine.textContent = text;
+      card.appendChild(stampLine);
+    });
 
     var actions = document.createElement('div');
     actions.className = 'bet-actions';
@@ -2676,13 +2797,21 @@ const ROSTER_ROASTS = {
     } else {
       var isProposer = b.proposer === member;
       var isTaker = !!b.taker && b.taker === member;
+      var windowOpen = (closeTs == null) || (closeTs > Date.now());
       if (b.status === 'open' && !isProposer && (!b.taker || b.taker === member)){
-        var acceptBtn = document.createElement('button');
-        acceptBtn.type = 'button';
-        acceptBtn.className = 'btn-sm';
-        acceptBtn.textContent = 'Accept';
-        acceptBtn.addEventListener('click', function(){ handleAccept(b.id); });
-        actions.appendChild(acceptBtn);
+        if (windowOpen){
+          var acceptBtn = document.createElement('button');
+          acceptBtn.type = 'button';
+          acceptBtn.className = 'btn-sm';
+          acceptBtn.textContent = 'Accept';
+          acceptBtn.addEventListener('click', function(){ handleAccept(b.id); });
+          actions.appendChild(acceptBtn);
+        } else {
+          var closedSpan = document.createElement('span');
+          closedSpan.className = 'bet-meta';
+          closedSpan.textContent = 'Window closed';
+          actions.appendChild(closedSpan);
+        }
       }
       var adminParty = isProposer || isTaker;
       if (b.status === 'accepted' && (adminParty || isAdmin)){
@@ -2714,7 +2843,85 @@ const ROSTER_ROASTS = {
       }
     }
     card.appendChild(actions);
+    card.appendChild(buildBetComments(b));
     return card;
+  }
+
+  function buildBetComments(b){
+    var wrap = document.createElement('div');
+    wrap.className = 'bet-comments';
+    var comments = commentsByBetId[b.id] || [];
+    comments.forEach(function(c){
+      var row = document.createElement('div');
+      row.className = 'bet-comment';
+      var who = document.createElement('span');
+      who.className = 'bc-who';
+      who.textContent = c.name;
+      row.appendChild(who);
+      var body = document.createElement('span');
+      body.className = 'bc-body';
+      body.textContent = c.body;
+      row.appendChild(body);
+      var when = document.createElement('span');
+      when.className = 'bc-when';
+      when.textContent = exactTime(c.created_at);
+      row.appendChild(when);
+      if (member && (c.name === member || isAdmin)){
+        var takeDown = document.createElement('button');
+        takeDown.type = 'button';
+        takeDown.className = 'btn-void';
+        takeDown.textContent = 'Take it down';
+        takeDown.addEventListener('click', function(){ handleHideComment(c.id); });
+        row.appendChild(takeDown);
+      }
+      wrap.appendChild(row);
+    });
+    if (!comments.length && member){
+      var empty = document.createElement('div');
+      empty.className = 'form-msg';
+      empty.textContent = 'No comments yet.';
+      wrap.appendChild(empty);
+    }
+    if (member){
+      var row2 = document.createElement('div');
+      row2.className = 'bet-actions';
+      var input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'text-input';
+      input.maxLength = 240;
+      input.placeholder = 'Say something';
+      row2.appendChild(input);
+      var commentBtn = document.createElement('button');
+      commentBtn.type = 'button';
+      commentBtn.className = 'btn-sm';
+      commentBtn.textContent = 'Comment';
+      commentBtn.addEventListener('click', function(){
+        var text = input.value.trim();
+        if (!text) return;
+        var pass = storedPass();
+        if (!pass || !member){ setMsg('sb-action-msg', 'Enter your passcode to bet.', 'err'); return; }
+        commentBtn.disabled = true;
+        rpc('post_bet_comment', { p_pass: pass, p_bet_id: b.id, p_body: text }).then(function(){
+          input.value = '';
+          return loadBets();
+        }).catch(function(err){
+          handleWriteError(err, 'sb-action-msg');
+        }).then(function(){ commentBtn.disabled = false; });
+      });
+      row2.appendChild(commentBtn);
+      wrap.appendChild(row2);
+    }
+    return wrap;
+  }
+
+  function handleHideComment(id){
+    var pass = storedPass();
+    if (!pass || !member){ setMsg('sb-action-msg', 'Enter your passcode to bet.', 'err'); return; }
+    rpc('hide_bet_comment', { p_pass: pass, p_id: id }).then(function(){
+      return loadBets();
+    }).catch(function(err){
+      handleWriteError(err, 'sb-action-msg');
+    });
   }
 
   function showInlinePasscode(card, triggerBtn){
@@ -2814,8 +3021,45 @@ const ROSTER_ROASTS = {
     renderLedger(list);
   }
 
+  function loadWeeks(){
+    return getList('weeks?select=week,locks_at,label').then(function(list){
+      weeksById = {};
+      (list || []).forEach(function(w){ weeksById[w.week] = w; });
+      populateWeekSelect();
+    }).catch(function(){});
+  }
+
+  function populateWeekSelect(){
+    var sel = document.getElementById('sb-week');
+    if (!sel) return;
+    var current = sel.value;
+    while (sel.options.length > 1){ sel.remove(1); }
+    var now = Date.now();
+    Object.keys(weeksById).map(Number).sort(function(a, c){ return a - c; }).forEach(function(wk){
+      var w = weeksById[wk];
+      if (!w.locks_at || new Date(w.locks_at).getTime() <= now) return;
+      var opt = document.createElement('option');
+      opt.value = String(wk);
+      opt.textContent = w.label || ('Week ' + wk);
+      sel.appendChild(opt);
+    });
+    if (current) sel.value = current;
+  }
+
+  function loadBetComments(){
+    return getList('bet_comments?select=id,bet_id,name,body,created_at&order=created_at.asc&limit=500').then(function(list){
+      commentsByBetId = {};
+      (list || []).forEach(function(c){
+        if (!commentsByBetId[c.bet_id]) commentsByBetId[c.bet_id] = [];
+        commentsByBetId[c.bet_id].push(c);
+      });
+    }).catch(function(){});
+  }
+
   function loadBets(){
-    return getList('bets?select=id,created_at,proposer,taker,body,stakes,status,accepted_at,settled_at,winner,house_note&order=created_at.desc&limit=100').then(function(list){
+    return loadBetComments().then(function(){
+      return getList('bets?select=id,created_at,proposer,taker,body,stakes,status,accepted_at,settled_at,winner,house_note,accept_deadline,week,invalid_reason&order=created_at.desc&limit=100');
+    }).then(function(list){
       renderBets(list);
       if (typeof loadTab === 'function') loadTab();
     }).catch(function(){});
@@ -2825,20 +3069,26 @@ const ROSTER_ROASTS = {
     var bodyEl = document.getElementById('sb-body');
     var stakesEl = document.getElementById('sb-stakes');
     var againstEl = document.getElementById('sb-against');
+    var weekEl = document.getElementById('sb-week');
+    var deadlineEl = document.getElementById('sb-deadline');
     var btn = document.getElementById('sb-submit');
     var body = bodyEl.value.trim();
     var stakes = stakesEl.value.trim() || "a Dr. McGillicuddy's";
     var against = againstEl ? againstEl.value : '';
+    var week = (weekEl && weekEl.value) ? parseInt(weekEl.value, 10) : null;
+    var deadline = (deadlineEl && deadlineEl.value) ? new Date(deadlineEl.value).toISOString() : null;
     setMsg('sb-msg', '', '');
     if (!body || body.length > 240){ setMsg('sb-msg', 'Say the bet. 240 tops.', 'err'); return; }
     if (stakes.length > 60){ setMsg('sb-msg', 'Stakes, 60 tops.', 'err'); return; }
     ensurePasscode('sb-pass', 'sb-msg', function(pass){
       if (!pass) return;
       btn.disabled = true;
-      rpc('post_bet', { p_pass: pass, p_taker: against || null, p_body: body, p_stakes: stakes }).then(function(){
+      rpc('post_bet', { p_pass: pass, p_taker: against || null, p_body: body, p_stakes: stakes, p_deadline: deadline, p_week: week }).then(function(){
         bodyEl.value = '';
         stakesEl.value = '';
         if (againstEl) againstEl.value = '';
+        if (weekEl) weekEl.value = '';
+        if (deadlineEl) deadlineEl.value = '';
         wireCounter('sb-body', 'sb-count', 240);
         setMsg('sb-msg', 'On the bar.', 'ok');
         return loadBets();
@@ -3556,6 +3806,7 @@ const ROSTER_ROASTS = {
   var sackoSubmit = document.getElementById('sacko-submit');
   if (sackoSubmit) sackoSubmit.addEventListener('click', submitSacko);
 
+  loadWeeks();
   loadTab();
   loadSacko();
   loadPoll();
@@ -3597,6 +3848,7 @@ const ROSTER_ROASTS = {
     ['around-bar-section', 'Around the bar'],
     ['napkin-wall', 'Napkin wall'],
     ['side-bets', 'Side bets'],
+    ['bet-rules-section', 'House rules'],
     ['tab-section', 'The tab'],
     ['sacko-section', 'Sacko'],
     ['arts-take-section', "Art's take"],
