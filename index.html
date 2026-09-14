@@ -926,61 +926,6 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     </div>
   </div>
 
-  <div class="section" id="bet-rules-section">
-    <div class="section-head"><div class="section-plaque"><div class="section-title">Betting rules</div></div><div class="section-note">Posted above the register. The board enforces these itself, so nobody has to take anyone's word for it.</div></div>
-    <div class="bar-rail"></div>
-
-    <div class="matchup-line" style="margin-bottom:10px;">Art never settled an argument with his opinion when a clock would do it for him. These are the rules the site enforces on its own. The house does not apply them by hand and cannot bend them for anybody, including whoever owns the bar.</div>
-
-    <div class="matchup-grid">
-
-      <div class="matchup-card plain">
-        <div class="matchup-name">1. Every bet is stamped</div>
-        <div class="card-blurb">The moment a bet goes up is recorded to the second, and so is the moment somebody takes it. Both are printed on the card. No bet on this board relies on anyone remembering when something happened.</div>
-      </div>
-
-      <div class="matchup-card plain">
-        <div class="matchup-name">2. Matchup bets die at kickoff</div>
-        <div class="card-blurb">A bet on how a week's matchup ends can only be posted, and can only be accepted, before that week's first kickoff. After the first ball is in the air the site refuses both, with the kickoff time in the error.</div>
-        <div class="card-blurb">This is the one that matters most. A wager offered or taken once the result is known is not a wager, it is a man reading a scoreboard and asking for a drink. The clock decides it, not the house.</div>
-      </div>
-
-      <div class="matchup-card plain">
-        <div class="matchup-name">3. You may set your own deadline</div>
-        <div class="card-blurb">Any bet can carry an acceptance deadline. Put one on and the bet stops taking takers at that moment, whether or not it is about a matchup. Leave it off and a matchup bet still dies at kickoff; an open ended bet stays up until somebody takes it or the house closes it.</div>
-      </div>
-
-      <div class="matchup-card plain">
-        <div class="matchup-name">4. Expired, and what a duck is</div>
-        <div class="card-blurb">A bet whose window shuts with nobody on the other side is marked EXPIRED. If it had a name on it and that person never took it, it counts as a duck against them on the tab.</div>
-        <div class="card-blurb">Ducks are counted by the clock and nothing else: named, unaccepted, window closed. Nobody can hand one out, and no note written by the house adds or removes one. Declining a bet is allowed. Leaving one with your name on it sitting on the bar until it rots is a duck, and that is the whole test.</div>
-      </div>
-
-      <div class="matchup-card plain">
-        <div class="matchup-name">5. Invalid is not a duck</div>
-        <div class="card-blurb">A bet that broke a rule when it was posted, most often a matchup bet written after kickoff, is marked INVALID with the reason on the card. It is dead, no drink is owed, and it counts against nobody on either side.</div>
-        <div class="card-blurb">A bet that should never have been on the bar cannot be ducked.</div>
-      </div>
-
-      <div class="matchup-card plain">
-        <div class="matchup-name">6. Taking, settling, walking away</div>
-        <div class="card-blurb">An open bet with no name on it can be taken by anyone. A bet with a name on it can only be taken by that person. Nobody can take their own bet. Once accepted, either side may settle it when there is a winner, and either side may void it by agreement.</div>
-      </div>
-
-      <div class="matchup-card plain">
-        <div class="matchup-name">7. The house rules on itself last</div>
-        <div class="card-blurb">The man who runs this board also has bets on it. So the rules above are enforced by the site rather than by him: he cannot post a matchup bet late, cannot accept one late, cannot grant a duck, and cannot clear one off his own record.</div>
-        <div class="card-blurb">Where the house has ruled by hand, the reason is printed on the card with the timestamps behind it, so anyone can check the work and say so if it stinks.</div>
-      </div>
-
-      <div class="matchup-card plain">
-        <div class="matchup-name">8. Say your piece</div>
-        <div class="card-blurb">Every bet takes comments. Both sides get pinged when one lands, and so does anybody named in it. Take your own comment down whenever you like. Two hundred forty characters, same as a napkin, because Art only had so much paper.</div>
-      </div>
-
-    </div>
-    <div class="line-note">Art, probably: a bet is a promise made before you know the answer. Everything after that is just talking.</div>
-  </div>
 
   <div class="section" id="standings-section">
     <div class="section-head">
@@ -1543,7 +1488,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
       <div class="field-row sb-reminder">
         <div class="field-label">Before you slap it down</div>
         <div class="char-count sb-reminder-body">A bet on a week's matchup has to go up before that week kicks off, and has to be taken before then too. Once the first ball is in the air the board refuses both. A bet with somebody's name on it that nobody takes before the window shuts goes down as a duck. <a href="#bet-rules-section">All of it, in full.</a></div>
-        <div class="sb-reminder-line">Just be reasonable men.</div>
+        <div class="sb-reminder-line">Bet it before you know the answer.</div>
       </div>
       <div class="field-row" id="sb-pass-row">
         <label class="field-label" for="sb-pass">Passcode</label>
@@ -1555,6 +1500,62 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     <div class="form-msg" id="sb-action-msg" role="status" aria-live="polite"></div>
     <div class="bet-list" id="sb-list"></div>
     <div class="ledger-line" id="sb-ledger"></div>
+  </div>
+
+  <div class="section" id="bet-rules-section">
+    <div class="section-head"><div class="section-plaque"><div class="section-title">Betting rules</div></div><div class="section-note">The board enforces these itself. Nobody rules on anybody.</div></div>
+    <div class="bar-rail"></div>
+
+    <div class="matchup-line" style="margin-bottom:10px;"><b>The short version:</b> bet on a matchup before it kicks off, or don't bet on it. Take the bets with your name on them. Everything else is details.</div>
+
+    <div class="matchup-grid">
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">Matchup bets close at kickoff</div>
+        <div class="card-blurb">Betting on how a week turns out? You have until that week's first game starts. After that the board won't let you post one and won't let you take one. It tells you the kickoff time when it stops you.</div>
+        <div class="card-blurb">A bet you make once you already know the answer isn't a bet.</div>
+      </div>
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">Everything is timestamped</div>
+        <div class="card-blurb">Every bet shows when it went up, when it closes, when somebody took it, and when it was settled, down to the minute. Nobody has to remember anything or take anyone's word for it.</div>
+      </div>
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">You can set a deadline</div>
+        <div class="card-blurb">Any bet can have an "accept by" time. After it passes, the bet stops taking takers. Leave it blank and a matchup bet still dies at kickoff. Anything else stays up until somebody takes it.</div>
+      </div>
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">What counts as a duck</div>
+        <div class="card-blurb">Put somebody's name on a bet and they never take it before it closes? That's a duck, and it shows on their line on the tab.</div>
+        <div class="card-blurb">Ducks are counted by the clock. Nobody hands them out and nobody can wipe one off. Turning a bet down is fine and costs you nothing. Ignoring one with your name on it until it expires is the duck.</div>
+      </div>
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">Invalid is not a duck</div>
+        <div class="card-blurb">A bet that broke a rule when it was posted gets marked INVALID with the reason on the card. Nobody owes anything and it counts against nobody.</div>
+        <div class="card-blurb">You can't duck a bet that was never really on the bar.</div>
+      </div>
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">Taking and settling</div>
+        <div class="card-blurb">No name on it, anyone can take it. Your name on it, only you. Nobody takes their own. Once it's on, either side can settle it when there's a winner, or void it if you both walk away.</div>
+      </div>
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">The rules run themselves</div>
+        <div class="card-blurb">Everyone on this board has bets on it, including whoever keeps it. So none of the above is anybody's judgement call: the site reads the clock and applies the same rule to every name on it.</div>
+        <div class="card-blurb">Any bet that gets closed out carries its reason and its timestamps on the card. Check the work on any of them.</div>
+      </div>
+
+      <div class="matchup-card plain">
+        <div class="matchup-name">Talk your talk</div>
+        <div class="card-blurb">Every bet takes comments. Both sides get a ping, and so does anyone you name. Take your own down whenever you want. 240 characters, same as a napkin.</div>
+      </div>
+
+    </div>
+    <div class="line-note">Art, probably: a bet is a promise made before you know the answer. Everything after that is just talking.</div>
   </div>
 
 
