@@ -578,7 +578,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
       </div>
       <div style="display:flex;align-items:center;gap:8px;">
         <svg width="32" height="28" viewBox="0 0 40 34"><path d="M10 15 L30 15 L26 32 L14 32 Z" fill="none" stroke="var(--dim)" stroke-width="2" stroke-linejoin="round"></path><ellipse cx="20" cy="15" rx="10" ry="2.6" fill="none" stroke="var(--dim)" stroke-width="2"></ellipse><g fill="var(--ink)" stroke="var(--dim)" stroke-width="1.1"><rect x="2" y="0" width="7" height="7" rx="1.4" transform="rotate(-16 5.5 3.5)"></rect><rect x="11" y="2" width="7" height="7" rx="1.4" transform="rotate(10 14.5 5.5)"></rect><rect x="20" y="0" width="7" height="7" rx="1.4" transform="rotate(-8 23.5 3.5)"></rect><rect x="29" y="2" width="7" height="7" rx="1.4" transform="rotate(14 32.5 5.5)"></rect><rect x="6" y="8" width="7" height="7" rx="1.4" transform="rotate(6 9.5 11.5)"></rect></g><g fill="var(--bg)"><circle cx="5.5" cy="3.5" r="0.8"></circle><circle cx="13.5" cy="4.5" r="0.8"></circle><circle cx="15.5" cy="6.5" r="0.8"></circle><circle cx="22.5" cy="2.5" r="0.8"></circle><circle cx="24.5" cy="4.5" r="0.8"></circle><circle cx="22.5" cy="4.5" r="0.8"></circle><circle cx="31.5" cy="4.5" r="0.8"></circle><circle cx="8.5" cy="10.5" r="0.8"></circle><circle cx="10.5" cy="12.5" r="0.8"></circle></g></svg>
-        <div class="section-note">Tap a column to sort &middot; ESPN projections, Sep 8</div>
+        <div class="section-note">Sorted by points scored &middot; tap Now to sort by projected season points instead</div>
       </div>
     </div>
     <div class="bar-rail"></div>
@@ -1741,17 +1741,18 @@ const ROSTER_ROASTS = {
 <script>
 (function(){
   var teams = [
-    { team: 'CTE Celebration Club', manager: 'Tom', slot: 5, draft: 2622, now: 2593, w1: 142.5, note: 'traded up, then back' },
-    { team: 'Waterboyz FC', manager: 'Oscar', slot: 7, draft: 2608, now: 2712, w1: 158.5, note: 'bought a defense at 2 AM' },
-    { team: "Paul takes Biktarvy", manager: 'Robert', slot: 8, draft: 2569, now: 2549, w1: 153.4, note: 'deep at every spot' },
-    { team: "Ray Rice's Revenge", manager: 'Nic', slot: 1, draft: 2517, now: 2519, w1: 149.0, note: 'collects tight ends' },
-    { team: 'Martinelli Mob', manager: 'W', slot: 6, draft: 2512, now: 2514, w1: 144.9, note: 'league creator, no notes' },
-    { team: 'Blue Team', manager: 'Brennan', slot: 2, draft: 2511, now: 2626, w1: 150.3, note: 'three RBs, one defense' },
-    { team: "Symp-Tom of a Bigger Paul-blem", manager: 'Tyler', slot: 4, draft: 2482, now: 2483, w1: 142.7, note: 'nine receivers' },
-    { team: "Ball Knowers", manager: 'Skoney', slot: 3, draft: 2470, now: 2436, w1: 128.1, note: 'TE arrived at 3 AM' }
-  ];
-  var byNow = teams.slice().sort(function(a,b){ return b.now - a.now; });
-  byNow.forEach(function(t,i){ t.rank = i+1; t.delta = t.now - t.draft; });
+        { team: 'CTE Celebration Club', manager: 'Tom', slot: 5, draft: 2622, now: 2647, pts: 160.06, note: 'traded up, then back' },
+        { team: 'Waterboyz FC', manager: 'Oscar', slot: 7, draft: 2608, now: 2724, pts: 152.52, note: 'bought a defense at 2 AM' },
+        { team: "Paul takes Biktarvy", manager: 'Robert', slot: 8, draft: 2569, now: 2557, pts: 191.26, note: 'benched Allen and was right' },
+        { team: "Ray Rice's Revenge", manager: 'Nic', slot: 1, draft: 2517, now: 2520, pts: 151.26, note: 'collects tight ends' },
+        { team: 'Martinelli Mob', manager: 'W', slot: 6, draft: 2512, now: 2522, pts: 159.86, note: 'league creator, no notes' },
+        { team: 'Blue Team', manager: 'Brennan', slot: 2, draft: 2511, now: 2640, pts: 129.86, note: 'two monsters, nobody else' },
+        { team: "Symp-Tom of a Bigger Paul-blem", manager: 'Tyler', slot: 4, draft: 2482, now: 2464, pts: 163.60, note: 'nine receivers' },
+        { team: "Ball Knowers", manager: 'Skoney', slot: 3, draft: 2470, now: 2355, pts: 154.42, note: 'renamed while ahead' }
+      ];
+  var byPts = teams.slice().sort(function(a,b){ return b.pts - a.pts; });
+  byPts.forEach(function(t,i){ t.rank = i+1; });
+  teams.forEach(function(t){ t.delta = t.now - t.draft; });
   var byDraft = teams.slice().sort(function(a,b){ return b.draft - a.draft; });
   byDraft.forEach(function(t,i){ t.draftRank = i+1; });
 
@@ -1764,10 +1765,10 @@ const ROSTER_ROASTS = {
     { label: 'After draft', align: 'right', key: 'draft' },
     { label: 'Now', align: 'right', key: 'now' },
     { label: 'Change', align: 'right', key: 'delta' },
-    { label: 'Week 1', align: 'right', key: 'w1' }
+    { label: 'Points', align: 'right', key: 'pts' }
   ];
 
-  var state = { sort: 'now', taps: 0, bear: false };
+  var state = { sort: 'pts', taps: 0, bear: false };
 
   var theadRow = document.getElementById('thead-row');
   var tbody = document.getElementById('standings-body');
@@ -1802,7 +1803,7 @@ const ROSTER_ROASTS = {
       if (sort === 'slot') return a.slot - b.slot;
       if (sort === 'draft') return b.draft - a.draft;
       if (sort === 'delta') return b.delta - a.delta;
-      if (sort === 'w1') return b.w1 - a.w1;
+      if (sort === 'pts') return b.pts - a.pts;
       return b.now - a.now;
     });
     tbody.innerHTML = '';
@@ -1819,7 +1820,7 @@ const ROSTER_ROASTS = {
         '<td class="num dim">' + fmt(t.draft) + ' (' + t.draftRank + ')</td>' +
         '<td class="num">' + fmt(t.now) + '</td>' +
         '<td class="num delta ' + deltaClass + '">' + deltaText + '</td>' +
-        '<td class="num">' + t.w1.toFixed(1) + '</td>';
+        '<td class="num">' + t.pts.toFixed(2) + '</td>';
       tbody.appendChild(tr);
     });
   }
