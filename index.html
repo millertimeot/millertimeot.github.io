@@ -148,7 +148,7 @@ a:hover{color:#ffe58f;}
 
 /* Standings table */
 .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px;}
-table.standings{border-collapse:collapse;width:100%;min-width:560px;font-size:1.0625rem;}
+table.standings{border-collapse:collapse;width:100%;min-width:680px;font-size:1.0625rem;}
 table.standings thead th{font-family:'Caveat',cursive;font-size:1.1875rem;color:var(--dim);font-weight:400;text-align:right;padding:4px 8px;white-space:nowrap;}
 table.standings thead th:first-child, table.standings thead th:nth-child(2){text-align:left;}
 table.standings tbody td{padding:10px 8px;border-bottom:1px dashed var(--dash-line);vertical-align:middle;}
@@ -578,7 +578,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
       </div>
       <div style="display:flex;align-items:center;gap:8px;">
         <svg width="32" height="28" viewBox="0 0 40 34"><path d="M10 15 L30 15 L26 32 L14 32 Z" fill="none" stroke="var(--dim)" stroke-width="2" stroke-linejoin="round"></path><ellipse cx="20" cy="15" rx="10" ry="2.6" fill="none" stroke="var(--dim)" stroke-width="2"></ellipse><g fill="var(--ink)" stroke="var(--dim)" stroke-width="1.1"><rect x="2" y="0" width="7" height="7" rx="1.4" transform="rotate(-16 5.5 3.5)"></rect><rect x="11" y="2" width="7" height="7" rx="1.4" transform="rotate(10 14.5 5.5)"></rect><rect x="20" y="0" width="7" height="7" rx="1.4" transform="rotate(-8 23.5 3.5)"></rect><rect x="29" y="2" width="7" height="7" rx="1.4" transform="rotate(14 32.5 5.5)"></rect><rect x="6" y="8" width="7" height="7" rx="1.4" transform="rotate(6 9.5 11.5)"></rect></g><g fill="var(--bg)"><circle cx="5.5" cy="3.5" r="0.8"></circle><circle cx="13.5" cy="4.5" r="0.8"></circle><circle cx="15.5" cy="6.5" r="0.8"></circle><circle cx="22.5" cy="2.5" r="0.8"></circle><circle cx="24.5" cy="4.5" r="0.8"></circle><circle cx="22.5" cy="4.5" r="0.8"></circle><circle cx="31.5" cy="4.5" r="0.8"></circle><circle cx="8.5" cy="10.5" r="0.8"></circle><circle cx="10.5" cy="12.5" r="0.8"></circle></g></svg>
-        <div class="section-note">Sorted by points scored &middot; tap Now to sort by projected season points instead</div>
+        <div class="section-note">Sorted by points scored &middot; tap any heading to re-sort &middot; Change and Move follow whichever column the board is ranked by &middot; this is the first board with a score on it, so points movement starts next Tuesday</div>
       </div>
     </div>
     <div class="bar-rail"></div>
@@ -1086,7 +1086,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     <div class="award-card">
       <div class="award-name">Skoney</div>
       <div class="award-winner">Lost by 5.64 with 24.50 sitting there</div>
-      <div class="award-roast">Art, probably: renamed the team while he was ahead. You never change the sign.</div>
+      <div class="award-roast">Art, probably: he had the sign changed to Ball Knowers while he was still ahead, and it was wrong by dinner. Knowing ball is a thing other people say about you. Nobody who has it ever had to put it on the door.</div>
     </div>
     <div class="award-card">
       <div class="award-name">Tom</div>
@@ -1178,7 +1178,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
         <div class="badge">FINAL</div>
         <div class="badge-row"><div class="matchup-line">CTE Celebration Club <span class="vs">beat</span> Ball Knowers</div><div class="line-note">160.06 &ndash; 154.42</div></div>
         <div class="matchup-name">Won It From The Bench</div>
-        <div class="card-blurb">Tom won by 5.64 with 21.7 sitting on his own bench. Patrick Mahomes outscored his starting quarterback by 7.5 and never left the seat. Third highest score of the week and a 5 and 2 record against the field, so the win is real, but he found the one way to make it interesting. Skoney scored 154.42, the fifth best number of the week, and got nothing for it. Somewhere in the middle of it he renamed the team Ball Knowers, which ESPN keeps a permanent record of, and he did it while he was ahead. <span class="art-line">Art, probably: started the wrong quarterback and won anyway. That is not skill, kid, that is Tuesday. And the other one changed the sign while he was still winning. You never change the sign.</span></div>
+        <div class="card-blurb">Tom won by 5.64 with 21.7 sitting on his own bench. Patrick Mahomes outscored his starting quarterback by 7.5 and never left the seat. Third highest score of the week and a 5 and 2 record against the field, so the win is real, but he found the one way to make it interesting. Skoney scored 154.42, the fifth best number of the week, and got nothing for it. Somewhere in the middle of it, while he was still ahead, he renamed the team Ball Knowers. ESPN keeps a permanent timestamped record of that. By the end of the night the name was the only thing he owned that still said he was winning. <span class="art-line">Art, probably: started the wrong quarterback and won anyway. That is not skill, kid, that is Tuesday. And the other one hung Ball Knowers over the door while he was still winning, which is exactly how a room finds out a man does not know ball. You never change the sign.</span></div>
       </div>
       <div class="matchup-card plain">
         <div class="badge">CLOSEST GAME</div>
@@ -1219,7 +1219,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
       <div class="story"><div class="srank">5</div><div><div class="swho">Ray Rice's Revenge &middot; Nic</div><div class="sline" id="story-line-4">Bijan at the top of a genuinely balanced roster, and the Tuesday trade only made it better on paper. He also owns three tight ends now, and the rules still let him start one. Chicago guy to the bone, he would argue Italian beef dipped over dry before he would argue his tight end depth chart.</div></div></div>
       <div class="story"><div class="srank">6</div><div><div class="swho">Martinelli Mob &middot; W</div><div class="sline" id="story-line-5">Built the league, drafted a roster with no real hole, and has not touched it since. A commissioner who never has to explain a single roster move is either disciplined or just not paying attention.</div></div></div>
       <div class="story"><div class="srank">7</div><div><div class="swho">Symp-Tom of a Bigger Paul-blem &middot; Tyler</div><div class="sline" id="story-line-7">Deepest receiver room in the league, nine wide receivers deep, with McCaffrey and Kittle up top. Josh Jacobs is day to day, and the ninth receiver on the bench is not walking through that door to help.</div></div></div>
-      <div class="story"><div class="srank">8</div><div><div class="swho">Ball Knowers &middot; Skoney</div><div class="sline" id="story-line-8">Jonathan Taylor and Saquon Barkley give him a real backfield, and Nabers, Brown and Waddle a real receiver room. He also traded away his only tight end on a Tuesday, lost the waiver claim on Isaiah Likely to Tom's priority at 2 AM, and found Juwan Johnson anyway at three in the morning.</div></div></div>
+      <div class="story"><div class="srank">8</div><div><div class="swho">Ball Knowers &middot; Skoney</div><div class="sline" id="story-line-8">Jonathan Taylor and Saquon Barkley give him a real backfield, and Nabers, Brown and Waddle a real receiver room. He also traded away his only tight end on a Tuesday, lost the waiver claim on Isaiah Likely to Tom's priority at 2 AM, and found Juwan Johnson anyway at three in the morning. The sign over the door says Ball Knowers. He hung it while he was ahead, and the scoreboard spent the rest of the night filing an objection.</div></div></div>
     </div>
   </div>
 
@@ -1878,34 +1878,84 @@ const ROSTER_ROASTS = {
         { team: 'Martinelli Mob', manager: 'W', slot: 6, draft: 2512, now: 2522, pts: 159.86, note: 'league creator, no notes' },
         { team: 'Blue Team', manager: 'Brennan', slot: 2, draft: 2511, now: 2640, pts: 129.86, note: 'two monsters, nobody else' },
         { team: "Symp-Tom of a Bigger Paul-blem", manager: 'Tyler', slot: 4, draft: 2482, now: 2464, pts: 163.60, note: 'nine receivers' },
-        { team: "Ball Knowers", manager: 'Skoney', slot: 3, draft: 2470, now: 2355, pts: 154.42, note: 'renamed while ahead' }
+        { team: "Ball Knowers", manager: 'Skoney', slot: 3, draft: 2470, now: 2355, pts: 154.42, note: 'named it Ball Knowers, then lost' }
       ];
-  var byPts = teams.slice().sort(function(a,b){ return b.pts - a.pts; });
-  byPts.forEach(function(t,i){ t.rank = i+1; });
-  teams.forEach(function(t){ t.delta = t.now - t.draft; });
-  var byDraft = teams.slice().sort(function(a,b){ return b.draft - a.draft; });
-  byDraft.forEach(function(t,i){ t.draftRank = i+1; });
+  // WHERE EVERY TEAM STOOD ON THE BOARD LAST WEEK. Movement is measured against
+  // numbers that were actually PUBLISHED, not against anything recomputed later,
+  // so a team cannot quietly improve its own history. Points begin this week:
+  // week 1 is the first board that carried a score, so there is nothing yet to
+  // move against and the column says "new" rather than inventing a zero.
+  var prev = {
+    "CTE Celebration Club":           { now: 2593, pts: null },
+    "Waterboyz FC":                   { now: 2712, pts: null },
+    "Paul takes Biktarvy":            { now: 2549, pts: null },
+    "Ray Rice's Revenge":             { now: 2519, pts: null },
+    "Martinelli Mob":                 { now: 2514, pts: null },
+    "Blue Team":                      { now: 2626, pts: null },
+    "Symp-Tom of a Bigger Paul-blem": { now: 2483, pts: null },
+    "Ball Knowers":                   { now: 2436, pts: null }
+  };
+  teams.forEach(function(t){
+    var p = prev[t.team] || {};
+    t.prevNow = typeof p.now === 'number' ? p.now : null;
+    t.prevPts = typeof p.pts === 'number' ? p.pts : null;
+  });
+
+  // One ranking helper for this week's board AND last week's, so the two can
+  // never drift apart in how they handle a missing value.
+  function rankInto(field, get){
+    teams.forEach(function(t){ t[field] = null; });
+    teams.filter(function(t){ return get(t) !== null; })
+         .sort(function(x,y){ return get(y) - get(x); })
+         .forEach(function(t,i){ t[field] = i + 1; });
+  }
+  rankInto('nowRank',     function(t){ return t.now; });
+  rankInto('rank',        function(t){ return t.pts; });
+  rankInto('draftRank',   function(t){ return t.draft; });
+  rankInto('prevNowRank', function(t){ return t.prevNow; });
+  rankInto('prevPtsRank', function(t){ return t.prevPts; });
+
+  // THE TWO COLUMNS THAT CHANGE MEANING WITH THE SORT. Change and Move always
+  // describe whichever number the board is currently ranked by, because a points
+  // board showing a projection movement is just a wrong column under a right
+  // heading. Sorting by something static, the draft slot or the draft
+  // projection, leaves the metric where it was rather than blanking both.
+  var metrics = {
+    now: { name: 'proj', cur: function(t){ return t.now; }, was: function(t){ return t.prevNow; },
+           rank: function(t){ return t.nowRank; }, wasRank: function(t){ return t.prevNowRank; },
+           show: function(n){ return (n > 0 ? '+' : '') + Math.round(n); } },
+    pts: { name: 'pts',  cur: function(t){ return t.pts; }, was: function(t){ return t.prevPts; },
+           rank: function(t){ return t.rank; },    wasRank: function(t){ return t.prevPtsRank; },
+           show: function(n){ return (n > 0 ? '+' : '') + n.toFixed(2); } }
+  };
+
+  var state = { sort: 'pts', metric: 'pts', taps: 0, bear: false };
+
+  function met(){ return metrics[state.metric] || metrics.now; }
+  function chg(t){ var m = met(); return m.was(t) === null ? null : m.cur(t) - m.was(t); }
+  function mv(t){ var m = met(); return (m.wasRank(t) === null || m.rank(t) === null) ? null : m.wasRank(t) - m.rank(t); }
 
   var fmt = function(n){ return n.toLocaleString('en-US'); };
 
-  var headers = [
-    { label: '#', align: 'left', key: null },
-    { label: 'Team', align: 'left', key: null },
-    { label: 'Draft slot', align: 'right', key: 'slot' },
-    { label: 'After draft', align: 'right', key: 'draft' },
-    { label: 'Now', align: 'right', key: 'now' },
-    { label: 'Change', align: 'right', key: 'delta' },
-    { label: 'Points', align: 'right', key: 'pts' }
-  ];
-
-  var state = { sort: 'pts', taps: 0, bear: false };
+  function headerSet(){
+    return [
+      { label: '#', align: 'left', key: null },
+      { label: 'Team', align: 'left', key: null },
+      { label: 'Draft slot', align: 'right', key: 'slot' },
+      { label: 'After draft', align: 'right', key: 'draft' },
+      { label: 'Projected (rank)', align: 'right', key: 'now' },
+      { label: 'Points', align: 'right', key: 'pts' },
+      { label: 'Change (' + met().name + ')', align: 'right', key: 'delta' },
+      { label: 'Move', align: 'right', key: 'move' }
+    ];
+  }
 
   var theadRow = document.getElementById('thead-row');
   var tbody = document.getElementById('standings-body');
 
   function renderHeaders(){
     theadRow.innerHTML = '';
-    headers.forEach(function(h){
+    headerSet().forEach(function(h){
       var th = document.createElement('th');
       if (h.key){
         var d = document.createElement('div');
@@ -1914,10 +1964,19 @@ const ROSTER_ROASTS = {
         if (state.sort === h.key){
           d.style.color = 'var(--accent)';
           d.style.textDecoration = 'underline';
+        } else if (h.key === state.metric){
+          d.style.color = 'var(--ink)';
+          d.style.textDecoration = 'underline dotted';
         } else {
           d.style.color = 'var(--dim)';
         }
-        d.addEventListener('click', function(){ state.sort = h.key; renderTable(); });
+        d.addEventListener('click', function(){
+          state.sort = h.key;
+          // Only the two real columns move the metric. Change and Move re-sort
+          // the board without changing what they are measuring.
+          if (h.key === 'now' || h.key === 'pts') state.metric = h.key;
+          renderTable();
+        });
         th.appendChild(d);
       } else {
         th.textContent = h.label;
@@ -1926,31 +1985,43 @@ const ROSTER_ROASTS = {
     });
   }
 
+  // A missing value sorts to the bottom rather than reading as a zero.
+  function nn(v){ return v === null ? -1e9 : v; }
+
   function renderTable(){
     renderHeaders();
-    var sort = state.sort;
+    var sort = state.sort, m = met();
     var sorted = teams.slice().sort(function(a,b){
       if (sort === 'slot') return a.slot - b.slot;
       if (sort === 'draft') return b.draft - a.draft;
-      if (sort === 'delta') return b.delta - a.delta;
+      if (sort === 'delta') return nn(chg(b)) - nn(chg(a));
+      if (sort === 'move') return nn(mv(b)) - nn(mv(a));
       if (sort === 'pts') return b.pts - a.pts;
       return b.now - a.now;
     });
     tbody.innerHTML = '';
-    sorted.forEach(function(t){
+    sorted.forEach(function(t, i){
       var tr = document.createElement('tr');
-      if (t.rank === 1) tr.className = 'rank-first';
-      else if (t.rank === 8) tr.className = 'rank-last';
-      var deltaText = t.delta > 0 ? ('+' + t.delta) : (t.delta < 0 ? String(t.delta) : 'even');
-      var deltaClass = t.delta > 0 ? 'pos' : (t.delta < 0 ? 'neg' : 'zero');
+      if (i === 0) tr.className = 'rank-first';
+      else if (i === sorted.length - 1) tr.className = 'rank-last';
+
+      var c = chg(t);
+      var cText = c === null ? 'first' : (c === 0 ? 'even' : m.show(c));
+      var cClass = c === null ? 'zero' : (c > 0 ? 'pos' : (c < 0 ? 'neg' : 'zero'));
+
+      var d = mv(t);
+      var dText = d === null ? 'new' : (d === 0 ? 'even' : (d > 0 ? '+' + d : String(d)));
+      var dClass = d === null ? 'zero' : (d > 0 ? 'pos' : (d < 0 ? 'neg' : 'zero'));
+
       tr.innerHTML =
-        '<td class="rank">' + t.rank + '</td>' +
+        '<td class="rank">' + (i + 1) + '</td>' +
         '<td class="team-cell"><div class="team-name">' + t.team + '</div><div class="team-note">' + t.manager + ' &middot; ' + t.note + '</div></td>' +
         '<td class="num">Pick ' + t.slot + '</td>' +
         '<td class="num dim">' + fmt(t.draft) + ' (' + t.draftRank + ')</td>' +
-        '<td class="num">' + fmt(t.now) + '</td>' +
-        '<td class="num delta ' + deltaClass + '">' + deltaText + '</td>' +
-        '<td class="num">' + t.pts.toFixed(2) + '</td>';
+        '<td class="num">' + fmt(t.now) + ' (' + t.nowRank + ')</td>' +
+        '<td class="num">' + t.pts.toFixed(2) + '</td>' +
+        '<td class="num delta ' + cClass + '">' + cText + '</td>' +
+        '<td class="num delta ' + dClass + '">' + dText + '</td>';
       tbody.appendChild(tr);
     });
   }
