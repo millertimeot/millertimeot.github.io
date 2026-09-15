@@ -128,7 +128,7 @@ a:hover{color:#ffe58f;}
 .badge-row{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;}
 .matchup-line{font-size:1.2rem;line-height:1.2;}
 .matchup-line .vs{color:var(--dim);font-size:1.0625rem;}
-.card-blurb{font-size:1.0625rem;line-height:1.45;}
+.card-blurb{font-size:1.0625rem;line-height:1.45;}.art-line{display:block;margin-top:8px;font-family:Caveat,cursive;font-size:1.1875rem;line-height:1.3;color:var(--pink);}
 .line-note{font-family:'Caveat',cursive;font-size:1.1875rem;color:var(--accent);}
 
 /* Top/bottom cards */
@@ -1319,7 +1319,38 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
       <div class="award-roast">Art, probably: paid for the seat and never sat in it.</div>
     </div>
     -->
-    <div class="line-note" id="awards-body">Week 1 is not over. Nobody has earned anything yet, which is the most Skoney sentence ever written.</div>
+    <div id="awards-body">
+      <div class="award-card">
+        <div class="award-name">Player of the week</div>
+        <div class="award-winner">Caleb Williams &middot; started by Robert</div>
+        <div class="award-number">37.3 points</div>
+        <div class="award-roast">Art, probably: a Bears quarterback wins something. Now I have seen everything from here.</div>
+      </div>
+      <div class="award-card">
+        <div class="award-name">Play of the week</div>
+        <div class="award-winner">Robert &middot; Paul takes Biktarvy</div>
+        <div class="award-number">Benched Josh Allen, was right by 1.6</div>
+        <div class="award-roast">Art, from the other side: made no sense all week and scored forty more than anybody. That is not luck twice.</div>
+      </div>
+      <div class="award-card">
+        <div class="award-name">Bench points wasted</div>
+        <div class="award-winner">Nic &middot; Ray Rice's Revenge</div>
+        <div class="award-number">97.2 points left on the bench</div>
+        <div class="award-roast">Art, probably: paid for every seat and sat in none of them.</div>
+      </div>
+      <div class="award-card">
+        <div class="award-name">Worst start</div>
+        <div class="award-winner">Ja'Marr Chase &middot; started by Oscar</div>
+        <div class="award-number">3.2 against a 19.9 projection</div>
+        <div class="award-roast">Art, probably: won the game anyway. Some guys fall in the door and land on a stool.</div>
+      </div>
+      <div class="award-card">
+        <div class="award-name">Luckiest win</div>
+        <div class="award-winner">Oscar &middot; Waterboyz FC</div>
+        <div class="award-number">Sixth best score of the week, still 1 and 0</div>
+        <div class="award-roast">Art, probably: drew the only guy who scored less. I used to seat people like that by the door.</div>
+      </div>
+    </div>
   </div>
 
   <div class="section" id="record-section">
@@ -1331,34 +1362,42 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
       <div class="record-value">Oscar &middot; 168.4</div>
     </div>
     -->
-    <div class="line-note" id="record-body">The book opens after week 1.</div>
+    <div id="record-body">
+      <div class="record-row"><div class="record-label">Highest score</div><div class="record-value">Robert &middot; 191.26</div></div>
+      <div class="record-row"><div class="record-label">Biggest blowout</div><div class="record-value">Robert over Nic &middot; 40.00</div></div>
+      <div class="record-row"><div class="record-label">Closest game</div><div class="record-value">Tyler over W &middot; 3.74</div></div>
+      <div class="record-row"><div class="record-label">Worst beat</div><div class="record-value">W &middot; 159.86 and a loss</div></div>
+      <div class="record-row"><div class="record-label">Lowest score</div><div class="record-value">Brennan &middot; 129.86</div></div>
+    </div>
   </div>
 
   <div class="section" id="week-section">
-    <div class="section-head"><div class="section-plaque"><div class="section-title">Week 1 on tap</div></div><div class="section-note">Full PPR &middot; no ties &middot; three of the four still live into Monday night</div></div>
+    <div class="section-head"><div class="section-plaque"><div class="section-title">Week 1, final</div></div><div class="section-note">Full PPR &middot; no ties &middot; every starter has played</div></div>
     <div class="bar-rail"></div>
     <div class="matchup-grid">
       <div class="matchup-card gold">
-        <div class="badge">GAME OF THE WEEK</div>
-        <div class="badge-row"><div class="matchup-line">Waterboyz FC <span class="vs">at</span> Blue Team</div><div class="line-note">Oscar by 15</div></div>
-        <div class="matchup-name">The Solo No Defense Bowl</div>
-        <div class="card-blurb">Oscar spent eighteen rounds without a defense and then bought the best one in the pool at 2 AM Wednesday. Brennan spent eighteen rounds without one too and still hasn't fixed it. He is the last team in the league in that spot.</div>
+        <div class="badge">FINAL</div>
+        <div class="badge-row"><div class="matchup-line">Waterboyz FC <span class="vs">beat</span> Blue Team</div><div class="line-note">152.52 &ndash; 129.86</div></div>
+        <div class="matchup-name">Two Monsters And Nobody Else</div>
+        <div class="card-blurb">Brennan got 35.3 from Derrick Henry and 33.6 from Jahmyr Gibbs, the two best backs anybody started all week, and still finished last in scoring. Omarion Hampton came in 9.3 under his number and George Pickens 8.9 under his. Oscar won it while Ja'Marr Chase put up 3.2 against a 19.9 projection, which is the part that should worry the other six of us. <span class="art-line">Art, probably: two guys did the job. The other seven found a stool.</span></div>
       </div>
       <div class="matchup-card plain">
-        <div class="badge-row"><div class="matchup-line">Paul takes Biktarvy <span class="vs">at</span> Ray Rice's Revenge</div><div class="line-note">Nic by 3</div></div>
-        <div class="matchup-name">Trade Tuesday Bowl</div>
-        <div class="card-blurb">Both managers traded on Tuesday and now have to play each other. One of them wins and gets to say the trade worked. The other gets to say it is a long season.</div>
+        <div class="badge">HIGHEST SCORE</div>
+        <div class="badge-row"><div class="matchup-line">Paul takes Biktarvy <span class="vs">beat</span> Ray Rice's Revenge</div><div class="line-note">191.26 &ndash; 151.26</div></div>
+        <div class="matchup-name">The Savant Game</div>
+        <div class="card-blurb">Robert sat Josh Allen, the highest projected player in this league at any position, and started Caleb Williams instead. Williams went 37.3. Allen went 35.7 on the bench. He was right by a point and a half and posted 191.26, the highest score of the week by 27.7. Nic lost it at tight end: Colston Loveland projected 12.0 and finished on a zero while Dallas Goedert sat on his bench with 23.7. <span class="art-line">Art, from the other side: benched the best player in the league and won by forty. Buy that man a McGillicuddy's.</span></div>
       </div>
       <div class="matchup-card gold">
-        <div class="badge">TONIGHT</div>
-        <div class="badge-row"><div class="matchup-line">CTE Celebration Club <span class="vs">at</span> 5 bucks says Robert's on call</div><div class="line-note">Tom by 19</div></div>
-        <div class="matchup-name">The 3 AM Waiver Game</div>
-        <div class="card-blurb">Tom's roster, still the best hand-built team in the league even after Oscar's overnight defense heist, against a Skoney lineup that finally has a tight end again. Juwan Johnson at three in the morning ended thirty hours of folding chair jokes. Wednesday night, three of Tom's starters kick this thing off early.</div>
+        <div class="badge">FINAL</div>
+        <div class="badge-row"><div class="matchup-line">CTE Celebration Club <span class="vs">beat</span> Ball Knowers</div><div class="line-note">160.06 &ndash; 154.42</div></div>
+        <div class="matchup-name">Won It From The Bench</div>
+        <div class="card-blurb">Tom won by 5.64 with 21.7 sitting on his own bench. Patrick Mahomes outscored his starting quarterback by 7.5 and never left the seat. Third highest score of the week and a 5 and 2 record against the field, so the win is real, but he found the one way to make it interesting. Skoney scored 154.42, the fifth best number of the week, and got nothing for it. <span class="art-line">Art, probably: started the wrong quarterback and won anyway. That is not skill, kid, that is Tuesday.</span></div>
       </div>
       <div class="matchup-card plain">
-        <div class="badge-row"><div class="matchup-line">Symp-Tom of a Bigger Paul-blem <span class="vs">at</span> Martinelli Mob</div><div class="line-note">W by 2</div></div>
-        <div class="matchup-name">Sensible vs Nine Receivers</div>
-        <div class="card-blurb">The league creator built a balanced roster. Tyler built a wide receiver room with nine names and a running back who is day to day. Closest game on the board.</div>
+        <div class="badge">CLOSEST GAME</div>
+        <div class="badge-row"><div class="matchup-line">Symp-Tom of a Bigger Paul-blem <span class="vs">beat</span> Martinelli Mob</div><div class="line-note">163.60 &ndash; 159.86</div></div>
+        <div class="matchup-name">Three Points And Seventy Four Cents</div>
+        <div class="card-blurb">Decided by 3.74, the closest game on the board and the one nobody could look away from. Justin Jefferson went 31.2 for the league creator and it still was not enough. W put up 159.86, the fourth best score of the week, and is 0 and 1 for it. The nine receiver room held up for exactly one Sunday. <span class="art-line">Art, 1945 to 2025, still not impressed: lost by four. That is a shot and a Hamm's.</span></div>
       </div>
     </div>
   </div>
