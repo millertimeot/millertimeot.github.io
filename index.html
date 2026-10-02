@@ -469,11 +469,10 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
 .herzog-line{display:block;margin-top:8px;font-family:'Libre Baskerville',Georgia,serif;font-style:italic;font-size:0.9375rem;line-height:1.5;color:var(--herzog);}
 .herzog-line b,.tc-herzog b{font-style:normal;font-weight:400;letter-spacing:0.04em;text-transform:uppercase;font-size:0.75em;}
 .tc-herzog{font-family:'Libre Baskerville',Georgia,serif;font-style:italic;font-size:0.875rem;line-height:1.4;color:#34505f;margin-top:6px;}
-.herzog-reel{display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:18px;align-items:start;}
-@media (max-width:620px){.herzog-reel{grid-template-columns:1fr;}.herzog-photo{max-width:260px;}}
-.herzog-photo{margin:0;}
-.herzog-photo img{width:100%;height:auto;display:block;border:5px solid #000;filter:grayscale(1) contrast(1.08);}
-.herzog-photo figcaption{font-family:'Caveat',cursive;font-size:1.125rem;color:var(--dim);line-height:1.25;margin-top:6px;}
+.herzog-reel{display:flex;flex-direction:column;gap:14px;}
+.herzog-photo{margin:0;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+.herzog-photo img{width:180px;max-width:100%;height:auto;display:block;border:5px solid #000;filter:grayscale(1) contrast(1.08);flex-shrink:0;}
+.herzog-photo figcaption{font-family:'Caveat',cursive;font-size:1.1875rem;color:var(--dim);line-height:1.3;flex:1;min-width:150px;}
 .herzog-vo{display:flex;flex-direction:column;gap:10px;}
 .herzog-vo p{margin:0;font-family:'Libre Baskerville',Georgia,serif;font-style:italic;font-size:1rem;line-height:1.6;color:var(--herzog);max-width:65ch;}
 .herzog-vo .herzog-tag{font-style:normal;font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--dim);}
@@ -481,6 +480,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
 .herzog-exchange .herzog-line{margin-top:0;}
 .herzog-credit{font-size:0.75rem;line-height:1.5;color:var(--dim);margin-top:14px;}
 .herzog-credit a{color:var(--dim);}
+/* /herzog */
 </style>
 </head>
 <body>
@@ -1571,7 +1571,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     <div class="section-head"><div class="section-plaque"><div class="section-title">Burden of Dice</div></div><div class="section-note">Uninvited documentary, from the end of a bar that wants him out. Parody, not affiliated.</div></div>
     <div class="bar-rail"></div>
     <div class="herzog-reel">
-      <figure class="herzog-photo"><img src="photos/herzog-1.jpg" alt="Werner Herzog, seated portrait, unsmiling" loading="lazy" width="480" height="320"><figcaption>That's his happy face. Ordered nothing, tipped nothing, filmed the urinal for an hour. Out, Werner.</figcaption></figure>
+      <figure class="herzog-photo"><img src="photos/herzog-1.jpg" alt="Werner Herzog, seated portrait, unsmiling" loading="lazy" width="480" height="320"><figcaption>That's his happy face. Ordered nothing, tipped nothing, filmed the urinal for an hour. 86'd, Werner.</figcaption></figure>
       <div class="herzog-vo">
         <span class="herzog-tag">Herzog, as imagined, narrating</span>
         <p>Week three, and five of the eight teams stand at 2-1, which the accountants call parity and I call a herd at the river that has not yet noticed the water is low. The lowest score of the season, 90.84, and the largest margin, 46.68, arrived in the same afternoon and belonged to the same man, and when I saw the number I had to step outside into the parking lot, which I then filmed. I came here to make a film about men and their faith; I am making, it turns out, a film about a man and his bench.</p>
@@ -1581,7 +1581,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
         <div class="herzog-exchange"><span class="herzog-line"><b>Herzog, as imagined:</b> I asked the bartender whether the standings reveal a deeper, ecstatic truth about these eight men. He did not look up. I have been not looked at by bears, and it felt warmer.</span><span class="art-line">Art, probably: There's your truth: I spent the sixties in California surrounded by damn hippies, and one of 'em followed me home with a camera. Get out.</span></div>
         <div class="herzog-exchange"><span class="herzog-line"><b>Herzog, as imagined:</b> The lowest score of the season was 90.84. I looked at the number for a long time and it did not change, and I felt something in me go cold, as it did on the ice sheet.</span><span class="art-line">Art, probably: Ninety on a chalkboard and the man goes cold. He was born in '42, I got '45, and somehow I'm the one who turned out normal.</span></div>
         <div class="herzog-exchange"><span class="herzog-line"><b>Herzog, as imagined:</b> I filmed the dice cup for forty minutes. Five men rolled, and each believed the cup was listening. The cup was not listening. The cup is never listening.</span><span class="art-line">Art, probably: Forty minutes filming a dice cup. Two Germans in this bar and the one from the old country is the slow one. Door's behind you, Klink.</span></div>
-        <div class="herzog-exchange"><span class="herzog-line"><b>Herzog, as imagined:</b> The bartender has asked me to leave four times. I have not left. The film requires that I stay, and the film, like the glacier, does not negotiate.</span><span class="art-line">Art, probably: Ate a shoe on a bet and can't take a hint. Four nights, zero drinks, zero tips, one sermon about a glacier. Werner, the glacier's gotta go.</span></div>
+        <div class="herzog-exchange"><span class="herzog-line"><b>Herzog, as imagined:</b> The bartender has asked me to leave four times. I have not left. The film requires that I stay, and the film, like the glacier, does not negotiate.</span><span class="art-line">Art, probably: Ate a shoe on a bet and can't take a hint. I've 86'd guys for lecturing me about stuff I already agreed with. You're one sermon from the sidewalk, Werner.</span></div>
       </div>
     </div>
     <div class="herzog-credit">A parody. Werner Herzog has never been to this bar and had nothing to do with any of this. Photo: <a href="https://commons.wikimedia.org/wiki/File:Werner_herzog_portrait.jpg" rel="noopener">Raffi Asdourian from New York, United States</a>, <a href="https://creativecommons.org/licenses/by/2.0" rel="noopener">CC BY 2.0</a>, via Wikimedia Commons, shown in black and white.</div>
