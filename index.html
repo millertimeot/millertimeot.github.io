@@ -483,6 +483,30 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
 .herzog-reply{margin-top:6px;}
 .napkin .herzog-reply{color:#34505f;font-size:0.875rem;}
 /* /herzog */
+/* regulars */
+:root{--fielder:#cfc59a;--odenkirk:#e7a65f;--leo:#d9d3e8;}
+.reg-line{display:block;margin-top:6px;font-size:0.9375rem;line-height:1.5;}
+.reg-line b{font-weight:400;letter-spacing:0.04em;text-transform:uppercase;font-size:0.75em;font-style:normal;}
+.reg-fielder{font-family:'Courier New',Courier,monospace;color:var(--fielder);}
+.reg-odenkirk{font-family:Impact,'Arial Narrow',sans-serif;letter-spacing:0.01em;color:var(--odenkirk);}
+.reg-leo{font-family:Georgia,serif;color:var(--leo);}
+.reg-herzog{font-family:'Libre Baskerville',Georgia,serif;font-style:italic;color:var(--herzog,#a9c4d6);}
+.reg-art{font-family:'Caveat',cursive;font-size:1.125rem;color:var(--chalk,#f3ead3);}
+.napkin .reg-line,.tc-reg .reg-line{font-size:0.875rem;}
+.napkin .reg-fielder,.tc-reg .reg-fielder{color:#5b5233;}
+.napkin .reg-odenkirk,.tc-reg .reg-odenkirk{color:#8a4b12;}
+.napkin .reg-leo,.tc-reg .reg-leo{color:#4a4560;}
+.tc-reg{margin-top:6px;}
+.regcast-reel{display:flex;flex-direction:column;gap:16px;}
+.regcast-photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;}
+.regcast-photos figure{margin:0;display:flex;flex-direction:column;gap:6px;}
+.regcast-photos img{width:100%;max-width:200px;height:auto;display:block;border:5px solid #000;filter:grayscale(1) contrast(1.08);}
+.regcast-photos figcaption{font-family:'Caveat',cursive;font-size:1.125rem;color:var(--dim);line-height:1.3;}
+.regcast-exchange{border-left:2px solid var(--dim);padding:2px 0 2px 12px;}
+.regcast-exchange .reg-line:first-child{margin-top:0;}
+.regcast-credit{font-size:0.75rem;line-height:1.5;color:var(--dim);margin-top:14px;}
+.regcast-credit a{color:var(--dim);}
+/* /regulars */
 </style>
 </head>
 <body>
@@ -610,12 +634,12 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
         <div class="matchup-name">Two losers held winning hands</div>
         <div class="card-blurb">Skoney&#39;s best possible lineup was 156.20 against Oscar&#39;s actual 138.32, and Tom&#39;s best was 148.00 against Robert&#39;s 140.20. Both stayed folded: Skoney left 19.14 on the bench with Juwan Johnson&#39;s zero in the lineup, and Tom left 33.22, the most in the league, Colston Loveland&#39;s 18.50 sitting in it.</div>
         <div class="card-blurb">The other two losers were not holding anything. W&#39;s best was 144.98 against Nic&#39;s 152.34, short by 7.36, and Brennan&#39;s best was 101.14, which still loses to Tyler&#39;s 123.76 by 22.62 with every slot set right.</div>
-        <span class="art-line">Art, probably: two guys folded winners this week. At my tables that cost you the stool.</span><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> Two winning hands folded by their owners. In the jungle nothing folds. It is eaten.</span>
+        <span class="art-line">Art, probably: two guys folded winners this week. At my tables that cost you the stool.</span><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> Two winning hands folded by their owners. In the jungle nothing folds. It is eaten.</span><span class="reg-line reg-odenkirk reg-reply"><b>Odenkirk, as imagined:</b> Two winning lineups, both benched. Your Honor, my clients believed in the wrong guys. That's not a crime. It's a Bears season.</span>
       </div><div class="matchup-card plain">
         <div class="matchup-name">The board, before it happened</div>
         <div class="card-blurb">This board gave Oscar 51.1 percent on Tuesday and he won by 1.26, the one call that landed. W at 76.9 lost by 20.96, Brennan at 63.9 lost by 40.82, and Tom at 55.9 lost by 25.42.</div>
         <div class="card-blurb">One for four, and the Brier score on the week is 0.388, worse than the 0.250 a coin flip scores and worse than last week&#39;s 0.352. Two straight weeks under the dartboard. Week seven&#39;s numbers are below, printed anyway.</div>
-        <span class="art-line">Art, probably: one for four, twice running. The dartboard wants a rematch and I am inclined to book it.</span><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> The board is wrong and publishes itself anyway. Science, or penance. Possibly both.</span>
+        <span class="art-line">Art, probably: one for four, twice running. The dartboard wants a rematch and I am inclined to book it.</span><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> The board is wrong and publishes itself anyway. Science, or penance. Possibly both.</span><span class="reg-line reg-leo reg-reply"><b>Pope Leo, as imagined:</b> One for four is 25 percent. The Sox went 41 and 121, about 25 percent. So the board is a big leaguer. Perspective.</span>
       </div></div>
   </div>
   <div class="section" id="shelves-section" data-week="6">
@@ -1024,21 +1048,25 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
         <div class="matchup-name">Second Meets Seventh</div>
         <div class="card-blurb">Oscar 57.0 percent, the closest call on the board, with the projections at 164.1 to 154.7. Nic arrives off the best score of the week and a 7-0 run against the field, with the starting sheet intact and Ladd McConkey and Kyle Monangai questionable on the bench. Oscar&#39;s walking wounded are benched too, Breece Hall questionable and Deebo Samuel out, and the starting eleven is clean. Second place against the hottest hand in the room.</div>
         <span class="herzog-line"><b>Herzog, as imagined:</b> The hottest hand in the room hosts second place, 57.0 against him. Heat, I learned at the volcano, is a rumor the cold starts.</span>
+        <span class="reg-line reg-leo"><b>Pope Leo, as imagined:</b> Real quick: 57.0 is the closest call on the board. In tennis that's a let. You replay the point. No? Okay.</span>
       </div><div class="matchup-card plain">
         <div class="badge-row"><div class="matchup-line">Blue Team <span class="vs">at</span> Ball Knowers</div><div class="line-note">Skoney 77.3%</div></div>
         <div class="matchup-name">The Bye Week Collection</div>
         <div class="card-blurb">Skoney 77.3 percent, the safest number on the board, with the projections at 148.1 to 124.9. Brennan&#39;s Tuesday lineup has Trevor Lawrence, Omarion Hampton and Cameron Dicker all on byes and Davante Adams on injured reserve in a receiver slot, with Quinshon Judkins questionable in the flex. A week after starting two bye players, he has four holes to patch by Sunday. Skoney&#39;s tags are at the top of his own sheet: Saquon Barkley and A.J. Brown, both questionable, both starting.</div>
         <span class="herzog-line"><b>Herzog, as imagined:</b> One side arrives with three starters on bye and a fourth on injured reserve. The other is favored at 77.3. Not a prediction. A headcount.</span>
+        <span class="reg-line reg-fielder"><b>Fielder, as imagined:</b> Blue Team versus Ball Knowers. I've hired actors to play both lineups. The understudies are more confident.</span>
       </div><div class="matchup-card plain">
         <div class="badge-row"><div class="matchup-line">Paul takes Biktarvy <span class="vs">at</span> Martinelli Mob</div><div class="line-note">W 69.7%</div></div>
         <div class="matchup-name">First Place Pays A Visit</div>
         <div class="card-blurb">W 69.7 percent at home, with the projections at 148.4 to 131.4. Robert brings first place and a quarterback slot held by Tua Tagovailoa, fresh off a 0.00, while Josh Allen sits his Bills bye on the bench. W loses James Cook to the same bye and has DJ Moore questionable in the lineup after a zero of his own. Whoever&#39;s dead slots come back to life first takes it.</div>
         <span class="herzog-line"><b>Herzog, as imagined:</b> First place travels with a quarterback who scored zero and starts again anyway. The home man holds the record, sixth place, and 69.7.</span>
+        <span class="reg-line reg-fielder"><b>Fielder, as imagined:</b> Josh Allen and James Cook share a bye, one per side. Home side favored at 69.7. I flowcharted it. Every branch has an empty chair.</span>
       </div><div class="matchup-card plain">
         <div class="badge-row"><div class="matchup-line">CTE Celebration Club <span class="vs">at</span> Symp-Tom of a Bigger Paul-blem</div><div class="line-note">Tyler 60.1%</div></div>
         <div class="matchup-name">Last Call At The Bottom Half</div>
         <div class="card-blurb">Tyler 60.1 percent, with the projections at 163.1 to 152.1. Tyler&#39;s Tuesday lineup still has Justin Herbert at quarterback on his Chargers bye, with Joe Burrow back from his own bye and waiting on the bench. Tom arrives off the worst projection miss of the week, with Rashee Rice questionable on the bench and Jayden Daniels, this week&#39;s claim, going straight onto a bye. Fifth hosts eighth and the board likes the home team.</div>
         <span class="herzog-line"><b>Herzog, as imagined:</b> The host is favored at 60.1 while his quarterback sits on a bye he has not noticed. Opposite him, last place and its folded winning hand.</span>
+        <span class="reg-line reg-odenkirk"><b>Odenkirk, as imagined:</b> If you or a loved one has been injured by a fantasy lineup, call. Somebody in this matchup is going to need me Monday.</span>
       </div></div>
     <div class="line-note">Tuesday&#39;s numbers are the ones this board gets graded on, logged before a snap: Oscar 57.0, Skoney 77.3, W 69.7, Tyler 60.1. The numbers read every player on both rosters: a questionable starter plays about 64 percent of the time, a man on a bye scores nothing, and when a starter sits his manager&#39;s best healthy bench player at that spot counts instead. Last week this board went one for four with a Brier score of 0.388.</div>
   </div>
@@ -1056,7 +1084,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     <div class="record-row"><div class="record-label">Byes</div><div class="record-value">Bills, Chargers, Commanders and Jaguars, which takes Josh Allen, James Cook, Omarion Hampton, Trevor Lawrence, Cameron Dicker, Justin Herbert, Jayden Daniels, Ladd McConkey and Parker Washington out whether they are tagged or not</div></div>
     <div class="line-note">Starter and bench are where ESPN had each man on Tuesday afternoon, and lineups move. The tag is ESPN&#39;s word, not ours.</div>
     <span class="herzog-line"><b>Herzog, as imagined:</b> The report lists the questionable, the doubtful, the gone. It is read each week like a weather forecast, and like weather, it does not care that you have plans.</span>
-    <span class="art-line">Art, probably: four teams off this week and two lineups already holding dead men. Read the chalkboard before Sunday, not after.</span><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> The bye arrives like the dry season. The herd waits at the river. Two managers have not heard.</span>
+    <span class="art-line">Art, probably: four teams off this week and two lineups already holding dead men. Read the chalkboard before Sunday, not after.</span><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> The bye arrives like the dry season. The herd waits at the river. Two managers have not heard.</span><span class="reg-line reg-fielder reg-reply"><b>Fielder, as imagined:</b> I hired actors to play the Bills, Chargers, Commanders and Jaguars. They also didn't show up. Very committed.</span>
   </div>
   <div class="section" id="story-section" data-week="6">
     <div class="spotlight">
@@ -1083,7 +1111,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
       <div class="award-name">Underperformed the most</div>
       <div class="award-winner">Bijan Robinson &middot; RB &middot; Nic</div>
       <div class="award-number">7.30 on a 22.99 projection, -15.69, in a game his team won by 20.96 anyway</div>
-      <div class="award-roast">Art, probably: the star called in sick and the bar still hit its number. Best staff in the room.</div><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> The star gave 7.30 and the collective absorbed him. The village survives winter this way.</span>
+      <div class="award-roast">Art, probably: the star called in sick and the bar still hit its number. Best staff in the room.</div><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> The star gave 7.30 and the collective absorbed him. The village survives winter this way.</span><span class="reg-line reg-leo reg-reply"><b>Pope Leo, as imagined:</b> The star went 7.30 and the team still put up 152.34. That's a group effort. Everybody shake hands. No? Okay.</span>
     </div>
     <div class="award-card">
       <div class="award-name">Started and scored nothing</div>
@@ -1105,7 +1133,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     <div class="record-row"><div class="record-label">Brennan</div><div class="record-value">108.39 projected, 82.94 scored &middot; -25.45</div></div>
     <div class="record-row"><div class="record-label">Tom</div><div class="record-value">150.09 projected, 114.78 scored &middot; -35.31</div></div>
     <div class="line-note">One team over the number and seven under it. Robert&#39;s +16.39 had a zero at quarterback inside it, and three of the four winners missed their own projection and won anyway.</div>
-    <span class="art-line">Art, probably: seven teams under the number in one week. Maybe the number has been drinking.</span><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> The number is not drinking. The number simply does not love you back.</span>
+    <span class="art-line">Art, probably: seven teams under the number in one week. Maybe the number has been drinking.</span><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> The number is not drinking. The number simply does not love you back.</span><span class="reg-line reg-odenkirk reg-reply"><b>Odenkirk, as imagined:</b> Seven under the number. That's not variance, that's a class action. The forms are in my car. The car is also a settlement.</span>
   </div>
   <div class="section" id="bench-section" data-week="6">
     <div class="section-head"><div class="section-plaque"><div class="section-title">Left on the bench</div></div><div class="section-note">What you scored against the most those same players could have scored</div></div>
@@ -1194,7 +1222,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
         <div class="award-name">Worst start</div>
         <div class="award-winner">Jahmyr Gibbs and the Lions defense &middot; started by Brennan</div>
         <div class="award-number">Two starting slots, zero points, both on the Detroit bye this wall flagged last Tuesday</div>
-        <div class="award-roast">Art, probably: started two guys who were out of state. I checked IDs for less.</div><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> Two absent men, started anyway. Faith of this size usually requires a cathedral. He had a lineup card.</span>
+        <div class="award-roast">Art, probably: started two guys who were out of state. I checked IDs for less.</div><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> Two absent men, started anyway. Faith of this size usually requires a cathedral. He had a lineup card.</span><span class="reg-line reg-fielder reg-reply"><b>Fielder, as imagined:</b> To prevent this, I've stationed a man outside the stadium to confirm each starter is inside. He's in Burbank. It's a start.</span>
       </div>
       <div class="award-card">
         <div class="award-name">Luckiest win</div>
@@ -1206,7 +1234,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
         <div class="award-name">Unluckiest loss</div>
         <div class="award-winner">Skoney &middot; Ball Knowers</div>
         <div class="award-number">4-3 against the field, the second most points for in the league, a winning lineup on the roster, and a 1.26 loss</div>
-        <div class="award-roast">Art, 1945 to 2025, still not impressed: second biggest ledger in the room and fourth place. The dice owe him and the dice know it.</div><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> The dice owe no one. That is their single, terrible virtue. The ledger, 913.04 deep, knows it.</span>
+        <div class="award-roast">Art, 1945 to 2025, still not impressed: second biggest ledger in the room and fourth place. The dice owe him and the dice know it.</div><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> The dice owe no one. That is their single, terrible virtue. The ledger, 913.04 deep, knows it.</span><span class="reg-line reg-leo reg-reply"><b>Pope Leo, as imagined:</b> 913.04 points for and fourth place. I ran it twice. It isn't fair. Nobody asked. I know. Okay.</span>
       </div>
     </div>
   </div>
@@ -1470,8 +1498,8 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     <div class="bar-rail"></div>
     <div class="napkin-grid">
       <div class="napkin"><div class="n-who-row"><svg width="13" height="13" viewBox="0 0 13 13"><rect x="0.5" y="0.5" width="12" height="12" rx="2.4" fill="#2a1f16"></rect><circle cx="3.6" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="6.5" cy="6.5" r="1.1" fill="#f3ead3"></circle><circle cx="3.6" cy="9.4" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="9.4" r="1.1" fill="#f3ead3"></circle></svg><div class="n-who">Oscar &middot; Waterboyz FC</div></div><div class="n-line" id="n-line-1">Won by a buck twenty six and walked out like he closed the place. Take the chips, kid.</div><div class="n-tag">Art, probably</div><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> He celebrates a margin thinner than the napkin it is written on. Survivors behave this way.</span></div>
-      <div class="napkin"><div class="n-who-row"><svg width="13" height="13" viewBox="0 0 13 13"><rect x="0.5" y="0.5" width="12" height="12" rx="2.4" fill="#2a1f16"></rect><circle cx="3.6" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="6.5" cy="6.5" r="1.1" fill="#f3ead3"></circle><circle cx="3.6" cy="9.4" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="9.4" r="1.1" fill="#f3ead3"></circle></svg><div class="n-who">Tom &middot; CTE Celebration Club</div></div><div class="n-line" id="n-line-2">Thirty three on the bench in a twenty five point loss. The drawer was right there, kid.</div><div class="n-tag">Art, probably</div><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> The drawer is always right there. That is the drawer's whole tragedy.</span></div>
-      <div class="napkin"><div class="n-who-row"><svg width="13" height="13" viewBox="0 0 13 13"><rect x="0.5" y="0.5" width="12" height="12" rx="2.4" fill="#2a1f16"></rect><circle cx="3.6" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="6.5" cy="6.5" r="1.1" fill="#f3ead3"></circle><circle cx="3.6" cy="9.4" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="9.4" r="1.1" fill="#f3ead3"></circle></svg><div class="n-who">Robert &middot; Paul takes Biktarvy</div></div><div class="n-line" id="n-line-3">First place with a dead quarterback slot. The till does not ask who rang it.</div><div class="n-tag">Art, probably</div><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> First place, carried by ten men and a silence. Every expedition loses someone and keeps walking.</span></div>
+      <div class="napkin"><div class="n-who-row"><svg width="13" height="13" viewBox="0 0 13 13"><rect x="0.5" y="0.5" width="12" height="12" rx="2.4" fill="#2a1f16"></rect><circle cx="3.6" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="6.5" cy="6.5" r="1.1" fill="#f3ead3"></circle><circle cx="3.6" cy="9.4" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="9.4" r="1.1" fill="#f3ead3"></circle></svg><div class="n-who">Tom &middot; CTE Celebration Club</div></div><div class="n-line" id="n-line-2">Thirty three on the bench in a twenty five point loss. The drawer was right there, kid.</div><div class="n-tag">Art, probably</div><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> The drawer is always right there. That is the drawer's whole tragedy.</span><span class="reg-line reg-fielder reg-reply"><b>Fielder, as imagined:</b> I asked why the drawer stayed shut. Nobody answered. I've built a drawer that opens itself. It cost eleven thousand dollars.</span></div>
+      <div class="napkin"><div class="n-who-row"><svg width="13" height="13" viewBox="0 0 13 13"><rect x="0.5" y="0.5" width="12" height="12" rx="2.4" fill="#2a1f16"></rect><circle cx="3.6" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="6.5" cy="6.5" r="1.1" fill="#f3ead3"></circle><circle cx="3.6" cy="9.4" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="9.4" r="1.1" fill="#f3ead3"></circle></svg><div class="n-who">Robert &middot; Paul takes Biktarvy</div></div><div class="n-line" id="n-line-3">First place with a dead quarterback slot. The till does not ask who rang it.</div><div class="n-tag">Art, probably</div><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> First place, carried by ten men and a silence. Every expedition loses someone and keeps walking.</span><span class="reg-line reg-odenkirk reg-reply"><b>Odenkirk, as imagined:</b> First place with a dead slot at quarterback. In Chicago we call that a building year. Up here it's apparently a Tuesday.</span></div>
       <div class="napkin"><div class="n-who-row"><svg width="13" height="13" viewBox="0 0 13 13"><rect x="0.5" y="0.5" width="12" height="12" rx="2.4" fill="#2a1f16"></rect><circle cx="3.6" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="6.5" cy="6.5" r="1.1" fill="#f3ead3"></circle><circle cx="3.6" cy="9.4" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="9.4" r="1.1" fill="#f3ead3"></circle></svg><div class="n-who">Nic &middot; Ray Rice's Revenge</div></div><div class="n-line" id="n-line-4">Best score in the room from seventh place. The game pays late and short, always has.</div><div class="n-tag">Art, probably</div><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> The game is a creditor with no address. One pays anyway.</span></div>
       <div class="napkin"><div class="n-who-row"><svg width="13" height="13" viewBox="0 0 13 13"><rect x="0.5" y="0.5" width="12" height="12" rx="2.4" fill="#2a1f16"></rect><circle cx="3.6" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="6.5" cy="6.5" r="1.1" fill="#f3ead3"></circle><circle cx="3.6" cy="9.4" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="9.4" r="1.1" fill="#f3ead3"></circle></svg><div class="n-who">W &middot; Martinelli Mob</div></div><div class="n-line" id="n-line-5">The record is still yours. So is sixth place. Chalk is patient, standings are not.</div><div class="n-tag">Art, probably</div><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> A record and a sixth place in the same hands. Monuments are built where nothing else grew.</span></div>
       <div class="napkin"><div class="n-who-row"><svg width="13" height="13" viewBox="0 0 13 13"><rect x="0.5" y="0.5" width="12" height="12" rx="2.4" fill="#2a1f16"></rect><circle cx="3.6" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="3.6" r="1.1" fill="#f3ead3"></circle><circle cx="6.5" cy="6.5" r="1.1" fill="#f3ead3"></circle><circle cx="3.6" cy="9.4" r="1.1" fill="#f3ead3"></circle><circle cx="9.4" cy="9.4" r="1.1" fill="#f3ead3"></circle></svg><div class="n-who">Brennan &middot; Blue Team</div></div><div class="n-line" id="n-line-6">I wrote it on this wall Tuesday: two guys on vacation. You started them anyway. Read the wall.</div><div class="n-tag">Art, probably</div><span class="herzog-line herzog-reply"><b>Herzog, as imagined:</b> The wall was right and was not consulted. Prophets in bars share this fate with prophets everywhere.</span></div>
@@ -1503,6 +1531,29 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
     <div class="herzog-credit">A parody. Werner Herzog has never been to this bar and had nothing to do with any of this. Photo: <a href="https://commons.wikimedia.org/wiki/File:Werner_herzog_portrait.jpg" rel="noopener">Raffi Asdourian from New York, United States</a>, <a href="https://creativecommons.org/licenses/by/2.0" rel="noopener">CC BY 2.0</a>, via Wikimedia Commons, shown in black and white.</div>
   </div>
   <!-- /herzog-section -->
+  <!-- regcast-section -->
+  <div class="section" id="regcast-section" data-week="7">
+    <div class="section-head"><div class="section-plaque"><div class="section-title">Three More Stools Art Didn't Order</div></div><div class="section-note">Three imagined regulars join the German at the rail. Parody, not affiliated.</div></div>
+    <div class="bar-rail"></div>
+    <div class="regcast-reel">
+      <div class="regcast-photos">
+        <figure><img src="photos/fielder-1.jpg" alt="Nathan Fielder, black and white photo" loading="lazy"><figcaption>Rehearsed his Hamm's order. Still got it wrong.</figcaption></figure>
+        <figure><img src="photos/odenkirk-1.jpg" alt="Bob Odenkirk, black and white photo" loading="lazy"><figcaption>Good kid. Bears fan. Can't be both.</figcaption></figure>
+        <figure><img src="photos/pope-leo-1.jpg" alt="Pope Leo XIV, black and white photo" loading="lazy"><figcaption>Sox fan brokering peace. That explains everything.</figcaption></figure>
+      </div>
+      <div class="regcast-exchange"><span class="reg-line reg-fielder"><b>Fielder, as imagined:</b> I built a replica of this bar to rehearse Sunday. Actors are playing all eight teams. The one playing Blue Team asked for notes.</span><span class="reg-line reg-leo"><b>Pope Leo, as imagined:</b> Fellas, that's actually kind. Can we give Nathan a little credit here?</span><span class="reg-line reg-herzog"><b>Herzog, as imagined:</b> Credit is a loan against the void. Blue Team will default. We all default.</span><span class="reg-line reg-art"><b>Art, probably:</b> Kid, I ran a bar, not a zoo.</span></div>
+      <div class="regcast-exchange"><span class="reg-line reg-odenkirk"><b>Odenkirk, as imagined:</b> Art, I did a year at Marquette, a mile from here. I know this town. I know this bar.</span><span class="reg-line reg-art"><b>Art, probably:</b> A year up here and that's what took?</span><span class="reg-line reg-odenkirk"><b>Odenkirk, as imagined:</b> The Bears already played Thursday. I'm calm. I'm very calm. Somebody hide the dice cup.</span><span class="reg-line reg-art"><b>Art, probably:</b> You cooked up Da Bears. Drink outside.</span></div>
+      <div class="regcast-exchange"><span class="reg-line reg-odenkirk"><b>Odenkirk, as imagined:</b> I had a small one. You threw yours a party every year. I'm starting to think you were showing off.</span><span class="reg-line reg-art"><b>Art, probably:</b> Nothing says party like one. Flier said so.</span><span class="reg-line reg-odenkirk"><b>Odenkirk, as imagined:</b> Put me on next year's list. I'll bring the Italian beef, dipped. We both take it easy on the dice.</span><span class="reg-line reg-art"><b>Art, probably:</b> Two-man club. You still drink outside.</span></div>
+      <div class="regcast-exchange"><span class="reg-line reg-leo"><b>Pope Leo, as imagined:</b> Okay, Waterboyz FC at Ray Rice's Revenge is 57.0. That's basically a coin flip. What if they just split the win?</span><span class="reg-line reg-herzog"><b>Herzog, as imagined:</b> There is no splitting. There is the river and the one who drowns. Be quiet, Leo.</span><span class="reg-line reg-art"><b>Art, probably:</b> Split a win. Kid, I never split a tab.</span></div>
+      <div class="regcast-exchange"><span class="reg-line reg-odenkirk"><b>Odenkirk, as imagined:</b> Here comes the Chicago pope, in from Dolton. That's not Chicago, pal, that's where Chicago parks.</span><span class="reg-line reg-leo"><b>Pope Leo, as imagined:</b> Bob, you're from Naperville. I can see the city from Dolton. You need a map and a day off.</span><span class="reg-line reg-odenkirk"><b>Odenkirk, as imagined:</b> Naperville has a Riverwalk, Leo. Overruled.</span><span class="reg-line reg-art"><b>Art, probably:</b> Two suburbs fighting over one city. Outside, both.</span></div>
+      <div class="regcast-exchange"><span class="reg-line reg-fielder"><b>Fielder, as imagined:</b> The picks went one for four. The plan? Replace them with a dartboard. The dartboard also went one for four. I kept both.</span><span class="reg-line reg-art"><b>Art, probably:</b> Darts were there first, genius.</span><span class="reg-line reg-fielder"><b>Fielder, as imagined:</b> He didn't say anything after that. Neither did I. It's been since Tuesday.</span></div>
+      <div class="regcast-exchange"><span class="reg-line reg-leo"><b>Pope Leo, as imagined:</b> Real quick, Ball Knowers and Blue Team. What if everybody gets a mulligan this week? Cooler heads.</span><span class="reg-line reg-odenkirk"><b>Odenkirk, as imagined:</b> Objection. A mulligan is a golf word, Leo, and this is a bar in Milwaukee. Sit down.</span><span class="reg-line reg-fielder"><b>Fielder, as imagined:</b> I looked into mulligans. Legally they require a second lineup. I've hired one. It also has three byes.</span><span class="reg-line reg-leo"><b>Pope Leo, as imagined:</b> Okay. End of the bar. Neutral party, if anybody needs one.</span></div>
+      <div class="regcast-exchange"><span class="reg-line reg-fielder"><b>Fielder, as imagined:</b> Paul takes Biktarvy is in first place with a quarterback who scored zero. From a business perspective, the quarterback is overhead.</span><span class="reg-line reg-odenkirk"><b>Odenkirk, as imagined:</b> No. The quarterback is the product, Nathan. He throws the ball. Okay, the ball is the product. The quarterback is the guy.</span><span class="reg-line reg-fielder"><b>Fielder, as imagined:</b> So he shipped zero product and gained market share. I'd like to meet him. I've sent an actor first.</span><span class="reg-line reg-odenkirk"><b>Odenkirk, as imagined:</b> Twice. I explained it twice. Art, where's the river.</span></div>
+      <div class="regcast-exchange"><span class="reg-line reg-herzog"><b>Herzog, as imagined:</b> Symp-Tom of a Bigger Paul-blem waits for Sunday the way a man waits for a verdict. The void keeps no calendar.</span><span class="reg-line reg-leo"><b>Pope Leo, as imagined:</b> Werner, with respect, it's a football game. Reasonable people shake hands after. It'll be fine.</span><span class="reg-line reg-herzog"><b>Herzog, as imagined:</b> Nothing is fine. Fine is a word for weather and dentistry. Sit down, Leo.</span><span class="reg-line reg-art"><b>Art, probably:</b> Downer, sap, weirdo, Bears fan. Last call.</span></div>
+    </div>
+    <div class="regcast-credit">A parody. Nathan Fielder has never been to this bar and had nothing to do with any of this. Photo: <a href="https://commons.wikimedia.org/wiki/File:Nathan_Fielder.jpg" rel="noopener">Northwest</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" rel="noopener">CC BY-SA 4.0</a>, via Wikimedia Commons, shown in black and white. Bob Odenkirk has never been to this bar and had nothing to do with any of this. Photo: <a href="https://commons.wikimedia.org/wiki/File:Bob_Odenkirk_by_Gage_Skidmore.jpg" rel="noopener">Gage Skidmore</a>, <a href="https://creativecommons.org/licenses/by-sa/3.0" rel="noopener">CC BY-SA 3.0</a>, via Wikimedia Commons, shown in black and white. Pope Leo XIV has never been to this bar and had nothing to do with any of this. Photo: <a href="https://commons.wikimedia.org/wiki/File:Pope_Leo_XIV_3_(cropped).jpg" rel="noopener">Edgar Beltrán, The Pillar</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0" rel="noopener">CC BY-SA 4.0</a>, via Wikimedia Commons, shown in black and white.</div>
+  </div>
+  <!-- /regcast-section -->
   <div class="section" id="regulars-section">
     <div class="section-plaque"><div class="section-title">Regulars</div></div>
     <div class="bar-rail"></div>
@@ -1598,6 +1649,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
           <div class="tc-scout"><span class="tc-lbl">Scouting report</span><br>Beat Tom 140.20 to 114.78 with Tua Tagovailoa scoring 0.00 at quarterback and a +16.39 beat of his projection, the only one in the league this week. Kyle Pitts Sr. went 23.00 on 8.69, the biggest beat on the sheet. First at 4-2 with 952.62 points for, the most in the league, 6-1 against the field. At W next, 69.7 the wrong way, with Josh Allen benched on his Bills bye.</div>
           <div class="tc-art">Art, probably: rang the only honest number of the week on a register with a dead key. That is tending, kid.</div>
           <div class="tc-herzog"><b>Herzog, as imagined:</b> A dead key, an honest number. The bartender calls it tending. I call it a mystery I could not film.</div>
+          <div class="tc-reg"><span class="reg-line reg-odenkirk"><b>Odenkirk, as imagined:</b> First place with a zero at quarterback and 952.62 points for. You don't need a lawyer. You need a witness. I'm available.</span></div>
         </div>
       </div>
       <div class="roster-panel" hidden></div><div class="trading-card">
@@ -1620,6 +1672,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
           <div class="tc-scout"><span class="tc-lbl">Scouting report</span><br>Beat Skoney 138.32 to 137.06, the closest game of the week, while missing his own number by 22.90. Left just 6.40 on the bench, the second tightest sheet in the league. Second at 4-2 with 898.18. Gets Nic and the hottest hand in the room in the closest call on the board, 57.0.</div>
           <div class="tc-art">Art, probably: won ugly by the width of a coaster and banked it clean. The ledger does not blush.</div>
           <div class="tc-herzog"><b>Herzog, as imagined:</b> The ledger does not blush, he says. Neither does the glacier. Both of them bury people.</div>
+          <div class="tc-reg"><span class="reg-line reg-leo"><b>Pope Leo, as imagined:</b> Won by 1.26 and left 6.40 on the bench. Tidy week. I'd say so out loud if anybody were listening.</span></div>
         </div>
       </div>
       <div class="roster-panel" hidden></div><div class="trading-card">
@@ -1642,6 +1695,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
           <div class="tc-scout"><span class="tc-lbl">Scouting report</span><br>Scored 82.94, the lowest of the week, with Gibbs and the Lions defense started through their shared bye and Judkins adding a zero. Lost by 40.82, went 0-7 against the field, and fell from first to third at 4-2. The next sheet is no kinder: Lawrence, Hampton and Dicker on byes, Adams on injured reserve in a starting slot, 77.3 against at Skoney.</div>
           <div class="tc-art">Art, probably: the wall called it Tuesday and the lineup slept in. Expensive nap.</div>
           <div class="tc-herzog"><b>Herzog, as imagined:</b> The wall warned him in chalk. Chalk is how civilizations warn themselves. The cave paintings were also ignored.</div>
+          <div class="tc-reg"><span class="reg-line reg-fielder"><b>Fielder, as imagined:</b> Started two men on bye and scored 82.94. From a business perspective, that's a pivot. Next quarter looks different.</span></div>
         </div>
       </div>
       <div class="roster-panel" hidden></div><div class="trading-card error-card">
@@ -1664,6 +1718,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
           <div class="tc-scout"><span class="tc-lbl">Scouting report</span><br>Scored 137.06 and lost by 1.26 with Juwan Johnson&#39;s 0.00 at tight end; the best legal lineup on the roster, 156.20, wins the game by 17.88. Nabers went 28.50 on 17.36. Fourth at 3-3 with 913.04 points for, second most in the league. Added the Chiefs defense for RJ Harvey. Gets Brennan at 77.3 his way, with Barkley and A.J. Brown both questionable in the lineup.</div>
           <div class="tc-art">Art, 1945 to 2025, still not impressed: the misprint finally read right and the tight end printed blank.</div>
           <div class="tc-herzog"><b>Herzog, as imagined:</b> A blank where a tight end should be. The void takes many forms. This one wore a jersey.</div>
+          <div class="tc-reg"><span class="reg-line reg-odenkirk"><b>Odenkirk, as imagined:</b> Has a zero at tight end cost you a game by 1.26 through no fault of your own? It was your fault. Call anyway.</span></div>
         </div>
       </div>
       <div class="roster-panel" hidden></div>
@@ -1689,6 +1744,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
           <div class="tc-scout"><span class="tc-lbl">Scouting report</span><br>Beat Brennan 123.76 to 82.94, the biggest margin of the week, with the tightest sheet in the league at 96.2 percent of his best. Kyren Williams missed his number by 11.32 and nothing wobbled. Fifth at 3-3 with 884.16. Hosts Tom at 60.1, with Herbert still in the Tuesday lineup on his Chargers bye and Burrow on the bench.</div>
           <div class="tc-art">Art, probably: won forty with nothing left on the bar. Now mind the quarterback slot, it has a vacancy sign.</div>
           <div class="tc-herzog"><b>Herzog, as imagined:</b> A vacancy at quarterback, noticed by everyone but the owner. I have filmed this before. It was called a shipwreck.</div>
+          <div class="tc-reg"><span class="reg-line reg-leo"><b>Pope Leo, as imagined:</b> 96.2 percent of his best lineup. That's an A. I taught math. I'd put that on the fridge.</span></div>
         </div>
       </div>
       <div class="roster-panel" hidden></div><div class="trading-card">
@@ -1711,6 +1767,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
           <div class="tc-scout"><span class="tc-lbl">Scouting report</span><br>Lost 152.34 to 131.38 to the best score of the week despite Bhayshul Tuten&#39;s 24.70 on a 12.64 projection; DJ Moore&#39;s starting slot paid zero. Sixth at 2-4 with 881.26, and the 199.90 record is still his. Week seven brings first place to town at 69.7 his way, with James Cook on the Bills bye and Moore questionable.</div>
           <div class="tc-art">Art, probably: the chalkboard still says 199.90 and the standings say sixth. Chalk is patient, standings are not.</div>
           <div class="tc-herzog"><b>Herzog, as imagined:</b> The record outlives the week that made it. So do fossils. Nobody asks the fossil its record.</div>
+          <div class="tc-reg"><span class="reg-line reg-fielder"><b>Fielder, as imagined:</b> He holds the record, 199.90, and sits sixth. I asked how that felt. He didn't answer. I've booked a room for the silence.</span></div>
         </div>
       </div>
       <div class="roster-panel" hidden></div><div class="trading-card">
@@ -1733,6 +1790,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
           <div class="tc-scout"><span class="tc-lbl">Scouting report</span><br>Put up 152.34, the best score of the week, and went 7-0 against the field one week after the perfect lineup lost by 54.84. Bijan Robinson&#39;s 7.30 on 22.99 was the worst player miss on the sheet and cost him nothing. Seventh at 2-4 with 864.16. Hosts Oscar in the coin flip, 57.0 against.</div>
           <div class="tc-art">Art, probably: played it perfect and lost, played it loose and lapped the room. Stop thinking, kid, it is working.</div>
           <div class="tc-herzog"><b>Herzog, as imagined:</b> He is told to stop thinking, and it works. I have spent my life thinking. The evidence favors the bartender.</div>
+          <div class="tc-reg"><span class="reg-line reg-odenkirk"><b>Odenkirk, as imagined:</b> Lost by 54.84 with a perfect lineup, then 152.34 and ran the table. That's not a comeback. That's a movie. I'd option it.</span></div>
         </div>
       </div>
       <div class="roster-panel" hidden></div><div class="trading-card">
@@ -1755,6 +1813,7 @@ html.standalone body{padding-top:calc(env(safe-area-inset-top) + 54px);}
           <div class="tc-scout"><span class="tc-lbl">Scouting report</span><br>Lost 140.20 to 114.78 and missed his projection by 35.31, the worst of the week, with Boston&#39;s 2.50 in the lineup and Loveland&#39;s 18.50 on the bench; the best lineup, 148.00, wins the game. Eighth at 2-4 with 826.74, 1-6 against the field. Claimed Dobbins and Daniels, settled on Zvada at kicker. At Tyler next, 60.1 against.</div>
           <div class="tc-art">Art, probably: hand-built card, factory mistakes. The winner was in the shoebox all along, kid.</div>
           <div class="tc-herzog"><b>Herzog, as imagined:</b> The winning lineup existed, unplayed, like a film left in its canister. The saddest archive is a bench.</div>
+          <div class="tc-reg"><span class="reg-line reg-fielder"><b>Fielder, as imagined:</b> Left 33.22 on the bench and missed his projection by 35.31. I built a replica of his bench. It also won. Replicas are undefeated.</span></div>
         </div>
       </div>
       <div class="roster-panel" hidden></div>
